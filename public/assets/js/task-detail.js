@@ -1,47 +1,56 @@
-// Task type frameworks with phases
-const TASK_FRAMEWORKS = {
-  '施策の立案': {
-    input: [],
-    progress: [],
-    output: []
-  },
-  '課題の解決': {
-    input: [],
-    progress: [],
-    output: []
-  },
-  'アクションの訴求': {
-    input: [],
-    progress: [],
-    output: []
-  },
-  '比較検討': {
-    input: [],
-    progress: [],
-    output: []
-  },
-  'リサーチ': {
-    input: [],
-    progress: [],
-    output: []
-  },
-  'プロジェクト計画・運営': {
-    input: [],
-    progress: [],
-    output: []
-  },
-  'ナレッジ化': {
-    input: [],
-    progress: [],
-    output: []
-  }
-};
-
+import { TASK_FRAMEWORKS } from './task-frameworks.js';
 import { fetchJSON, putJSON } from './api.js';
 import { createElement, clearElement, formatDate, showModal, hideModal } from './dom.js';
 
 let currentTask = null;
-let currentPhase = 'input';
+let currentPhaseId = null;
+
+function ensurePhaseState(task, framework) {
+  if (!framework || !framework.phases || framework.phases.length === 0) {
+    return;
+  }
+
+  const phaseIds = framework.phases.map(phase => phase.id);
+  const legacyKeys = ['input', 'progress', 'output'];
+
+  if (!task.phases || Array.isArray(task.phases) || Object.keys(task.phases).some(key => legacyKeys.includes(key))) {
+    task.phases = {};
+  }
+
+  phaseIds.forEach(id => {
+    if (!task.phases[id]) {
+      task.phases[id] = { completed: false, items: {} };
+    }
+    if (typeof task.phases[id].items !== 'object' || task.phases[id].items === null) {
+      task.phases[id].items = {};
+    }
+  });
+
+  Object.keys(task.phases).forEach(key => {
+    if (!phaseIds.includes(key)) {
+      delete task.phases[key];
+    }
+  });
+}
+
+function buildInfoSection(title, data) {
+  if (!data || (Array.isArray(data) && data.length === 0)) {
+    return null;
+  }
+
+  const section = createElement('div', { className: 'phase-info-section' }, [
+    createElement('h4', {}, [title])
+  ]);
+
+  if (Array.isArray(data)) {
+    const list = createElement('ul', {}, data.map(item => createElement('li', {}, [item])));
+    section.appendChild(list);
+  } else {
+    section.appendChild(createElement('p', {}, [data]));
+  }
+
+  return section;
+}
 
 async function init() {
   const params = new URLSearchParams(window.location.search);
@@ -82,7 +91,8 @@ function renderTaskDetail() {
   document.getElementById('task-stakeholders').textContent = currentTask.stakeholders || '-';
   document.getElementById('task-start').textContent = formatDate(currentTask.startDate);
   document.getElementById('task-end').textContent = formatDate(currentTask.endDate);
-  
+
+  currentPhaseId = null;
   renderJournals();
   renderTaskFramework();
 }
@@ -149,149 +159,167 @@ function renderJournals() {
 }
 
 function renderTaskFramework() {
+  const phaseContainer = document.querySelector('.phase-container');
   const framework = TASK_FRAMEWORKS[currentTask.taskType];
-  if (!framework) {
-    document.querySelector('.phase-container').style.display = 'none';
+
+  if (!phaseContainer) {
     return;
   }
-  
+
+  if (!framework || !framework.phases || framework.phases.length === 0) {
+    phaseContainer.style.display = 'none';
+    return;
+  }
+
+  phaseContainer.style.display = '';
   document.getElementById('framework-type').textContent = currentTask.taskType;
-  
-  // Render phase tabs
+
+  ensurePhaseState(currentTask, framework);
+
+  if (!currentPhaseId || !framework.phases.some(phase => phase.id === currentPhaseId)) {
+    const firstIncomplete = framework.phases.find(phase => !currentTask.phases[phase.id]?.completed);
+    currentPhaseId = (firstIncomplete || framework.phases[0]).id;
+  }
+
   const nav = document.getElementById('phase-nav');
   clearElement(nav);
-  
-  const phaseNames = {
-    input: 'Input',
-    progress: 'Progress', 
-    output: 'Output'
-  };
-  
-  ['input', 'progress', 'output'].forEach(phase => {
+
+  framework.phases.forEach(phase => {
     const tab = createElement('button', {
-      className: `phase-tab ${phase === currentPhase ? 'active' : ''}`,
-      onClick: () => switchPhase(phase)
-    }, [phaseNames[phase]]);
+      className: `phase-tab ${phase.id === currentPhaseId ? 'active' : ''}`,
+      onClick: () => switchPhase(phase.id)
+    }, [phase.name]);
     nav.appendChild(tab);
   });
-  
+
   renderPhaseContent();
 }
 
 function renderPhaseContent() {
   const container = document.getElementById('phase-content-container');
   clearElement(container);
-  
+
   const framework = TASK_FRAMEWORKS[currentTask.taskType];
   if (!framework) return;
-  
-  const items = framework[currentPhase];
-  if (!items) return;
-  
-  // Initialize phases if not exists
-  if (!currentTask.phases) {
-    currentTask.phases = {
-      input: { completed: false, items: {} },
-      progress: { completed: false, items: {} },
-      output: { completed: false, items: {} }
-    };
-  }
-  
-  const phaseData = currentTask.phases[currentPhase];
-  
+
+  ensurePhaseState(currentTask, framework);
+
+  const phaseDefinition = framework.phases.find(phase => phase.id === currentPhaseId);
+  if (!phaseDefinition) return;
+
+  const phaseState = currentTask.phases[phaseDefinition.id];
   const content = createElement('div', { className: 'phase-content active' }, []);
-  
-  // If no items in this phase, show message
-  if (items.length === 0) {
-    content.appendChild(createElement('p', { 
-      style: 'color: #64748b; padding: 2rem; text-align: center;' 
-    }, [
-      'このフェーズにはまだ項目が設定されていません。'
-    ]));
+
+  const infoSections = [
+    buildInfoSection('目的', phaseDefinition.purpose),
+    buildInfoSection('使用視点', phaseDefinition.perspectives),
+    buildInfoSection('使用フレームワーク', phaseDefinition.frameworks),
+    buildInfoSection('補足ポイント', phaseDefinition.points)
+  ].filter(Boolean);
+
+  if (infoSections.length > 0) {
+    content.appendChild(createElement('div', { className: 'phase-info' }, infoSections));
+  }
+
+  if (!phaseDefinition.tasks || phaseDefinition.tasks.length === 0) {
+    content.appendChild(createElement('p', {
+      style: 'color: #64748b; padding: 2rem; text-align: center;'
+    }, ['このフェーズにはまだ項目が設定されていません。']));
     container.appendChild(content);
     return;
   }
-  
+
   const checklist = createElement('ul', { className: 'checklist' }, []);
-  
-  items.forEach((item, idx) => {
+
+  phaseDefinition.tasks.forEach((taskText, idx) => {
     const itemKey = `item_${idx}`;
-    const itemData = phaseData.items[itemKey] || { checked: false, note: '' };
-    
+    const currentItem = phaseState.items[itemKey] || { checked: false, note: '' };
+    if (!phaseState.items[itemKey]) {
+      phaseState.items[itemKey] = { ...currentItem };
+    }
+
     const checkbox = createElement('input', {
       type: 'checkbox',
-      checked: !!itemData.checked,
+      checked: !!currentItem.checked,
       onChange: (e) => {
-        phaseData.items[itemKey] = {
-          ...itemData,
-          checked: e.target.checked
+        phaseState.items[itemKey] = {
+          ...phaseState.items[itemKey],
+          checked: e.target.checked,
+          note: phaseState.items[itemKey]?.note ?? currentItem.note ?? ''
         };
         saveTask();
       }
     });
-    
+
+    const label = createElement('div', { className: 'checklist-label', style: 'flex: 1;' }, [`${idx + 1}. ${taskText}`]);
+
     const textarea = createElement('textarea', {
-      placeholder: 'Notes...',
+      placeholder: 'この項目に関する具体的な内容を記入してください（メモや次のアクションなど）。',
+      onInput: (e) => {
+        phaseState.items[itemKey] = {
+          ...phaseState.items[itemKey],
+          note: e.target.value,
+          checked: phaseState.items[itemKey]?.checked ?? currentItem.checked ?? false
+        };
+      },
       onBlur: (e) => {
-        phaseData.items[itemKey] = {
-          ...itemData,
+        phaseState.items[itemKey] = {
+          ...phaseState.items[itemKey],
           note: e.target.value
         };
         saveTask();
       }
     });
-    textarea.value = itemData.note || '';
-    
+    textarea.value = currentItem.note || '';
+
     const li = createElement('li', {}, [
-      createElement('div', { className: 'checklist-header' }, [
-        checkbox,
-        createElement('div', { style: 'flex: 1;' }, [item])
-      ]),
+      createElement('div', { className: 'checklist-header' }, [checkbox, label]),
       textarea
     ]);
-    
+
     checklist.appendChild(li);
   });
-  
+
   content.appendChild(checklist);
-  
+
   const actions = createElement('div', { className: 'phase-actions' }, [
     createElement('button', {
       className: 'btn btn-primary',
       onClick: () => completePhase()
     }, ['フェーズを完了'])
   ]);
-  
+
   content.appendChild(actions);
   container.appendChild(content);
 }
 
-function switchPhase(phase) {
-  currentPhase = phase;
-  
-  // Update active tab
-  document.querySelectorAll('.phase-tab').forEach(tab => {
-    tab.classList.remove('active');
-  });
-  event.target.classList.add('active');
-  
-  renderPhaseContent();
+function switchPhase(phaseId) {
+  currentPhaseId = phaseId;
+  renderTaskFramework();
 }
 
 function completePhase() {
-  if (!currentTask.phases) return;
-  
-  currentTask.phases[currentPhase].completed = true;
-  
-  // Move to next phase
-  if (currentPhase === 'input') {
-    currentPhase = 'progress';
-  } else if (currentPhase === 'progress') {
-    currentPhase = 'output';
-  } else {
-    alert('すべてのフェーズが完了しました!');
+  const framework = TASK_FRAMEWORKS[currentTask.taskType];
+  if (!framework) return;
+
+  ensurePhaseState(currentTask, framework);
+
+  if (!currentTask.phases || !currentTask.phases[currentPhaseId]) return;
+
+  currentTask.phases[currentPhaseId].completed = true;
+
+  const currentIndex = framework.phases.findIndex(phase => phase.id === currentPhaseId);
+  if (currentIndex !== -1) {
+    const remaining = framework.phases.slice(currentIndex + 1).find(phase => !currentTask.phases[phase.id]?.completed);
+    if (remaining) {
+      currentPhaseId = remaining.id;
+    } else if (currentIndex < framework.phases.length - 1) {
+      currentPhaseId = framework.phases[currentIndex + 1].id;
+    } else {
+      alert('すべてのフェーズが完了しました!');
+    }
   }
-  
+
   saveTask();
   renderTaskFramework();
 }
@@ -331,11 +359,8 @@ function setupEventListeners() {
       if (!confirm('タスクタイプを変更すると、すべてのフェーズデータがリセットされます。続行しますか?')) {
         return;
       }
-      currentTask.phases = {
-        input: { completed: false, items: {} },
-        progress: { completed: false, items: {} },
-        output: { completed: false, items: {} }
-      };
+      currentTask.phases = {};
+      currentPhaseId = null;
     }
     
     currentTask.purpose = e.target.elements.purpose.value;

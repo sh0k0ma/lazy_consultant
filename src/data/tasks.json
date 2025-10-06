@@ -4,7 +4,7 @@
     "workId": "1759650660577",
     "name": "test",
     "purpose": "test",
-    "taskType": "データ分析・モデル化",
+    "taskType": "課題の解決",
     "startDate": "2025-10-11",
     "endDate": "2025-10-17",
     "status": "Planned",
@@ -20,13 +20,8 @@
     ],
     "phases": {
       "input": {
-        "completed": true,
-        "items": {
-          "item_4": {
-            "checked": false,
-            "note": ""
-          }
-        }
+        "completed": false,
+        "items": {}
       },
       "progress": {
         "completed": false,
