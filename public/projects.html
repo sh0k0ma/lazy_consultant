@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Projects - Lazy Consultant</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1><a href="/">Lazy Consultant</a></h1>
+      <nav>
+        <div class="dropdown">
+          <button class="dropdown-btn">プロジェクト</button>
+          <div class="dropdown-content">
+            <a href="/projects.html">プロジェクト</a>
+            <a href="/works.html">ワーク</a>
+            <a href="/tasks.html">タスク</a>
+          </div>
+        </div>
+        <a href="/knowledge.html" target="_blank">ナレッジ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="list-page">
+      <div class="list-header">
+        <h2>全プロジェクト</h2>
+      </div>
+      <div id="projects-list"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p><a href="/privacy.html">プライバシーポリシー</a> | <a href="/terms.html">利用規約</a></p>
+  </footer>
+
+  <script type="module">
+    import { fetchJSON } from './assets/js/api.js';
+    import { createElement, clearElement, formatDate } from './assets/js/dom.js';
+
+    async function init() {
+      const projects = await fetchJSON('/api/projects');
+      const container = document.getElementById('projects-list');
+      clearElement(container);
+
+      if (projects.length === 0) {
+        container.appendChild(createElement('div', { className: 'empty-state' }, ['プロジェクトが見つかりません。']));
+        return;
+      }
+
+      projects.forEach(project => {
+        const item = createElement('div', { 
+          className: 'list-item',
+          onClick: () => window.location.href = `/project.html?id=${project.id}`
+        }, [
+          createElement('div', { className: 'list-item-info' }, [
+            createElement('h3', {}, [project.name]),
+            createElement('div', { className: 'list-item-meta' }, [
+              `${formatDate(project.startDate)} - ${formatDate(project.endDate)}`
+            ])
+          ]),
+          createElement('span', { className: `status-badge status-${project.status}` }, [project.status])
+        ]);
+        container.appendChild(item);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

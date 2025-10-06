@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lazy Consultant</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1><a href="/">Lazy Consultant</a></h1>
+      <nav>
+        <div class="dropdown">
+          <button class="dropdown-btn">プロジェクト</button>
+          <div class="dropdown-content">
+            <a href="/projects.html">プロジェクト</a>
+            <a href="/works.html">ワーク</a>
+            <a href="/tasks.html">タスク</a>
+          </div>
+        </div>
+        <a href="/knowledge.html" target="_blank">ナレッジ</a>
+        <button id="export-data-btn" class="btn btn-secondary">データ出力</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="dashboard">
+      <div class="dashboard-header">
+        <h2>ダッシュボード</h2>
+        <button id="add-project-btn" class="btn btn-primary">+ プロジェクトを追加</button>
+      </div>
+      <div id="projects-container"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p><a href="/privacy.html">プライバシーポリシー</a> | <a href="/terms.html">利用規約</a></p>
+  </footer>
+
+  <!-- Modal for adding/editing project -->
+  <div id="project-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="project-modal-title">プロジェクトを追加</h2>
+      <form id="project-form">
+        <label>プロジェクト名: <input type="text" name="name" required></label>
+        <label>概要: <textarea name="overview" required></textarea></label>
+        <label>ステータス: 
+          <select name="status" required>
+            <option value="Planned">Planned</option>
+            <option value="Ongoing">Ongoing</option>
+            <option value="Complete">Complete</option>
+            <option value="Blocked">Blocked</option>
+            <option value="Abandon">Abandon</option>
+          </select>
+        </label>
+        <label>開始日: <input type="date" name="startDate" required></label>
+        <label>終了日: <input type="date" name="endDate" required></label>
+        <input type="hidden" name="id">
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">保存</button>
+          <button type="button" class="btn btn-secondary" id="cancel-project">キャンセル</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for adding/editing work -->
+  <div id="work-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="work-modal-title">ワークを追加</h2>
+      <form id="work-form">
+        <input type="hidden" name="projectId">
+        <label>ワーク名: <input type="text" name="name" required></label>
+        <label>目的: <textarea name="purpose" required></textarea></label>
+        <label>ステークホルダー: <input type="text" name="stakeholders" placeholder="カンマ区切り"></label>
+        <label>開始日: <input type="date" name="startDate" required></label>
+        <label>終了日: <input type="date" name="endDate" required></label>
+        <label>ステータス: 
+          <select name="status" required>
+            <option value="Planned">Planned</option>
+            <option value="Ongoing">Ongoing</option>
+            <option value="Complete">Complete</option>
+            <option value="Blocked">Blocked</option>
+            <option value="Abandon">Abandon</option>
+          </select>
+        </label>
+        <label>最初のジャーナル: <textarea name="journalEntry"></textarea></label>
+        <input type="hidden" name="id">
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">保存</button>
+          <button type="button" class="btn btn-secondary" id="cancel-work">キャンセル</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for adding/editing task -->
+  <div id="task-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="task-modal-title">タスクを追加</h2>
+      <form id="task-form">
+        <input type="hidden" name="workId">
+        <label>タスク名: <input type="text" name="name" required></label>
+        <label>目的: <textarea name="purpose" required></textarea></label>
+        <label>タスクタイプ: 
+          <select name="taskType" required>
+            <option value="課題定義・論点設計">課題定義・論点設計</option>
+            <option value="リサーチ">リサーチ（市場・競合・技術）</option>
+            <option value="データ分析・モデル化">データ分析・モデル化</option>
+            <option value="戦略・施策設計">戦略・施策設計（新規施策を含む）</option>
+            <option value="実行計画・PMO">実行計画・PMO（プロジェクト運営）</option>
+            <option value="チェンジマネジメント">チェンジマネジメント（人の行動を変える）</option>
+            <option value="意思決定設計・ガバナンス">意思決定設計・ガバナンス</option>
+            <option value="成果検証・レビュー">成果検証・レビュー</option>
+            <option value="ナレッジ化・横展開">ナレッジ化・横展開</option>
+          </select>
+        </label>
+        <label>ステークホルダー: <input type="text" name="stakeholders" placeholder="カンマ区切り"></label>
+        <label>開始日: <input type="date" name="startDate" required></label>
+        <label>終了日: <input type="date" name="endDate" required></label>
+        <label>ステータス: 
+          <select name="status" required>
+            <option value="Planned">Planned</option>
+            <option value="Ongoing">Ongoing</option>
+            <option value="Complete">Complete</option>
+            <option value="Blocked">Blocked</option>
+            <option value="Abandon">Abandon</option>
+          </select>
+        </label>
+        <label>最初のジャーナル: <textarea name="journalEntry"></textarea></label>
+        <input type="hidden" name="id">
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">保存</button>
+          <button type="button" class="btn btn-secondary" id="cancel-task">キャンセル</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "1759650893950",
+    "workId": "1759650660577",
+    "name": "test",
+    "purpose": "test",
+    "taskType": "データ分析・モデル化",
+    "startDate": "2025-10-11",
+    "endDate": "2025-10-17",
+    "status": "Planned",
+    "journals": [
+      {
+        "date": "2025-10-05T00:00:00.000Z",
+        "entry": "test"
+      },
+      {
+        "date": "2025-10-05T09:55:08.114Z",
+        "entry": "test"
+      }
+    ],
+    "phases": {
+      "input": {
+        "completed": true,
+        "items": {
+          "item_4": {
+            "checked": false,
+            "note": ""
+          }
+        }
+      },
+      "progress": {
+        "completed": false,
+        "items": {}
+      },
+      "output": {
+        "completed": false,
+        "items": {}
+      }
+    },
+    "stakeholders": ""
+  }
+]

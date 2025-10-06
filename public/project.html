@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Detail - Lazy Consultant</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1><a href="/">Lazy Consultant</a></h1>
+      <nav>
+        <div class="dropdown">
+          <button class="dropdown-btn">プロジェクト</button>
+          <div class="dropdown-content">
+            <a href="/projects.html">プロジェクト</a>
+            <a href="/works.html">ワーク</a>
+            <a href="/tasks.html">タスク</a>
+          </div>
+        </div>
+        <a href="/knowledge.html" target="_blank">ナレッジ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="detail-page">
+      <div class="detail-header">
+        <div>
+          <h2 id="project-name"></h2>
+          <span id="project-status" class="status-badge"></span>
+        </div>
+        <div class="project-actions">
+          <button id="edit-project-btn" class="btn btn-secondary">編集</button>
+          <button id="back-btn" class="btn btn-secondary">← 戻る</button>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3>プロジェクト情報</h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">概要</span>
+            <span class="detail-value" id="project-overview"></span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">開始日</span>
+            <span class="detail-value" id="project-start"></span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">終了日</span>
+            <span class="detail-value" id="project-end"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3>関連ワーク</h3>
+        <div id="works-container"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p><a href="/privacy.html">プライバシーポリシー</a> | <a href="/terms.html">利用規約</a></p>
+  </footer>
+
+  <!-- Modal for editing project -->
+  <div id="edit-project-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>プロジェクトを編集</h2>
+      <form id="edit-project-form">
+        <input type="hidden" name="id">
+        <label>概要: <textarea name="overview" rows="3"></textarea></label>
+        <label>開始日: <input type="date" name="startDate" required></label>
+        <label>終了日: <input type="date" name="endDate" required></label>
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">保存</button>
+          <button type="button" class="btn btn-secondary" id="cancel-edit-project">キャンセル</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    import { fetchJSON, putJSON } from './assets/js/api.js';
+    import { createElement, clearElement, formatDate, showModal, hideModal } from './assets/js/dom.js';
+
+    let currentProject = null;
+
+    function renderProjectInfo() {
+      document.getElementById('project-name').textContent = currentProject.name;
+      const statusBadge = document.getElementById('project-status');
+      statusBadge.textContent = currentProject.status;
+      statusBadge.className = `status-badge status-${currentProject.status}`;
+      
+      document.getElementById('project-overview').textContent = currentProject.overview || '-';
+      document.getElementById('project-start').textContent = formatDate(currentProject.startDate);
+      document.getElementById('project-end').textContent = formatDate(currentProject.endDate);
+    }
+
+    async function init() {
+      const params = new URLSearchParams(window.location.search);
+      const projectId = params.get('id');
+      
+      if (!projectId) {
+        alert('プロジェクトIDが見つかりません');
+        window.location.href = '/';
+        return;
+      }
+      
+      const [projects, works] = await Promise.all([
+        fetchJSON('/api/projects'),
+        fetchJSON('/api/works')
+      ]);
+      
+      currentProject = projects.find(p => p.id === projectId);
+      if (!currentProject) {
+        alert('プロジェクトが見つかりません');
+        window.location.href = '/';
+        return;
+      }
+      
+      renderProjectInfo();
+      
+      const projectWorks = works.filter(w => w.projectId === projectId);
+      const container = document.getElementById('works-container');
+      clearElement(container);
+      
+      if (projectWorks.length === 0) {
+        container.appendChild(createElement('p', { style: 'color: #64748b;' }, ['このプロジェクトに関連するワークはありません。']));
+      } else {
+        projectWorks.forEach(work => {
+          const item = createElement('div', { 
+            className: 'list-item',
+            onClick: () => window.location.href = `/work.html?id=${work.id}`
+          }, [
+            createElement('div', { className: 'list-item-info' }, [
+              createElement('h3', {}, [work.name]),
+              createElement('div', { className: 'list-item-meta' }, [
+                `${formatDate(work.startDate)} - ${formatDate(work.endDate)}`
+              ])
+            ]),
+            createElement('span', { className: `status-badge status-${work.status}` }, [work.status])
+          ]);
+          container.appendChild(item);
+        });
+      }
+      
+      document.getElementById('back-btn').addEventListener('click', () => {
+        window.history.back();
+      });
+      
+      document.getElementById('edit-project-btn').addEventListener('click', () => {
+        const form = document.getElementById('edit-project-form');
+        form.elements.id.value = currentProject.id;
+        form.elements.overview.value = currentProject.overview || '';
+        form.elements.startDate.value = currentProject.startDate;
+        form.elements.endDate.value = currentProject.endDate;
+        showModal('edit-project-modal');
+      });
+      
+      document.getElementById('edit-project-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        currentProject.overview = e.target.elements.overview.value;
+        currentProject.startDate = e.target.elements.startDate.value;
+        currentProject.endDate = e.target.elements.endDate.value;
+        
+        await putJSON(`/api/projects/${currentProject.id}`, currentProject);
+        renderProjectInfo();
+        hideModal('edit-project-modal');
+      });
+      
+      document.getElementById('cancel-edit-project').addEventListener('click', () => {
+        hideModal('edit-project-modal');
+      });
+      
+      document.querySelectorAll('.modal .close').forEach(closeBtn => {
+        closeBtn.addEventListener('click', (e) => {
+          const modal = e.target.closest('.modal');
+          if (modal) modal.classList.remove('show');
+        });
+      });
+      
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.classList.remove('show');
+          }
+        });
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

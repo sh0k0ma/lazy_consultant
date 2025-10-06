@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Tasks - Lazy Consultant</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1><a href="/">Lazy Consultant</a></h1>
+      <nav>
+        <div class="dropdown">
+          <button class="dropdown-btn">プロジェクト</button>
+          <div class="dropdown-content">
+            <a href="/projects.html">プロジェクト</a>
+            <a href="/works.html">ワーク</a>
+            <a href="/tasks.html">タスク</a>
+          </div>
+        </div>
+        <a href="/knowledge.html" target="_blank">ナレッジ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="list-page">
+      <div class="list-header">
+        <h2>全タスク</h2>
+      </div>
+      <div id="tasks-list"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p><a href="/privacy.html">プライバシーポリシー</a> | <a href="/terms.html">利用規約</a></p>
+  </footer>
+
+  <script type="module">
+    import { fetchJSON } from './assets/js/api.js';
+    import { createElement, clearElement, formatDate } from './assets/js/dom.js';
+
+    async function init() {
+      const tasks = await fetchJSON('/api/tasks');
+      const container = document.getElementById('tasks-list');
+      clearElement(container);
+
+      if (tasks.length === 0) {
+        container.appendChild(createElement('div', { className: 'empty-state' }, ['タスクが見つかりません。']));
+        return;
+      }
+
+      tasks.forEach(task => {
+        const item = createElement('div', { 
+          className: 'list-item',
+          onClick: () => window.location.href = `/task.html?id=${task.id}`
+        }, [
+          createElement('div', { className: 'list-item-info' }, [
+            createElement('h3', {}, [task.name]),
+            createElement('div', { className: 'list-item-meta' }, [
+              `${task.taskType} • ${formatDate(task.startDate)} - ${formatDate(task.endDate)}`
+            ])
+          ]),
+          createElement('span', { className: `status-badge status-${task.status}` }, [task.status])
+        ]);
+        container.appendChild(item);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

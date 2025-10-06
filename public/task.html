@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Detail - Lazy Consultant</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1><a href="/">Lazy Consultant</a></h1>
+      <nav>
+        <div class="dropdown">
+          <button class="dropdown-btn">プロジェクト</button>
+          <div class="dropdown-content">
+            <a href="/projects.html">プロジェクト</a>
+            <a href="/works.html">ワーク</a>
+            <a href="/tasks.html">タスク</a>
+          </div>
+        </div>
+        <a href="/knowledge.html" target="_blank">ナレッジ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="detail-page">
+      <div class="detail-header">
+        <div>
+          <h2 id="task-name"></h2>
+          <span id="task-status" class="status-badge"></span>
+        </div>
+                <div class="project-actions">
+          <button id="edit-task-btn" class="btn btn-secondary">編集</button>
+          <button id="back-btn" class="btn btn-secondary">← 戻る</button>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3>タスク情報</h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">目的</span>
+            <span class="detail-value" id="task-purpose"></span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">タスクタイプ</span>
+            <span class="detail-value" id="task-type"></span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">ステークホルダー</span>
+            <span class="detail-value" id="task-stakeholders"></span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">開始日</span>
+            <span class="detail-value" id="task-start"></span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">終了日</span>
+            <span class="detail-value" id="task-end"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3>Journal</h3>
+        <div id="journals-container"></div>
+        <button id="add-journal-btn" class="btn btn-primary">+ Add Journal Entry</button>
+      </div>
+
+      <div class="phase-container">
+        <h3>Task Considerations - <span id="framework-type"></span></h3>
+        <div class="phase-nav" id="phase-nav"></div>
+        <div id="phase-content-container"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p><a href="/privacy.html">プライバシーポリシー</a> | <a href="/terms.html">利用規約</a></p>
+  </footer>
+
+  <!-- Modal for journal entry -->
+  <div id="journal-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>ジャーナルを追加</h2>
+      <form id="journal-form">
+        <label>内容: <textarea name="entry" required rows="5"></textarea></label>
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">保存</button>
+          <button type="button" class="btn btn-secondary" id="cancel-journal">キャンセル</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for editing task -->
+  <div id="edit-task-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>タスクを編集</h2>
+      <form id="edit-task-form">
+        <input type="hidden" name="id">
+        <label>目的: <textarea name="purpose" rows="3"></textarea></label>
+        <label>タスクタイプ:
+          <select name="taskType" required>
+            <option value="課題定義・論点設計">課題定義・論点設計</option>
+            <option value="リサーチ">リサーチ</option>
+            <option value="データ分析・モデル化">データ分析・モデル化</option>
+            <option value="戦略・施策設計">戦略・施策設計</option>
+            <option value="実行計画・PMO">実行計画・PMO</option>
+            <option value="チェンジマネジメント">チェンジマネジメント</option>
+            <option value="意思決定設計・ガバナンス">意思決定設計・ガバナンス</option>
+            <option value="成果検証・レビュー">成果検証・レビュー</option>
+            <option value="ナレッジ化・横展開">ナレッジ化・横展開</option>
+          </select>
+        </label>
+        <label>ステークホルダー: <input type="text" name="stakeholders"></label>
+        <label>開始日: <input type="date" name="startDate" required></label>
+        <label>終了日: <input type="date" name="endDate" required></label>
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">保存</button>
+          <button type="button" class="btn btn-secondary" id="cancel-edit-task">キャンセル</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/assets/js/task-detail.js"></script>
+</body>
+</html>

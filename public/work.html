@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work Detail - Lazy Consultant</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1><a href="/">Lazy Consultant</a></h1>
+      <nav>
+        <div class="dropdown">
+          <button class="dropdown-btn">プロジェクト</button>
+          <div class="dropdown-content">
+            <a href="/projects.html">プロジェクト</a>
+            <a href="/works.html">ワーク</a>
+            <a href="/tasks.html">タスク</a>
+          </div>
+        </div>
+        <a href="/knowledge.html" target="_blank">ナレッジ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="detail-page">
+      <div class="detail-header">
+        <div>
+          <h2 id="work-name"></h2>
+          <span id="work-status" class="status-badge"></span>
+        </div>
+        <div class="project-actions">
+          <button id="edit-work-btn" class="btn btn-secondary">編集</button>
+          <button id="back-btn" class="btn btn-secondary">← 戻る</button>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3>ワーク情報</h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">目的</span>
+            <span class="detail-value" id="work-purpose"></span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">ステークホルダー</span>
+            <span class="detail-value" id="work-stakeholders"></span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">開始日</span>
+            <span class="detail-value" id="work-start"></span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">終了日</span>
+            <span class="detail-value" id="work-end"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3>ジャーナル</h3>
+        <div id="journals-container"></div>
+        <button id="add-journal-btn" class="btn btn-primary">+ ジャーナルを追加</button>
+      </div>
+
+      <div class="detail-section">
+        <h3>関連タスク</h3>
+        <div id="tasks-container"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p><a href="/privacy.html">プライバシーポリシー</a> | <a href="/terms.html">利用規約</a></p>
+  </footer>
+
+  <!-- Modal for journal entry -->
+  <div id="journal-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>ジャーナルを追加</h2>
+      <form id="journal-form">
+        <label>内容: <textarea name="entry" required rows="5"></textarea></label>
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">保存</button>
+          <button type="button" class="btn btn-secondary" id="cancel-journal">キャンセル</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for editing work -->
+  <div id="edit-work-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>ワークを編集</h2>
+      <form id="edit-work-form">
+        <input type="hidden" name="id">
+        <label>目的: <textarea name="purpose" rows="3"></textarea></label>
+        <label>ステークホルダー: <input type="text" name="stakeholders"></label>
+        <label>開始日: <input type="date" name="startDate" required></label>
+        <label>終了日: <input type="date" name="endDate" required></label>
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">保存</button>
+          <button type="button" class="btn btn-secondary" id="cancel-edit-work">キャンセル</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    import { fetchJSON, putJSON } from './assets/js/api.js';
+    import { createElement, clearElement, formatDate, showModal, hideModal } from './assets/js/dom.js';
+
+    let currentWork = null;
+
+    function renderWorkInfo() {
+      document.getElementById('work-name').textContent = currentWork.name;
+      const statusBadge = document.getElementById('work-status');
+      statusBadge.textContent = currentWork.status;
+      statusBadge.className = `status-badge status-${currentWork.status}`;
+      
+      document.getElementById('work-purpose').textContent = currentWork.purpose || '-';
+      document.getElementById('work-stakeholders').textContent = currentWork.stakeholders || '-';
+      document.getElementById('work-start').textContent = formatDate(currentWork.startDate);
+      document.getElementById('work-end').textContent = formatDate(currentWork.endDate);
+    }
+
+    async function init() {
+      const params = new URLSearchParams(window.location.search);
+      const workId = params.get('id');
+      
+      if (!workId) {
+        alert('ワークIDが見つかりません');
+        window.location.href = '/';
+        return;
+      }
+      
+      const [works, tasks] = await Promise.all([
+        fetchJSON('/api/works'),
+        fetchJSON('/api/tasks')
+      ]);
+      
+      currentWork = works.find(w => w.id === workId);
+      if (!currentWork) {
+        alert('ワークが見つかりません');
+        window.location.href = '/';
+        return;
+      }
+      
+      renderWorkInfo();
+      
+      renderJournals();
+      
+      const workTasks = tasks.filter(t => t.workId === workId);
+      const container = document.getElementById('tasks-container');
+      clearElement(container);
+      
+      if (workTasks.length === 0) {
+        container.appendChild(createElement('p', { style: 'color: #64748b;' }, ['このワークに関連するタスクはありません。']));
+      } else {
+        workTasks.forEach(task => {
+          const item = createElement('div', { 
+            className: 'list-item',
+            onClick: () => window.location.href = `/task.html?id=${task.id}`
+          }, [
+            createElement('div', { className: 'list-item-info' }, [
+              createElement('h3', {}, [task.name]),
+              createElement('div', { className: 'list-item-meta' }, [
+                `${task.taskType} • ${formatDate(task.startDate)} - ${formatDate(task.endDate)}`
+              ])
+            ]),
+            createElement('span', { className: `status-badge status-${task.status}` }, [task.status])
+          ]);
+          container.appendChild(item);
+        });
+      }
+      
+      setupEventListeners();
+    }
+
+    function renderJournals() {
+      const container = document.getElementById('journals-container');
+      clearElement(container);
+      
+      if (!currentWork.journals || currentWork.journals.length === 0) {
+        container.appendChild(createElement('p', { style: 'color: #64748b;' }, ['No journal entries yet.']));
+        return;
+      }
+      
+      const sortedJournals = [...currentWork.journals].sort((a, b) => 
+        new Date(b.date) - new Date(a.date)
+      );
+      
+      sortedJournals.forEach(journal => {
+        const entry = createElement('div', { className: 'journal-entry' }, [
+          createElement('div', { className: 'journal-date' }, [formatDate(journal.date)]),
+          createElement('div', { className: 'journal-text' }, [journal.entry])
+        ]);
+        container.appendChild(entry);
+      });
+    }
+
+    function setupEventListeners() {
+      document.getElementById('back-btn').addEventListener('click', () => {
+        window.history.back();
+      });
+      
+      document.getElementById('add-journal-btn').addEventListener('click', () => {
+        showModal('journal-modal');
+      });
+      
+      document.getElementById('journal-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const entry = e.target.elements.entry.value;
+        
+        if (!currentWork.journals) {
+          currentWork.journals = [];
+        }
+        
+        currentWork.journals.push({
+          date: new Date().toISOString(),
+          entry
+        });
+        
+        await putJSON(`/api/works/${currentWork.id}`, currentWork);
+        renderJournals();
+        hideModal('journal-modal');
+        e.target.reset();
+      });
+      
+      document.getElementById('cancel-journal').addEventListener('click', () => {
+        hideModal('journal-modal');
+      });
+      
+      document.getElementById('edit-work-btn').addEventListener('click', () => {
+        const form = document.getElementById('edit-work-form');
+        form.elements.id.value = currentWork.id;
+        form.elements.purpose.value = currentWork.purpose || '';
+        form.elements.stakeholders.value = currentWork.stakeholders || '';
+        form.elements.startDate.value = currentWork.startDate;
+        form.elements.endDate.value = currentWork.endDate;
+        showModal('edit-work-modal');
+      });
+      
+      document.getElementById('edit-work-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        currentWork.purpose = e.target.elements.purpose.value;
+        currentWork.stakeholders = e.target.elements.stakeholders.value;
+        currentWork.startDate = e.target.elements.startDate.value;
+        currentWork.endDate = e.target.elements.endDate.value;
+        
+        await putJSON(`/api/works/${currentWork.id}`, currentWork);
+        renderWorkInfo();
+        hideModal('edit-work-modal');
+      });
+      
+      document.getElementById('cancel-edit-work').addEventListener('click', () => {
+        hideModal('edit-work-modal');
+      });
+      
+      document.querySelectorAll('.modal .close').forEach(closeBtn => {
+        closeBtn.addEventListener('click', (e) => {
+          const modal = e.target.closest('.modal');
+          if (modal) modal.classList.remove('show');
+        });
+      });
+      
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.classList.remove('show');
+          }
+        });
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
