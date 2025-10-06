@@ -490,6 +490,30 @@ footer a:hover {
   color: var(--text);
 }
 
+.journal-toggle {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+}
+
+.journal-toggle:hover {
+  color: var(--primary-dark);
+}
+
+.journal-older-entries {
+  margin-top: 0.75rem;
+}
+
 /* Knowledge Table */
 .knowledge-controls {
   display: flex;
@@ -573,6 +597,51 @@ footer a:hover {
 
 .phase-content.active {
   display: block;
+}
+
+.phase-info {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.phase-info-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 100%;
+}
+
+.phase-info-section h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.phase-info-section p,
+.phase-info-section li {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.phase-info-section ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+@media (max-width: 900px) {
+  .phase-info {
+    grid-template-columns: 1fr;
+  }
 }
 
 .checklist {

@@ -113,49 +113,83 @@ function renderJournals() {
     new Date(b.date) - new Date(a.date)
   );
   
-  sortedJournals.forEach((journal, index) => {
-    const dateEl = createElement('div', { 
-      className: 'journal-date',
-      style: 'cursor: pointer;',
-      title: 'クリックして日付を編集'
-    }, [formatDate(journal.date)]);
+  // Show only the most recent entry
+  const newestJournal = sortedJournals[0];
+  const olderJournals = sortedJournals.slice(1);
+  
+  // Render the newest entry
+  const newestEntry = createJournalEntry(newestJournal);
+  container.appendChild(newestEntry);
+  
+  // If there are older entries, add an accordion toggle
+  if (olderJournals.length > 0) {
+    const toggleBtn = createElement('button', {
+      className: 'journal-toggle',
+      onClick: (e) => {
+        const oldEntriesContainer = e.target.nextElementSibling;
+        const isExpanded = oldEntriesContainer.style.display === 'block';
+        oldEntriesContainer.style.display = isExpanded ? 'none' : 'block';
+        e.target.textContent = isExpanded 
+          ? `▶ 過去のジャーナル (${olderJournals.length}件) を表示` 
+          : `▼ 過去のジャーナル (${olderJournals.length}件) を非表示`;
+      }
+    }, [`▶ 過去のジャーナル (${olderJournals.length}件) を表示`]);
     
-    dateEl.onclick = async () => {
-      const input = document.createElement('input');
-      input.type = 'date';
-      input.value = journal.date.split('T')[0];
-      input.className = 'inline-edit-input';
-      
-      dateEl.textContent = '';
-      dateEl.appendChild(input);
-      input.focus();
-      
-      const saveDate = async () => {
-        const actualIndex = currentTask.journals.findIndex(j => j.date === journal.date && j.entry === journal.entry);
-        if (actualIndex !== -1) {
-          currentTask.journals[actualIndex].date = new Date(input.value).toISOString();
-          await saveTask();
-          renderJournals();
-        }
-      };
-      
-      input.onblur = saveDate;
-      input.onkeydown = (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          saveDate();
-        } else if (e.key === 'Escape') {
-          renderJournals();
-        }
-      };
+    const oldEntriesContainer = createElement('div', {
+      className: 'journal-older-entries',
+      style: 'display: none;'
+    }, []);
+    
+    olderJournals.forEach(journal => {
+      oldEntriesContainer.appendChild(createJournalEntry(journal));
+    });
+    
+    container.appendChild(toggleBtn);
+    container.appendChild(oldEntriesContainer);
+  }
+}
+
+function createJournalEntry(journal) {
+  const dateEl = createElement('div', { 
+    className: 'journal-date',
+    style: 'cursor: pointer;',
+    title: 'クリックして日付を編集'
+  }, [formatDate(journal.date)]);
+  
+  dateEl.onclick = async () => {
+    const input = document.createElement('input');
+    input.type = 'date';
+    input.value = journal.date.split('T')[0];
+    input.className = 'inline-edit-input';
+    
+    dateEl.textContent = '';
+    dateEl.appendChild(input);
+    input.focus();
+    
+    const saveDate = async () => {
+      const actualIndex = currentTask.journals.findIndex(j => j.date === journal.date && j.entry === journal.entry);
+      if (actualIndex !== -1) {
+        currentTask.journals[actualIndex].date = new Date(input.value).toISOString();
+        await saveTask();
+        renderJournals();
+      }
     };
     
-    const entry = createElement('div', { className: 'journal-entry' }, [
-      dateEl,
-      createElement('div', { className: 'journal-text' }, [journal.entry])
-    ]);
-    container.appendChild(entry);
-  });
+    input.onblur = saveDate;
+    input.onkeydown = (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        saveDate();
+      } else if (e.key === 'Escape') {
+        renderJournals();
+      }
+    };
+  };
+  
+  return createElement('div', { className: 'journal-entry' }, [
+    dateEl,
+    createElement('div', { className: 'journal-text' }, [journal.entry])
+  ]);
 }
 
 function renderTaskFramework() {
@@ -212,8 +246,8 @@ function renderPhaseContent() {
 
   const infoSections = [
     buildInfoSection('目的', phaseDefinition.purpose),
-    buildInfoSection('使用視点', phaseDefinition.perspectives),
-    buildInfoSection('使用フレームワーク', phaseDefinition.frameworks),
+    buildInfoSection('視点', phaseDefinition.perspectives),
+    buildInfoSection('フレームワーク', phaseDefinition.frameworks),
     buildInfoSection('補足ポイント', phaseDefinition.points)
   ].filter(Boolean);
 

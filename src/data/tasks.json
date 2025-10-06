@@ -16,18 +16,55 @@
       {
         "date": "2025-10-05T09:55:08.114Z",
         "entry": "test"
+      },
+      {
+        "date": "2025-10-06T11:47:49.441Z",
+        "entry": "testff"
       }
     ],
     "phases": {
-      "input": {
+      "phase1": {
+        "completed": false,
+        "items": {
+          "item_0": {
+            "checked": false,
+            "note": ""
+          },
+          "item_1": {
+            "checked": false,
+            "note": ""
+          },
+          "item_2": {
+            "checked": false,
+            "note": ""
+          },
+          "item_3": {
+            "checked": false,
+            "note": ""
+          },
+          "item_4": {
+            "checked": false,
+            "note": ""
+          },
+          "item_5": {
+            "checked": false,
+            "note": ""
+          }
+        }
+      },
+      "phase2": {
         "completed": false,
         "items": {}
       },
-      "progress": {
+      "phase3": {
         "completed": false,
         "items": {}
       },
-      "output": {
+      "phase4": {
+        "completed": false,
+        "items": {}
+      },
+      "phase5": {
         "completed": false,
         "items": {}
       }
