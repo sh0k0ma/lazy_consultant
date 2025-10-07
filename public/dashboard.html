@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Lazy Consultant</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1><a href="/">Lazy Consultant</a></h1>
+      <nav>
+        <a href="/dashboard.html">ダッシュボード</a>
+        <div class="dropdown">
+          <button class="dropdown-btn">プロジェクト</button>
+          <div class="dropdown-content">
+            <a href="/projects.html">プロジェクト</a>
+            <a href="/works.html">ワーク</a>
+            <a href="/tasks.html">タスク</a>
+          </div>
+        </div>
+        <a href="/knowledge.html" target="_blank">ナレッジ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="dashboard-page">
+      <h2>進捗ダッシュボード</h2>
+      
+      <div class="dashboard-section">
+        <h3>📋 まだ始まっていないタスク (Planned)</h3>
+        <div id="planned-tasks" class="task-status-list"></div>
+      </div>
+      
+      <div class="dashboard-section">
+        <h3>✅ 取り組み中 - オンスケ (On Schedule)</h3>
+        <div id="on-schedule-tasks" class="task-status-list"></div>
+      </div>
+      
+      <div class="dashboard-section">
+        <h3>⚠️ 取り組み中 - 遅延 (Delayed)</h3>
+        <div id="delayed-tasks" class="task-status-list"></div>
+      </div>
+      
+      <div class="dashboard-section">
+        <h3>🚀 取り組み中 - 先取り (Ahead)</h3>
+        <div id="ahead-tasks" class="task-status-list"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p><a href="/privacy.html">プライバシーポリシー</a> | <a href="/terms.html">利用規約</a></p>
+  </footer>
+
+  <script type="module" src="/assets/js/dashboard.js"></script>
+</body>
+</html>
