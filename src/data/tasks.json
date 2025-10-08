@@ -7,7 +7,7 @@
     "taskType": "課題の解決",
     "startDate": "2025-10-11",
     "endDate": "2025-10-17",
-    "status": "Planned",
+    "status": "Ongoing",
     "journals": [
       {
         "date": "2025-10-05T00:00:00.000Z",
@@ -28,8 +28,14 @@
         "items": {
           "item_0": {
             "checked": false,
-            "note": "",
-            "todos": []
+            "note": "test",
+            "todos": [
+              {
+                "description": "test",
+                "startDate": "2025-10-09",
+                "status": "Ongoing"
+              }
+            ]
           },
           "item_1": {
             "checked": false,

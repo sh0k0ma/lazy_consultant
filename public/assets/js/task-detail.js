@@ -585,16 +585,17 @@ function renderItemTodos(container, phaseId, itemKey) {
       }
     }, ['削除']);
     
-    const contentDiv = createElement('div', { style: 'flex: 1; display: flex; flex-direction: column; gap: 0.5rem;' }, 
+    const contentDiv = createElement('div', { style: 'display: flex; flex-direction: column; gap: 0.5rem; width: 100%;' }, 
       [descTextarea, dateLabel]
     );
-    const actionsDiv = createElement('div', { style: 'display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start;' }, 
+    
+    const actionsDiv = createElement('div', { style: 'display: flex; gap: 0.5rem; align-items: center; margin-top: 0.5rem;' }, 
       [statusSelect, deleteBtn]
     );
     
     const li = createElement('li', { 
       className: 'todo-item',
-      style: 'display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem; background: var(--card); border: 1px solid var(--border); border-radius: 0.375rem; margin-bottom: 0.5rem;'
+      style: 'display: flex; flex-direction: column; gap: 0.5rem; padding: 0.75rem; background: var(--card); border: 1px solid var(--border); border-radius: 0.375rem; margin-bottom: 0.5rem;'
     }, [contentDiv, actionsDiv]);
     
     todoList.appendChild(li);
