@@ -321,7 +321,19 @@ function renderPhaseContent() {
     const addTodoBtn = createElement('button', {
       className: 'btn btn-small btn-secondary',
       style: 'margin-top: 0.5rem;',
-      onClick: () => openTodoModal(phaseDefinition.id, itemKey)
+      onClick: async () => {
+        const phaseState = currentTask.phases[phaseDefinition.id];
+        if (!phaseState.items[itemKey].todos) {
+          phaseState.items[itemKey].todos = [];
+        }
+        phaseState.items[itemKey].todos.push({
+          description: '',
+          startDate: '',
+          status: 'Planned'
+        });
+        await saveTask();
+        renderTaskFramework();
+      }
     }, ['+ Todo追加']);
 
     const todosContainer = createElement('div', { 
@@ -473,43 +485,6 @@ function setupEventListeners() {
     renderTaskDetail();
   });
   
-  // Todo form submit
-  document.getElementById('todo-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    if (!currentTodoPhaseId || !currentTodoItemKey) return;
-    
-    const todoIdx = e.target.elements.todoIdx.value;
-    const description = e.target.elements.description.value;
-    const startDate = e.target.elements.startDate.value;
-    const status = e.target.elements.status.value;
-    
-    const phaseState = currentTask.phases[currentTodoPhaseId];
-    if (!phaseState || !phaseState.items[currentTodoItemKey]) return;
-    
-    const todoData = { description, startDate, status };
-    
-    if (todoIdx !== '') {
-      // Edit existing todo
-      phaseState.items[currentTodoItemKey].todos[parseInt(todoIdx)] = todoData;
-    } else {
-      // Create new todo
-      if (!phaseState.items[currentTodoItemKey].todos) {
-        phaseState.items[currentTodoItemKey].todos = [];
-      }
-      phaseState.items[currentTodoItemKey].todos.push(todoData);
-    }
-    
-    await saveTask();
-    renderTaskFramework();
-    hideModal('todo-modal');
-    e.target.reset();
-  });
-  
-  document.getElementById('cancel-todo').addEventListener('click', () => {
-    hideModal('todo-modal');
-  });
-  
   // Close modal handlers
   document.querySelectorAll('.modal .close').forEach(closeBtn => {
     closeBtn.addEventListener('click', (e) => {
@@ -545,32 +520,60 @@ function renderItemTodos(container, phaseId, itemKey) {
   const todoList = createElement('ul', { className: 'todo-list', style: 'margin-top: 0.5rem;' }, []);
   
   todos.forEach((todo, todoIdx) => {
-    const statusBadge = createElement('span', {
-      className: `status-badge status-${todo.status || 'Planned'}`,
-      style: 'font-size: 0.75rem; padding: 0.125rem 0.5rem;'
-    }, [todo.status || 'Planned']);
-    
-    const descEl = createElement('div', { 
-      style: 'font-size: 0.875rem; color: var(--text);'
-    }, [todo.description || '']);
-    
-    const dateEl = todo.startDate ? createElement('div', {
-      style: 'font-size: 0.875rem; color: #64748b; margin-top: 0.25rem;'
-    }, [`着手日: ${formatDate(todo.startDate)}`]) : null;
-    
-    const editBtn = createElement('button', {
-      className: 'btn btn-small btn-secondary',
-      onClick: () => {
-        currentTodoPhaseId = phaseId;
-        currentTodoItemKey = itemKey;
-        document.getElementById('todo-modal-title').textContent = 'Todoを編集';
-        document.getElementById('todo-form').elements.todoIdx.value = todoIdx;
-        document.getElementById('todo-form').elements.description.value = todo.description || '';
-        document.getElementById('todo-form').elements.startDate.value = todo.startDate || '';
-        document.getElementById('todo-form').elements.status.value = todo.status || 'Planned';
-        showModal('todo-modal');
+    const statusSelect = createElement('select', {
+      className: 'todo-status-select',
+      value: todo.status || 'Planned',
+      onChange: async (e) => {
+        const phaseState = currentTask.phases[phaseId];
+        if (phaseState && phaseState.items[itemKey]) {
+          phaseState.items[itemKey].todos[todoIdx].status = e.target.value;
+          await saveTask();
+        }
       }
-    }, ['編集']);
+    }, [
+      createElement('option', { value: 'Planned' }, ['Planned']),
+      createElement('option', { value: 'Ongoing' }, ['Ongoing']),
+      createElement('option', { value: 'Complete' }, ['Complete']),
+      createElement('option', { value: 'Blocked' }, ['Blocked'])
+    ]);
+    statusSelect.value = todo.status || 'Planned';
+    
+    const descTextarea = createElement('textarea', {
+      className: 'todo-description-textarea',
+      placeholder: '詳細な内容を記載してください',
+      value: todo.description || '',
+      rows: 2,
+      onBlur: async (e) => {
+        const phaseState = currentTask.phases[phaseId];
+        if (phaseState && phaseState.items[itemKey]) {
+          phaseState.items[itemKey].todos[todoIdx].description = e.target.value;
+          await saveTask();
+        }
+      }
+    });
+    descTextarea.value = todo.description || '';
+    
+    const dateInput = createElement('input', {
+      type: 'date',
+      className: 'todo-date-input',
+      value: todo.startDate || '',
+      onChange: async (e) => {
+        const phaseState = currentTask.phases[phaseId];
+        if (phaseState && phaseState.items[itemKey]) {
+          phaseState.items[itemKey].todos[todoIdx].startDate = e.target.value;
+          await saveTask();
+        }
+      }
+    });
+    dateInput.value = todo.startDate || '';
+    
+    const dateLabel = createElement('label', {
+      style: 'display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #64748b; margin-top: 0.5rem;'
+    }, [
+      createElement('span', {}, ['着手日:']),
+      dateInput
+    ]);
+    
     
     const deleteBtn = createElement('button', {
       className: 'btn btn-small btn-danger',
@@ -582,11 +585,11 @@ function renderItemTodos(container, phaseId, itemKey) {
       }
     }, ['削除']);
     
-    const contentDiv = createElement('div', { style: 'flex: 1;' }, 
-      [descEl, dateEl].filter(Boolean)
+    const contentDiv = createElement('div', { style: 'flex: 1; display: flex; flex-direction: column; gap: 0.5rem;' }, 
+      [descTextarea, dateLabel]
     );
-    const actionsDiv = createElement('div', { style: 'display: flex; gap: 0.5rem; align-items: flex-start;' }, 
-      [statusBadge, editBtn, deleteBtn]
+    const actionsDiv = createElement('div', { style: 'display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start;' }, 
+      [statusSelect, deleteBtn]
     );
     
     const li = createElement('li', { 
@@ -598,17 +601,6 @@ function renderItemTodos(container, phaseId, itemKey) {
   });
   
   container.appendChild(todoList);
-}
-
-function openTodoModal(phaseId, itemKey) {
-  currentTodoPhaseId = phaseId;
-  currentTodoItemKey = itemKey;
-  document.getElementById('todo-modal-title').textContent = 'Todoを追加';
-  document.getElementById('todo-form').elements.todoIdx.value = '';
-  document.getElementById('todo-form').elements.description.value = '';
-  document.getElementById('todo-form').elements.startDate.value = '';
-  document.getElementById('todo-form').elements.status.value = 'Planned';
-  showModal('todo-modal');
 }
 
 window.addEventListener('DOMContentLoaded', init);

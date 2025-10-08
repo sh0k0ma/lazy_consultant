@@ -28,27 +28,33 @@
         "items": {
           "item_0": {
             "checked": false,
-            "note": ""
+            "note": "",
+            "todos": []
           },
           "item_1": {
             "checked": false,
-            "note": ""
+            "note": "",
+            "todos": []
           },
           "item_2": {
             "checked": false,
-            "note": ""
+            "note": "",
+            "todos": []
           },
           "item_3": {
             "checked": false,
-            "note": ""
+            "note": "",
+            "todos": []
           },
           "item_4": {
             "checked": false,
-            "note": ""
+            "note": "",
+            "todos": []
           },
           "item_5": {
             "checked": false,
-            "note": ""
+            "note": "",
+            "todos": []
           }
         }
       },

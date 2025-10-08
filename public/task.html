@@ -137,31 +137,6 @@
     </div>
   </div>
 
-  <!-- Modal for adding/editing todo -->
-  <div id="todo-modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2 id="todo-modal-title">Todoを追加</h2>
-      <form id="todo-form">
-        <input type="hidden" name="todoIdx">
-        <label>記載欄: <textarea name="description" rows="5" placeholder="詳細な内容を記載してください" required></textarea></label>
-        <label>着手日: <input type="date" name="startDate"></label>
-        <label>ステータス:
-          <select name="status" required>
-            <option value="Planned">Planned</option>
-            <option value="Ongoing">Ongoing</option>
-            <option value="Complete">Complete</option>
-            <option value="Blocked">Blocked</option>
-          </select>
-        </label>
-        <div class="modal-actions">
-          <button type="submit" class="btn btn-primary">保存</button>
-          <button type="button" class="btn btn-secondary" id="cancel-todo">キャンセル</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
   <script type="module" src="/assets/js/task-detail.js"></script>
 </body>
 </html>
