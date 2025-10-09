@@ -399,9 +399,53 @@ function completePhase() {
 async function saveTask() {
   try {
     await putJSON(`/api/tasks/${currentTask.id}`, currentTask);
+    showSaveStatus('保存しました', 'success');
   } catch (err) {
     console.error('Failed to save task:', err);
+    showSaveStatus('保存に失敗しました', 'error');
   }
+}
+
+function showSaveStatus(message, type = 'success') {
+  // Remove existing status message
+  const existingStatus = document.querySelector('.save-status');
+  if (existingStatus) {
+    existingStatus.remove();
+  }
+  
+  // Create new status message
+  const statusEl = createElement('div', {
+    className: `save-status save-status-${type}`,
+    style: `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 0.75rem 1rem;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      z-index: 1000;
+      ${type === 'success' ? 
+        'background: #10b981; color: white;' : 
+        'background: #ef4444; color: white;'
+      }
+      animation: slideIn 0.3s ease-out;
+    `
+  }, [message]);
+  
+  document.body.appendChild(statusEl);
+  
+  // Auto-remove after 2 seconds
+  setTimeout(() => {
+    if (statusEl.parentNode) {
+      statusEl.style.animation = 'slideOut 0.3s ease-in';
+      setTimeout(() => {
+        if (statusEl.parentNode) {
+          statusEl.remove();
+        }
+      }, 300);
+    }
+  }, 2000);
 }
 
 function setupEventListeners() {
