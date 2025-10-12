@@ -1,6 +1,7 @@
 import { TASK_FRAMEWORKS } from './task-frameworks.js';
 import { fetchJSON, putJSON } from './api.js';
 import { createElement, clearElement, formatDate, showModal, hideModal } from './dom.js';
+import { setupExportButton } from './export.js';
 
 let currentTask = null;
 let currentPhaseId = null;
@@ -80,6 +81,7 @@ async function init() {
     
     renderTaskDetail();
     setupEventListeners();
+    setupExportButton();
   } catch (err) {
     console.error('Failed to load task:', err);
     alert('タスクの読み込みに失敗しました');

@@ -36,5 +36,12 @@
   <footer>
     <p><a href="/privacy.html">プライバシーポリシー</a> | <a href="/terms.html">利用規約</a></p>
   </footer>
+
+  <script type="module">
+    import { setupExportButton } from './assets/js/export.js';
+    window.addEventListener('DOMContentLoaded', () => {
+      setupExportButton();
+    });
+  </script>
 </body>
 </html>

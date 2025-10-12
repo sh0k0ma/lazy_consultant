@@ -1,5 +1,6 @@
 import { fetchJSON, postJSON, putJSON, deleteJSON } from './api.js';
 import { createElement, clearElement, showModal, hideModal, formToObject, objectToForm } from './dom.js';
+import { setupExportButton } from './export.js';
 
 let knowledgeItems = [];
 let filteredItems = [];
@@ -10,6 +11,7 @@ async function init() {
     filteredItems = [...knowledgeItems];
     renderKnowledgeTable();
     setupEventListeners();
+    setupExportButton();
   } catch (err) {
     console.error('Failed to load knowledge:', err);
   }

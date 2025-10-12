@@ -42,6 +42,7 @@
   <script type="module">
     import { fetchJSON } from './assets/js/api.js';
     import { createElement, clearElement, formatDate } from './assets/js/dom.js';
+    import { setupExportButton } from './assets/js/export.js';
 
     async function init() {
       const projects = await fetchJSON('/api/projects');
@@ -68,6 +69,8 @@
         ]);
         container.appendChild(item);
       });
+      
+      setupExportButton();
     }
 
     window.addEventListener('DOMContentLoaded', init);

@@ -42,6 +42,7 @@
   <script type="module">
     import { fetchJSON, deleteJSON } from './assets/js/api.js';
     import { createElement, clearElement, formatDate } from './assets/js/dom.js';
+    import { setupExportButton } from './assets/js/export.js';
 
     let tasksData = [];
 
@@ -98,6 +99,7 @@
     async function init() {
       tasksData = await fetchJSON('/api/tasks');
       renderTasks();
+      setupExportButton();
     }
 
     window.addEventListener('DOMContentLoaded', init);

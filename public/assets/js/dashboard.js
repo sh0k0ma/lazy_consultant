@@ -1,5 +1,6 @@
 import { fetchJSON } from './api.js';
 import { createElement, clearElement, formatDate } from './dom.js';
+import { setupExportButton } from './export.js';
 
 let projects = [];
 let works = [];
@@ -14,6 +15,7 @@ async function init() {
     ]);
     
     renderDashboard();
+    setupExportButton();
   } catch (err) {
     console.error('Failed to load data:', err);
   }

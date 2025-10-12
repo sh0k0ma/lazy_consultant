@@ -115,6 +115,7 @@
   <script type="module">
     import { fetchJSON, putJSON } from './assets/js/api.js';
     import { createElement, clearElement, formatDate, showModal, hideModal } from './assets/js/dom.js';
+    import { setupExportButton } from './assets/js/export.js';
 
     let currentWork = null;
 
@@ -279,6 +280,8 @@
           }
         });
       });
+      
+      setupExportButton();
     }
 
     window.addEventListener('DOMContentLoaded', init);
