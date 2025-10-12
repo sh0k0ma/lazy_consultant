@@ -1,28 +1,26 @@
 [
   {
-    "id": "1759650893950",
-    "workId": "1759650660577",
-    "name": "test",
-    "purpose": "test",
-    "taskType": "比較検討",
-    "startDate": "2025-10-11",
-    "endDate": "2025-10-17",
-    "status": "Ongoing",
-    "journals": [
-      {
-        "date": "2025-10-05T00:00:00.000Z",
-        "entry": "test"
+    "id": "1760260566194",
+    "workId": "1760260548589",
+    "name": "re",
+    "purpose": "ere",
+    "taskType": "day0",
+    "startDate": "2025-10-07",
+    "endDate": "2025-10-31",
+    "status": "Planned",
+    "phases": {
+      "input": {
+        "completed": false,
+        "items": {}
       },
-      {
-        "date": "2025-10-05T09:55:08.114Z",
-        "entry": "test"
+      "progress": {
+        "completed": false,
+        "items": {}
       },
-      {
-        "date": "2025-10-06T00:00:00.000Z",
-        "entry": "testff"
+      "output": {
+        "completed": false,
+        "items": {}
       }
-    ],
-    "phases": {},
-    "stakeholders": ""
+    }
   }
 ]

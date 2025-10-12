@@ -1,21 +1,11 @@
 [
   {
-    "id": "1759650660577",
-    "projectId": "1759650638787",
+    "id": "1760260548589",
+    "projectId": "1760260536309",
     "name": "test",
-    "purpose": "test",
-    "startDate": "2025-10-05",
-    "endDate": "2025-10-17",
-    "status": "Planned",
-    "journals": [
-      {
-        "date": "2025-10-05T07:51:00.555Z",
-        "entry": "test"
-      },
-      {
-        "date": "2025-10-05T07:51:16.838Z",
-        "entry": "you know"
-      }
-    ]
+    "purpose": "ew",
+    "startDate": "2025-10-09",
+    "endDate": "2025-10-24",
+    "status": "Planned"
   }
 ]
