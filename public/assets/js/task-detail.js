@@ -478,6 +478,27 @@ function setupEventListeners() {
     window.history.back();
   });
   
+  document.getElementById('delete-task-btn').addEventListener('click', async () => {
+    if (!confirm('このタスクを削除しますか？')) {
+      return;
+    }
+    
+    try {
+      const response = await fetch(`/api/tasks/${currentTask.id}`, {
+        method: 'DELETE'
+      });
+      
+      if (!response.ok) {
+        throw new Error('タスクの削除に失敗しました');
+      }
+      
+      alert('タスクを削除しました');
+      window.location.href = '/tasks.html';
+    } catch (err) {
+      alert('タスクの削除に失敗しました: ' + err.message);
+    }
+  });
+  
   document.getElementById('edit-task-btn').addEventListener('click', () => {
     const form = document.getElementById('edit-task-form');
     form.elements.id.value = currentTask.id;

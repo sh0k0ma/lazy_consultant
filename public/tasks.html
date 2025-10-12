@@ -40,20 +40,42 @@
   </footer>
 
   <script type="module">
-    import { fetchJSON } from './assets/js/api.js';
+    import { fetchJSON, deleteJSON } from './assets/js/api.js';
     import { createElement, clearElement, formatDate } from './assets/js/dom.js';
 
-    async function init() {
-      const tasks = await fetchJSON('/api/tasks');
+    let tasksData = [];
+
+    async function deleteTask(id, event) {
+      event.stopPropagation();
+      if (!confirm('このタスクを削除しますか？')) {
+        return;
+      }
+      
+      try {
+        await deleteJSON(`/api/tasks/${id}`);
+        tasksData = tasksData.filter(t => t.id !== id);
+        renderTasks();
+      } catch (err) {
+        alert('タスクの削除に失敗しました: ' + err.message);
+      }
+    }
+
+    function renderTasks() {
       const container = document.getElementById('tasks-list');
       clearElement(container);
 
-      if (tasks.length === 0) {
+      if (tasksData.length === 0) {
         container.appendChild(createElement('div', { className: 'empty-state' }, ['タスクが見つかりません。']));
         return;
       }
 
-      tasks.forEach(task => {
+      tasksData.forEach(task => {
+        const deleteBtn = createElement('button', {
+          className: 'btn btn-danger btn-sm',
+          onClick: (e) => deleteTask(task.id, e),
+          style: 'margin-left: 10px;'
+        }, ['削除']);
+
         const item = createElement('div', { 
           className: 'list-item',
           onClick: () => window.location.href = `/task.html?id=${task.id}`
@@ -64,10 +86,18 @@
               `${task.taskType} • ${formatDate(task.startDate)} - ${formatDate(task.endDate)}`
             ])
           ]),
-          createElement('span', { className: `status-badge status-${task.status}` }, [task.status])
+          createElement('div', { style: 'display: flex; align-items: center; gap: 10px;' }, [
+            createElement('span', { className: `status-badge status-${task.status}` }, [task.status]),
+            deleteBtn
+          ])
         ]);
         container.appendChild(item);
       });
+    }
+
+    async function init() {
+      tasksData = await fetchJSON('/api/tasks');
+      renderTasks();
     }
 
     window.addEventListener('DOMContentLoaded', init);
