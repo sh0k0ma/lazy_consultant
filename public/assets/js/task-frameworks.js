@@ -1,5 +1,56 @@
-export const TASK_FRAMEWORKS = {
-  '施策の立案': {
+/**
+ * Lazy Consultant - Task Frameworks Definition
+ * 
+ * Copyright (C) 2025 Shohei Komatsu (sh0k0ma)
+ * Licensed under GNU General Public License v3.0
+ * 
+ * This file is part of Lazy Consultant.
+ * See LICENCE.txt for license information.
+ * 
+ * NOTICE: This file contains proprietary business logic.
+ * Commercial use, modification, or redistribution requires explicit permission.
+ * Contact: https://shokoma.com/contact
+ * 
+ * WARNING: Unauthorized use or modification may result in legal action.
+ */
+
+
+// Obfuscation layer - Task type names are encoded
+const _decode = (s) => {
+  if (!s.startsWith('_')) return s;
+  const base64 = s.slice(1).replace(/x/g, '+').replace(/z/g, '/');
+  try {
+    return Buffer.from(base64, 'base64').toString('utf8');
+  } catch {
+    return decodeURIComponent(escape(atob(base64)));
+  }
+};
+
+// Mapping of encoded names to original
+const _typeMap = {
+  "_5pa9562W44Gu56uL5qGI": "施策の立案",
+  "_6Kqy6aGM44Gu6Kej5rG6": "課題の解決",
+  "_44Ki44Kv44K344On44Oz44Gu6Ki05rGC": "アクションの訴求",
+  "_5qxU6LyD5qSc6KiO": "比較検討",
+  "_44Oq44K144O844OB": "リサーチ",
+  "_44OH44O844Kz5YiG5p6Q": "データ分析",
+  "_5oim55Wl44Gu56uL5qGI": "戦略の立案",
+  "_5a6f6KGM6KiI55S7": "実行計画",
+  "_5oiQ5p6c5qSc6Ki8": "成果検証"
+};
+
+// Get frameworks with decoded names
+function _getTASK_FRAMEWORKS(obfuscatedData) {
+  const result = {};
+  Object.entries(obfuscatedData).forEach(([key, value]) => {
+    const realName = _typeMap[key] || key;
+    result[realName] = value;
+  });
+  return result;
+}
+
+const _obfuscatedFrameworks = {
+  '_5pa9562W44Gu56uL5qGI': {
     phases: [
       {
         id: 'phase1',
@@ -310,7 +361,7 @@ export const TASK_FRAMEWORKS = {
       }
     ]
   },
-  '課題の解決': {
+  '_6Kqy6aGM44Gu6Kej5rG6': {
     phases: [
       {
         id: 'phase1',
@@ -605,7 +656,7 @@ export const TASK_FRAMEWORKS = {
       }
     ]
   },
-  'アクションの訴求': {
+  '_44Ki44Kv44K344On44Oz44Gu6Ki05rGC': {
     phases: [
       {
         id: 'phase1',
@@ -868,7 +919,7 @@ export const TASK_FRAMEWORKS = {
       }
     ]
   },
-  '比較検討': {
+  '_5qxU6LyD5qSc6KiO': {
     phases: [
       {
         id: 'phase1',
@@ -1115,7 +1166,7 @@ export const TASK_FRAMEWORKS = {
       }
     ]
   },
-  'リサーチ': {
+  '_44Oq44K144O844OB': {
     phases: [
       {
         id: 'phase1',
@@ -2367,4 +2418,6 @@ export const TASK_FRAMEWORKS = {
       }
     ]
   }
-};
+};;
+
+export const TASK_FRAMEWORKS = _getTASK_FRAMEWORKS(_obfuscatedFrameworks);

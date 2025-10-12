@@ -3,3 +3,7 @@ work
 .env
 .DS_Store
 cryptic.md
+*.backup
+*.original
+obfuscate-script.mjs
+simple-obfuscate.mjs

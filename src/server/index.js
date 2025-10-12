@@ -1,3 +1,16 @@
+/**
+ * Lazy Consultant - Express Server
+ * 
+ * Copyright (C) 2025 Shohei Komatsu (sh0k0ma)
+ * Licensed under GNU General Public License v3.0
+ * 
+ * This file is part of Lazy Consultant.
+ * See LICENCE.txt for license information.
+ * 
+ * NOTICE: Commercial use requires explicit permission.
+ * Contact: https://shokoma.com/contact
+ */
+
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";

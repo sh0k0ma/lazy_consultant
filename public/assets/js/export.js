@@ -1,3 +1,16 @@
+/**
+ * Lazy Consultant - Data Export Module
+ * 
+ * Copyright (C) 2025 Shohei Komatsu (sh0k0ma)
+ * Licensed under GNU General Public License v3.0
+ * 
+ * This file is part of Lazy Consultant.
+ * See LICENCE.txt for license information.
+ * 
+ * NOTICE: Commercial use requires explicit permission.
+ * Contact: https://shokoma.com/contact
+ */
+
 import { fetchJSON } from './api.js';
 
 function downloadJSON(data, filename) {

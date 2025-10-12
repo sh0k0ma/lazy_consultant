@@ -1,3 +1,16 @@
+/**
+ * Lazy Consultant - Dashboard & Main Application Logic
+ * 
+ * Copyright (C) 2025 Shohei Komatsu (sh0k0ma)
+ * Licensed under GNU General Public License v3.0
+ * 
+ * This file is part of Lazy Consultant.
+ * See LICENCE.txt for license information.
+ * 
+ * NOTICE: Commercial use requires explicit permission.
+ * Contact: https://shokoma.com/contact
+ */
+
 import { fetchJSON, postJSON, putJSON, deleteJSON } from './api.js';
 import { createElement, clearElement, showModal, hideModal, formatDate, formToObject, objectToForm } from './dom.js';
 

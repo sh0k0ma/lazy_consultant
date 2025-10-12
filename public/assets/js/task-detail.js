@@ -1,3 +1,16 @@
+/**
+ * Lazy Consultant - Task Detail Module
+ * 
+ * Copyright (C) 2025 Shohei Komatsu (sh0k0ma)
+ * Licensed under GNU General Public License v3.0
+ * 
+ * This file is part of Lazy Consultant.
+ * See LICENCE.txt for license information.
+ * 
+ * NOTICE: Commercial use requires explicit permission.
+ * Contact: https://shokoma.com/contact
+ */
+
 import { TASK_FRAMEWORKS } from './task-frameworks.js';
 import { fetchJSON, putJSON } from './api.js';
 import { createElement, clearElement, formatDate, showModal, hideModal } from './dom.js';
