@@ -1,4 +1,4 @@
-import { fetchJSON, postJSON, putJSON, deleteJSON, saveAllPendingChanges } from './api.js';
+import { fetchJSON, postJSON, putJSON, deleteJSON } from './api.js';
 import { createElement, clearElement, showModal, hideModal, formatDate, formToObject, objectToForm } from './dom.js';
 
 let projects = [];
@@ -528,17 +528,3 @@ function setupEventListeners() {
 
 // Start app
 window.addEventListener('DOMContentLoaded', init);
-
-// Export functions for other pages
-window.app = {
-  fetchJSON,
-  postJSON,
-  putJSON,
-  deleteJSON,
-  saveAllPendingChanges,
-  createElement,
-  clearElement,
-  formatDate,
-  formToObject,
-  objectToForm
-};

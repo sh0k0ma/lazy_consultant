@@ -34,36 +34,3 @@ export async function deleteJSON(endpoint) {
   if (!res.ok) throw new Error(`Failed to delete ${endpoint}`);
   return res.json();
 }
-
-// Data management
-let pendingChanges = [];
-
-export function addPendingChange(type, endpoint, data) {
-  pendingChanges.push({ type, endpoint, data });
-}
-
-export async function saveAllPendingChanges() {
-  for (const change of pendingChanges) {
-    try {
-      if (change.type === 'PUT') {
-        await putJSON(change.endpoint, change.data);
-      } else if (change.type === 'POST') {
-        await postJSON(change.endpoint, change.data);
-      } else if (change.type === 'DELETE') {
-        await deleteJSON(change.endpoint);
-      }
-    } catch (err) {
-      console.error('Failed to save change:', err);
-    }
-  }
-  pendingChanges = [];
-}
-
-// Auto-save before unload
-window.addEventListener('beforeunload', (e) => {
-  if (pendingChanges.length > 0) {
-    e.preventDefault();
-    e.returnValue = '';
-    saveAllPendingChanges();
-  }
-});
