@@ -252,6 +252,17 @@ function renderPhaseContent() {
   const phaseState = currentTask.phases[phaseDefinition.id];
   const content = createElement('div', { className: 'phase-content active' }, []);
 
+  // Add phase description if available
+  if (phaseDefinition.description) {
+    content.appendChild(createElement('div', { 
+      className: 'phase-description',
+      style: 'background: #f8fafc; border-left: 4px solid #3b82f6; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0.375rem;'
+    }, [
+      createElement('h4', { style: 'margin: 0 0 0.5rem 0; color: #1e40af;' }, ['フェーズ説明']),
+      createElement('p', { style: 'margin: 0; line-height: 1.6; white-space: pre-wrap;' }, [phaseDefinition.description])
+    ]));
+  }
+
   const infoSections = [
     buildInfoSection('目的', phaseDefinition.purpose),
     buildInfoSection('視点', phaseDefinition.perspectives),
@@ -273,7 +284,7 @@ function renderPhaseContent() {
 
   const checklist = createElement('ul', { className: 'checklist' }, []);
 
-  phaseDefinition.tasks.forEach((taskText, idx) => {
+  phaseDefinition.tasks.forEach((taskItem, idx) => {
     const itemKey = `item_${idx}`;
     const currentItem = phaseState.items[itemKey] || { checked: false, note: '', todos: [] };
     if (!phaseState.items[itemKey]) {
@@ -282,6 +293,10 @@ function renderPhaseContent() {
     if (!phaseState.items[itemKey].todos) {
       phaseState.items[itemKey].todos = [];
     }
+
+    // Extract task name and description from the task object
+    const taskName = typeof taskItem === 'string' ? taskItem : (taskItem.name || '');
+    const taskDescription = typeof taskItem === 'object' ? (taskItem.description || '') : '';
 
     const checkbox = createElement('input', {
       type: 'checkbox',
@@ -296,7 +311,17 @@ function renderPhaseContent() {
       }
     });
 
-    const label = createElement('div', { className: 'checklist-label', style: 'flex: 1;' }, [`${idx + 1}. ${taskText}`]);
+    const labelContainer = createElement('div', { className: 'checklist-label', style: 'flex: 1;' }, [
+      createElement('strong', {}, [`${idx + 1}. ${taskName}`])
+    ]);
+    
+    if (taskDescription) {
+      labelContainer.appendChild(createElement('div', { 
+        style: 'font-size: 0.9rem; color: #64748b; margin-top: 0.25rem; white-space: pre-wrap;'
+      }, [taskDescription]));
+    }
+
+    const label = labelContainer;
 
     const textarea = createElement('textarea', {
       placeholder: 'この項目に関する具体的な内容を記入してください（メモや次のアクションなど）。',

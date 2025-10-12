@@ -172,7 +172,7 @@ export const TASK_FRAMEWORKS = {
           },
           {
             name: 'リスク分析と先回り対策',
-            description: '技術/運用/法務/レピュのリスクを洗い出し、回避/緩和策を定義。成果物：Risk Register。'
+            description: '技術/運用/法務/レピュテーションを洗い出し、回避/緩和策を定義。成果物：Risk Register。'
           },
           {
             name: '仕組み化・標準化設計',

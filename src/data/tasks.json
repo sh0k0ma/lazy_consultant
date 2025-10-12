@@ -22,5 +22,29 @@
         "items": {}
       }
     }
+  },
+  {
+    "id": "1760260935621",
+    "workId": "1760260548589",
+    "name": "え",
+    "purpose": "え",
+    "taskType": "プロジェクト計画・運営",
+    "startDate": "2025-10-09",
+    "endDate": "2025-10-24",
+    "status": "Planned",
+    "phases": {
+      "input": {
+        "completed": false,
+        "items": {}
+      },
+      "progress": {
+        "completed": false,
+        "items": {}
+      },
+      "output": {
+        "completed": false,
+        "items": {}
+      }
+    }
   }
 ]
