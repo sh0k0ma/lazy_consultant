@@ -4,7 +4,7 @@
     "workId": "1759650660577",
     "name": "test",
     "purpose": "test",
-    "taskType": "課題の解決",
+    "taskType": "比較検討",
     "startDate": "2025-10-11",
     "endDate": "2025-10-17",
     "status": "Ongoing",
@@ -18,69 +18,11 @@
         "entry": "test"
       },
       {
-        "date": "2025-10-06T11:47:49.441Z",
+        "date": "2025-10-06T00:00:00.000Z",
         "entry": "testff"
       }
     ],
-    "phases": {
-      "phase1": {
-        "completed": false,
-        "items": {
-          "item_0": {
-            "checked": false,
-            "note": "test",
-            "todos": [
-              {
-                "description": "test",
-                "startDate": "2025-10-09",
-                "status": "Ongoing"
-              }
-            ]
-          },
-          "item_1": {
-            "checked": false,
-            "note": "",
-            "todos": []
-          },
-          "item_2": {
-            "checked": false,
-            "note": "",
-            "todos": []
-          },
-          "item_3": {
-            "checked": false,
-            "note": "",
-            "todos": []
-          },
-          "item_4": {
-            "checked": false,
-            "note": "",
-            "todos": []
-          },
-          "item_5": {
-            "checked": false,
-            "note": "",
-            "todos": []
-          }
-        }
-      },
-      "phase2": {
-        "completed": false,
-        "items": {}
-      },
-      "phase3": {
-        "completed": false,
-        "items": {}
-      },
-      "phase4": {
-        "completed": false,
-        "items": {}
-      },
-      "phase5": {
-        "completed": false,
-        "items": {}
-      }
-    },
+    "phases": {},
     "stakeholders": ""
   }
 ]
