@@ -1,36 +1,12 @@
 [
   {
-    "id": "1760260566194",
-    "workId": "1760260548589",
-    "name": "re",
-    "purpose": "ere",
-    "taskType": "day0",
+    "id": "1760262644356",
+    "workId": "1760262635380",
+    "name": "っっr",
+    "purpose": "っっr",
+    "taskType": "施策の立案",
     "startDate": "2025-10-07",
-    "endDate": "2025-10-31",
-    "status": "Planned",
-    "phases": {
-      "input": {
-        "completed": false,
-        "items": {}
-      },
-      "progress": {
-        "completed": false,
-        "items": {}
-      },
-      "output": {
-        "completed": false,
-        "items": {}
-      }
-    }
-  },
-  {
-    "id": "1760260935621",
-    "workId": "1760260548589",
-    "name": "え",
-    "purpose": "え",
-    "taskType": "プロジェクト計画・運営",
-    "startDate": "2025-10-09",
-    "endDate": "2025-10-24",
+    "endDate": "2025-10-23",
     "status": "Planned",
     "phases": {
       "input": {
