@@ -4,19 +4,19 @@ export const TASK_FRAMEWORKS = {
       {
         id: 'phase1',
         name: 'フェーズ1：着手・意図合わせ',
-        description: 'プロジェクトの「なぜ」と成功の定義を言語化し、スコープ・制約・体制・合意形成の土台を固める。問題の定義が曖昧だと以降はすべて空回りするため、「本当に解くべき問題は何か」を徹底的に詰める。',
+        description: 'プロジェクトの「なぜ」と成功の定義を言語化し、スコープ・制約・体制・合意形成の土台を固める。不完全情報下でもスタンスを明確化し即レス運用で初速を上げ、デイゼロ準備と物理リマインダーで実行抜けを防ぐ。',
         tasks: [
           {
             name: '関係者マッピングと期待値すり合わせ',
-            description: '主要/周辺ステークホルダーを特定し、RACIで責任分担を可視化しつつ、明示/暗黙の期待値を聞き出して整合を取る（傾聴・ピラミッド原則）。成果物：Stakeholder Map、RACI、Expectation Notes。'
+            description: '主要/周辺ステークホルダーを特定し、RACIで責任分担を可視化しつつ、明示/暗黙の期待値を聞き出して整合（傾聴・ピラミッド原則）。成果物：Stakeholder Map、RACI、Expectation Notes。'
           },
           {
             name: '真の目的・課題の定義',
-            description: '「5 Whys」と『Are Your Lights On?』の問題定義原則で"お願いの背景""症状と原因""成功の状態"を切り分け、論点（Key Question）を一文で定義。成果物：Problem Statement、論点宣言。'
+            description: '「5 Whys」と『Are Your Lights On?』で"お願いの背景""症状と原因""成功の状態"を切り分け、論点（Key Question）を一文で定義。成果物：Problem Statement、論点宣言。'
           },
           {
             name: 'スコープ・制約・前提の固定化',
-            description: 'In/Out、期間・予算・人員・法規制等の制約、依存関係と前提を文書化し"変更管理の起点"にする。成果物：Project Charter、Assumption & Constraint List。'
+            description: 'In/Out、期間・予算・人員・法規制の制約、依存関係と前提を文書化し"変更管理の起点"に。成果物：Project Charter、Assumption & Constraint List。'
           },
           {
             name: '成功指標（KGI/KPI、Leading/Lagging）の仮設定',
@@ -25,67 +25,111 @@ export const TASK_FRAMEWORKS = {
           {
             name: '進め方・体制・コミュニケーション設計',
             description: '意思決定会議体（ガバナンス）、レポート/報連相の頻度、成果物フォーマット、PMOダッシュボードを設計。成果物：Governance/Comms Plan、PMO板。'
+          },
+          {
+            name: 'スタンス表明・即レス規律',
+            description: '不完全情報でも結論仮置きで前進。「ケースバイケース」で逃げず、即レスを標準運用。成果物：Decision Log、Response SLA。'
+          },
+          {
+            name: 'デイゼロ準備＆物理リマインダー',
+            description: '開始前日までにテンプレ・チェックリスト・アウトラインを用意し、紙/画面貼りで抜け漏れ防止。成果物：Day-0 Kit、Physical Reminders。'
+          },
+          {
+            name: '専門用語アラインメント',
+            description: 'クライアント/業界の用語・定義を先に合わせ、誤解減。成果物：Glossary、Definition Sheet。'
+          },
+          {
+            name: '努力配分設計（ホームラン×配分）',
+            description: 'インパクト最大の論点に120点集中、周辺は65点許容の配分を明示。成果物：Effort Focus Map。'
           }
         ]
       },
       {
         id: 'phase2',
         name: 'フェーズ2：論点設計・鍵問いの明確化',
-        description: 'MECEで課題をロジックツリー化し、仮説と検証課題をひも付ける。最短で結論に至る"解くべき問い"を定義して調査コストを最小化。',
+        description: 'MECEで課題をロジックツリー化し、仮説と検証課題をひも付け。論点ワードを書き切る量的基準とクローズド質問で検証速度を上げ、リアリティ・スイッチで思考の深さを確保。',
         tasks: [
           {
             name: 'Top論点の仮置き',
-            description: '「So What?/Why So?」で結論仮説→検証論点→必要ファクトへ落とす（ピラミッド/論点思考）。成果物：Issue Tree（仮）。'
+            description: '「So What?/Why So?」で結論仮説→検証論点→必要ファクトへ落とす。成果物：Issue Tree（仮）。'
           },
           {
             name: 'キークエスチョン設計',
-            description: '意思決定者の言語に合わせ、One Sentenceで"答えるべき問い"を定義（結論ファースト）。成果物：Key Questions List。'
+            description: '意思決定者の言語で、One Sentenceの"答えるべき問い"。成果物：Key Questions List。'
           },
           {
             name: '仮説樹の構築',
-            description: '仮説思考で"最有力仮説"を明示し、裏取りに必要なデータ/調査をぶら下げる。成果物：Hypothesis Tree。'
+            description: '最有力仮説を明示し、裏取りデータ/調査をぶら下げる。成果物：Hypothesis Tree。'
           },
           {
             name: '学習バックログの編成',
-            description: '仮説検証に必要な分析/インタビュー/観察をチケット化し、優先度・完了条件（DoD）を定義。成果物：Learning Backlog。'
+            description: '分析/インタビュー/観察をチケット化し、優先度・DoDを定義。成果物：Learning Backlog。'
+          },
+          {
+            name: '論点ワード100作成（1.5–2枚）＆3時間仕上げ',
+            description: 'A4 1.5–2枚（100クエスチョン）を書き切り、ワークプランまで3時間以内で初版完成。成果物：Issue Words、Work Plan v1。'
+          },
+          {
+            name: 'クローズドクエスチョン雛形',
+            description: 'オープンではなく"Yes/No＋数値/選択"で詰める質問雛形を準備。成果物：Closed-Q Bank。'
+          },
+          {
+            name: 'リアリティ・スイッチ適用レビュー',
+            description: '前提/定義/単位系を明示し、思考の深さをチェック。成果物：Reality-Switch Notes。'
           }
         ]
       },
       {
         id: 'phase3',
         name: 'フェーズ3：現状理解・情報収集（Where we are）',
-        description: '一次/二次情報の線と面を揃え、事実に基づく土台をつくる。3C/PEST/SWOT、現地現物、VOCで多面的に把握。',
+        description: '一次/二次の線と面を揃え、3C/PEST/SWOT、現地現物、VOCで多面的に把握。朝一で"仕込み"を動かし、フェルミ推定で粗い数を即時に握る。',
         tasks: [
           {
             name: '調査設計（定量/定性）',
-            description: 'サンプリング、統計精度、バイアス対策、インタビュー設計（問いの順序/言い換え）を明文化。成果物：Research Plan。'
+            description: 'サンプリング、統計精度、バイアス対策、インタビュー設計を明文化。成果物：Research Plan。'
           },
           {
             name: '3C/PEST/SWOTの骨組み作成',
-            description: '外部環境→自社/顧客/競合→内部資源の順で構造化し、仮説と照らして抜け/重複を点検。成果物：分析フレーム下書き。'
+            description: '外部→顧客/競合→内部の順で構造化、抜け/重複を点検。成果物：分析フレーム下書き。'
           },
           {
             name: '現地現物・VOC取得',
-            description: '現場観察と顧客の声を一次情報として採取（録音/写真/発話メモの即時構造化）。成果物：VOCサマリー、現場メモ。'
+            description: '観察・顧客の声を一次情報として採取し即時コード化。成果物：VOCサマリー、現場メモ。'
           },
           {
             name: 'プロセスマッピング/バリューチェーン',
-            description: 'As-Isの流れ・手戻り・滞留を可視化し、価値/コスト/リスクの発生点を同定。成果物：As-Is/痛点マップ。'
+            description: 'As-Isの滞留/手戻りを可視化し価値/コスト/リスクの発生点を同定。成果物：As-Is/痛点マップ。'
           },
           {
             name: 'ベンチマーキング',
-            description: '先進事例の"仕組み"まで分解し、転用可能要素/不可要素を判別。成果物：Benchmark Brief。'
+            description: '先進事例の仕組みまで分解し転用可否を判別。成果物：Benchmark Brief。'
+          },
+          {
+            name: '朝一"仕込み"実行',
+            description: 'アンケート配信・データ抽出など時間差作業は朝一で起動。成果物：Prep Queue、依頼ログ。'
+          },
+          {
+            name: 'フェルミ推定セットアップ',
+            description: '主要KPIのオーダー把握用に分解→概算→感度。成果物：Fermi Sheet。'
+          },
+          {
+            name: '用語・セグメンテーション整備',
+            description: '市場/顧客の切り口定義（本質セグメンテーション）を整理。成果物：Segmentation Draft。'
+          },
+          {
+            name: 'ネガティブ遮断の環境設計',
+            description: '低品質情報/雑音源を明示的に遮断し集中維持。成果物：Info-Hygiene Rules。'
           }
         ]
       },
       {
         id: 'phase4',
         name: 'フェーズ4：分析・示唆抽出',
-        description: 'データを"洞察"に変換する。記述→診断→処方の順で因果仮説を評価し、解像度を上げる。',
+        description: 'データを"洞察"に変換。記述→診断→処方で因果仮説を評価し、辻褄思考で見解差を統合。',
         tasks: [
           {
             name: '定量分析（記述/差分/因果の当たり）',
-            description: 'アウトライヤー/季節性/相関の見立て→簡易因果チェック→仮説の棄却/精緻化。成果物：Insight Sheet（定量）。'
+            description: '外れ値/季節性/相関→因果当たり→棄却/精緻化。成果物：Insight Sheet（定量）。'
           },
           {
             name: '定性のコード化とパターン抽出',
@@ -93,26 +137,30 @@ export const TASK_FRAMEWORKS = {
           },
           {
             name: '仮説検証スプリント',
-            description: '短サイクルで"検証→更新"を回し、学習曲線を最大化。成果物：Sprint Log、仮説改訂履歴。'
+            description: '短サイクルで検証→更新。成果物：Sprint Log、仮説改訂履歴。'
           },
           {
             name: 'クリティカルシンキング/前提潰し',
-            description: '前提・定義・単位系を明示して反証可能性を確保、思い込み排除。成果物：Assumption Test Sheet。'
+            description: '前提・定義・単位系を明示、反証可能性を確保。成果物：Assumption Test Sheet。'
           },
           {
             name: 'ストーリーライン試作',
-            description: '結論→理由→証拠→含意の流れで"だから何"を磨く。成果物：1枚スケッチ（One-Slide Story）。'
+            description: '結論→理由→証拠→含意の流れで"だから何"を磨く。成果物：One-Slide Story。'
+          },
+          {
+            name: '辻褄思考レビュー',
+            description: '相反する意見の成立条件を探索し、整合解を設計。成果物：Coherence Notes。'
           }
         ]
       },
       {
         id: 'phase5',
         name: 'フェーズ5：施策デザイン（選択肢創出〜評価）',
-        description: 'ゼロベースで多案を出し、Impact×Feasibility、リスク、UX/EX、エコシステムで評価。実装に堪える"仕組み化"まで落とす。',
+        description: 'ゼロベースで多案を出し、Impact×Feasibility、リスク、UX/EX、エコシステムで評価。"最初の2案を封印"して3つ目をひねる習慣と型の進化で質を底上げ。',
         tasks: [
           {
             name: 'オプション創出（ゼロベース/ラテラル）',
-            description: '制約一時解除→逆算思考→具体化の往復で大胆かつ実行可能な案を量産。成果物：Option Catalog。'
+            description: '制約一時解除→逆算→具体化の往復で量産。成果物：Option Catalog。'
           },
           {
             name: 'Impact-Feasibility評価',
@@ -120,103 +168,131 @@ export const TASK_FRAMEWORKS = {
           },
           {
             name: 'UX/EX観点の体験設計',
-            description: 'ターゲット行動のBefore/Afterをシナリオで設計、失敗時の代替動線も用意。成果物：サービス青写真。'
+            description: 'ターゲット行動のBefore/Afterをシナリオ化し、失敗時の代替動線も設計。成果物：サービス青写真。'
           },
           {
             name: 'リスク分析と先回り対策',
-            description: '技術/運用/法務/レピュテーションのリスクを洗い出し、手戻り最小の回避/緩和策を定義。成果物：Risk Register。'
+            description: '技術/運用/法務/レピュのリスクを洗い出し、回避/緩和策を定義。成果物：Risk Register。'
           },
           {
             name: '仕組み化・標準化設計',
-            description: '属人タスクを役割/手順/チェックリストへ落とし込み、誰でも同品質で回せる状態に。成果物：SOP/Playbook。'
+            description: '属人タスクを役割/手順/チェックリストへ落とし込み、誰でも同品質で回る状態へ。成果物：SOP/Playbook。'
+          },
+          {
+            name: 'サードアンサー・セッション',
+            description: '直感の2案を敢えて出さず、3つ目の面白い案を強制発想。成果物：Third-Answer Set。'
+          },
+          {
+            name: '型の進化（プロセス刷新）',
+            description: 'SOP/テンプレを都度アップデート。時間経過任せにせず"型"で成長角度を上げる。成果物：Updated SOP/Template。'
           }
         ]
       },
       {
         id: 'phase6',
         name: 'フェーズ6：ビジネスケース・意思決定',
-        description: '経営判断に耐える"数字と物語"を用意し、最終案を選定。ROI/NPV/感度分析と、簡潔で通る説明を両立。',
+        description: '経営判断に耐える"数字と物語"。ROI/NPV/感度にレンジ見積を採用し、反証可能性と短時間で刺さる説明を両立。',
         tasks: [
           {
             name: 'コスト/便益/リソースの定量化',
-            description: '投資/運用/変動費、効果見積の根拠を透明化し、レンジで示す。成果物：Business Case Sheet。'
+            description: '投資/運用/変動費、効果見積の根拠を透明化しレンジ提示。成果物：Business Case Sheet。'
           },
           {
             name: 'ロードマップと依存整理',
-            description: '里程標（Milestone）とクリティカルパス、意思決定ゲートを設計。成果物：Roadmap。'
+            description: 'Milestone、クリティカルパス、意思決定ゲート設計。成果物：Roadmap。'
           },
           {
             name: '経営合意用ストーリー/資料',
-            description: 'One-Slide/エレベーターピッチで"結論と根拠"を短時間で伝える資料を作成。成果物：Executive Deck。'
+            description: 'One-Slide/エレベーターピッチで"結論と根拠"を端的に伝える。成果物：Executive Deck。'
           },
           {
             name: '意思決定・承認プロセス実行',
-            description: '前広の根回し→会議→条件付承認→反映まで一気通貫。成果物：決裁記録。'
+            description: '根回し→会議→条件付承認→反映までを一気通貫。成果物：決裁記録。'
+          },
+          {
+            name: '省力化ポイントの明示',
+            description: 'インパクト低の"ナイスハブ"領域は省力運用に振り切り、注力配分を守る。成果物：Effort Cut List。'
+          },
+          {
+            name: '反証可能性ステートメント',
+            description: '意思決定の前提/閾値/破綻条件を明文化。成果物：Falsifiability Sheet。'
           }
         ]
       },
       {
         id: 'phase7',
         name: 'フェーズ7：実行設計・パイロット',
-        description: '机上の計画を"現実のオペレーション"に接続。チェンジマネジメント、PMO、トレーニングで実装可能性を高め、リスクを安く学ぶ。',
+        description: '机上の計画を現場運用へ接続。問いベースPMOとモチベ差の前提設計で生産性を底上げ。',
         tasks: [
           {
             name: '体制/役割（RACI）とPMO運用',
-            description: '実務責任の明確化、進捗・課題・リスクを一元管理するPMO板を整備。成果物：RACI、PMOダッシュボード。'
+            description: '実務責任の明確化、進捗・課題・リスクの一元管理。成果物：RACI、PMOダッシュボード。'
           },
           {
             name: 'コミュニケーション/エスカレーション設計',
-            description: '報連相の頻度・様式、意思決定の経路、危機時のエスカレーション条件を定義。成果物：Comms Runbook。'
+            description: '報連相の頻度・様式、意思決定経路、危機時のEsc条件を定義。成果物：Comms Runbook。'
           },
           {
             name: 'トレーニング/ナレッジ移転',
-            description: '役割別に必要技能を特定し、教材/演習/OJTを設計。成果物：Training Plan、教材。'
+            description: '役割別スキル要件→教材/OJT設計。成果物：Training Plan、教材。'
           },
           {
             name: 'パイロット設計・実施',
-            description: '限定スコープで検証、成功/撤退基準と学習リストを事前定義。成果物：Pilot Plan、結果レビュー。'
+            description: '限定スコープで検証、成功/撤退基準を事前定義。成果物：Pilot Plan、結果レビュー。'
           },
           {
             name: '変更影響・抵抗のマネジメント',
-            description: '利害・感情の可視化、早期巻き込み、インセンティブ設計で抵抗を低減。成果物：Change Heatmap。'
+            description: '利害/感情の可視化、早期巻込み、インセンティブ設計。成果物：Change Heatmap。'
+          },
+          {
+            name: '問いベースPMO',
+            description: 'タスクではなく論点で管理（Issue-based）。ダッシュボードも論点カラム基準。成果物：Issue-Led Board。'
+          },
+          {
+            name: 'モチベ前提の配賦設計',
+            description: '低モチベ前提で、論点ワード枚数や粒度の配賦で思考量を確保。成果物：Thinking Load Plan。'
           }
         ]
       },
       {
         id: 'phase8',
         name: 'フェーズ8：本格展開・定着化（Execution at scale）',
-        description: 'スモールから全社展開へ。Quick Winで推進力を作り、効果測定→学習→標準化で"定着"を実現する。',
+        description: 'スモールから全社展開へ。Quick Winの演出で推進力を作り、効果測定→学習→標準化で定着。',
         tasks: [
           {
             name: '本番展開・Quick Winの演出',
-            description: '可視化しやすい成果を早期提示し、支援者を増やす。成果物：Rollout Plan、Win事例。'
+            description: '可視化しやすい成果を早期提示し支援者を増やす。成果物：Rollout Plan、Win事例。'
           },
           {
             name: '効果測定とフィードバックループ',
-            description: 'KGI/KPIの定点観測、逸脱時の是正アクション、仮説更新を仕組みにする。成果物：KPIモニタリング表、CA（Corrective Action）記録。'
+            description: 'KGI/KPI定点観測、逸脱時の是正、仮説更新を仕組みに。成果物：KPIモニタ、CAログ。'
           },
           {
             name: '標準化・マニュアル化',
-            description: '成功手順をSOP/チェックリストに落とし、監査可能な状態へ。成果物：運用標準書、監査観点。'
+            description: '成功手順をSOP/チェックリスト化、監査可能に。成果物：運用標準書、監査観点。'
           },
           {
             name: 'ナレッジトランスファーと自走化',
-            description: '"コンサル不在でも回る"状態をゴールに、運用委譲・スキルトランスファーを完了。成果物：引継書、運用責任者の承認。'
+            description: '"コンサル不在でも回る"状態へ運用委譲。成果物：引継書、運用責任者承認。'
           },
           {
             name: 'レトロスペクティブ/学習資産化',
-            description: '成功/失敗の原因と再現条件を抽出し、次案件の出足を速める資産に集約。成果物：Lessons Learned。'
+            description: '成功/失敗の原因と再現条件を抽出し資産化。成果物：Lessons Learned。'
+          },
+          {
+            name: '成長実感の可視化',
+            description: '達成バッジ/トロフィー/帯のストライプ等で成長を見える化し行動継続を促進。成果物：Win Wall、Progress Badges。'
           }
         ]
       },
       {
         id: 'phase9',
         name: 'フェーズ9：クロージング・次の一手',
-        description: '成果/残課題/次の仮説を明文化し、経営意思決定につなぐ。思考解像度を高く保ち、言語化の質で締める。',
+        description: '成果/残課題/次の仮説を明文化し、経営意思決定につなぐ。言語化の質で締める。',
         tasks: [
           {
             name: '最終成果物の統合・納品',
-            description: 'Exective Summary→本編→付録の構成で、ワンスライド・ワンメッセージを徹底。成果物：最終報告書/付帯データ。'
+            description: 'Executive Summary→本編→付録の構成で、ワンスライド・ワンメッセージを徹底。成果物：最終報告書/付帯データ。'
           },
           {
             name: '未了課題・リスクの承継',
@@ -225,6 +301,10 @@ export const TASK_FRAMEWORKS = {
           {
             name: '次の仮説・施策候補の提示',
             description: '今回の学習から"次に効く問い"を提示し、継続的改善の芯を残す。成果物：Next Hypotheses List。'
+          },
+          {
+            name: 'ストーリー反省会',
+            description: 'どこが"刺さらなかったか"を具体化し、次回の一枚絵を磨く。成果物：Story Post-mortem。'
           }
         ]
       }
@@ -235,7 +315,7 @@ export const TASK_FRAMEWORKS = {
       {
         id: 'phase1',
         name: 'フェーズ1：着手・問題定義（Kickoff & Problem Definition）',
-        description: '症状と原因を混同せず、「本当に解くべき課題」を一行で定義し、成功の姿・境界・制約・体制を最初に固定する。曖昧さを残さないほど後工程のやり直しが減る。',
+        description: '症状と原因を混同せず、「本当に解くべき課題」を一行で定義し、成功の姿・境界・制約・体制を最初に固定する。曖昧さを残さないほど後工程のやり直しが減る。スタンス表明・即レス規律とデイゼロ準備で初動を固め、専門用語の齟齬を潰し、努力配分設計で資源投下の優先度を決める。',
         tasks: [
           {
             name: 'ステークホルダー速写マップと期待値すり合わせ',
@@ -252,13 +332,29 @@ export const TASK_FRAMEWORKS = {
           {
             name: '成功の定義（KGI/KPI）とTo-Be像',
             description: 'KGI（最終成果）と先行/遅行KPIを仮置き、取得方法と更新頻度まで決める。To-Be/As-Isの差分を一枚で可視化。成果物：KGI/KPIツリー、To-Be/Gap図。'
+          },
+          {
+            name: 'スタンス表明・即レス規律',
+            description: '不完全情報でも50%で「暫定スタンス」を表明し、学習速度を上げる。"Ping→Pong"を2時間以内徹底（即レス運用）。成果物：Interim Stance、Ping-Pong Log。'
+          },
+          {
+            name: 'デイゼロ準備＆物理リマインダー',
+            description: '初日（day0）に全体像整理、論点の骨子、ステークホルダー地図を初版化。付箋/ホワイトボード/手帳に物理で論点と期限を埋め込み、デジタルへの過信を排除。成果物：Day0 1-pager、物理リマインダー写真。'
+          },
+          {
+            name: '専門用語アラインメント',
+            description: '発注者/現場/読み手の用語が指す概念を定義し、略語・カタカナの誤用を早期に除去。用語定義シートを共有。成果物：Glossary（初版）。'
+          },
+          {
+            name: '努力配分設計（ホームラン×配分）',
+            description: 'プロジェクト全体を「ホームラン×単打」に仕分け、工数・思考資源の配分を明示化（7-2-1ルール等）。成果物：Effort Allocation Plan。'
           }
         ]
       },
       {
         id: 'phase2',
         name: 'フェーズ2：論点設計・検証設計',
-        description: 'MECEで課題を分解し、解くべき鍵問い（Key Question）と検証計画を最短経路で束ねる。',
+        description: 'MECEで課題を分解し、解くべき鍵問い（Key Question）と検証計画を最短経路で束ねる。論点ワード100枚＆3時間で初版を固め、クローズドクエスチョン雛形で精度を上げ、リアリティ・スイッチで当事者性を確保する。',
         tasks: [
           {
             name: 'Issue Tree（論点樹）の骨子化',
@@ -275,13 +371,25 @@ export const TASK_FRAMEWORKS = {
           {
             name: '学習バックログとDoD',
             description: '分析/インタビュー/観察のチケット化、優先度、完了条件（Definition of Done）を明文化。成果物：Learning Backlog。'
+          },
+          {
+            name: '論点ワード100作成（1.5-2枚）＆3時間仕上げ',
+            description: '論点を100ワードに圧縮し、A4で1.5～2枚に収める。3時間以内初版ルールで動き出しを最速化（完璧ではなく十分を狙う）。成果物：100-Word Issue Brief。'
+          },
+          {
+            name: 'クローズドクエスチョン雛形',
+            description: 'インタビュー/調査では「はい/いいえ」「5段階」等の構造化質問で定量化可能に。誘導バイアス排除の設計。成果物：Closed-Q Template。'
+          },
+          {
+            name: 'リアリティ・スイッチ適用レビュー',
+            description: '施策/シナリオ/課題を「当事者として本当に動けるか？」で検証し、机上論を排除。成果物：Reality-Check Log。'
           }
         ]
       },
       {
         id: 'phase3',
         name: 'フェーズ3：現状分析・情報収集（Fact-Finding）',
-        description: '一次/二次情報を設計通りに取りに行き、机上と現場のズレを潰す。3C/SWOT/PEST/BPM/VOCを目的適合で使い分ける。',
+        description: '一次/二次情報を設計通りに取りに行き、机上と現場のズレを潰す。3C/SWOT/PEST/BPM/VOCを目的適合で使い分ける。朝一"仕込み"で最初の1時間に論点・優先度を再確認し、フェルミ推定で数値感度を研ぎ、用語・セグメントを整備。ネガティブ遮断で集中環境を確保。',
         tasks: [
           {
             name: 'リサーチ設計（定量×定性）',
@@ -298,13 +406,29 @@ export const TASK_FRAMEWORKS = {
           {
             name: '業務プロセスマップ（As-Is）',
             description: 'BPMNで流れ/手戻り/滞留を可視化、品質・コスト・リスクの発生点をマーク。成果物：As-Isプロセス図、痛点マップ。'
+          },
+          {
+            name: '朝一"仕込み"実行',
+            description: '始業後の最初の1時間で論点と優先度を再確認し、思考資源を割り当て、フェルミ推定やVOCコード化など先行タスクを"仕込む"。成果物：Daily Prep Note。'
+          },
+          {
+            name: 'フェルミ推定セットアップ',
+            description: '不完全情報でも市場規模・効果量・工数をオーダーで弾き（10倍・1/10単位）、分析精度の要否を判定。成果物：Fermi Sheet、前提メモ。'
+          },
+          {
+            name: '用語・セグメンテーション整備',
+            description: 'VOCや定量データの集計単位（年齢層・地域・購買頻度等）を統一し、用語の揺れをGlossaryで吸収。成果物：Glossary（改訂版）、Segment定義。'
+          },
+          {
+            name: 'ネガティブ遮断の環境設計',
+            description: '通知OFF、物理的な集中スペース確保、否定的フィードバックの一時保留など、思考を守る環境をデザイン。成果物：Focus Protocol。'
           }
         ]
       },
       {
         id: 'phase4',
         name: 'フェーズ4：洞察化・真因特定',
-        description: 'データを"示唆"に変換し、真因仮説を反証で絞り込む。言い切れる粒度まで解像度を上げる。',
+        description: 'データを"示唆"に変換し、真因仮説を反証で絞り込む。言い切れる粒度まで解像度を上げる。辻褄思考レビューで一貫性を担保し、精緻化を図る。',
         tasks: [
           {
             name: '定量の一次分析→仮説当たり',
@@ -321,13 +445,17 @@ export const TASK_FRAMEWORKS = {
           {
             name: '真因仮説の反証テスト',
             description: '最有力仮説に対し、反証可能性を設計し代替仮説とA/Bで当てる。成果物：Refutation Log、仮説改訂履歴。'
+          },
+          {
+            name: '辻褄思考レビュー',
+            description: '結論→理由→根拠→前提の連鎖が論理的に一貫しているかを検証し、矛盾・飛躍・循環論法を排除。成果物：Logic-Check Sheet。'
           }
         ]
       },
       {
         id: 'phase5',
         name: 'フェーズ5：解決策の創出・評価',
-        description: 'ゼロベースで複数案を出し、Impact×Feasibility、リスク、UX/EX、ROIで客観比較。机上ではなく実装可能性にこだわる。',
+        description: 'ゼロベースで複数案を出し、Impact×Feasibility、リスク、UX/EX、ROIで客観比較。机上ではなく実装可能性にこだわる。サードアンサー・セッションで常識を疑い、型の進化（プロセス刷新）で思考と手法を更新する。',
         tasks: [
           {
             name: 'オプション幅出し（ゼロベース/ラテラル）',
@@ -348,13 +476,21 @@ export const TASK_FRAMEWORKS = {
           {
             name: '費用対効果と感度分析',
             description: 'ROI/NPV/Cash Impactをレンジで提示し、前提の感度を開示。成果物：Business Case Sheet。'
+          },
+          {
+            name: 'サードアンサー・セッション',
+            description: '第一案/第二案の次に「3つ目の道」を強制発想し、無意識の前提・常識を崩す。制約を可変要因に再定義。成果物：Third-Answer Canvas。'
+          },
+          {
+            name: '型の進化（プロセス刷新）',
+            description: '今回の学習を踏まえて、自身の思考プロセス・フレームワーク適用法を見直し、次回に引き継ぐ改善を明文化。成果物：Process Evolution Note。'
           }
         ]
       },
       {
         id: 'phase6',
         name: 'フェーズ6：実行計画・合意形成',
-        description: '経営が意思決定できる"数字と物語"を整え、ロードマップとガバナンスで実行可能性を固める。',
+        description: '経営が意思決定できる"数字と物語"を整え、ロードマップとガバナンスで実行可能性を固める。省力化ポイントを明示し、反証可能性ステートメントで検証性を担保する。',
         tasks: [
           {
             name: 'ロードマップ/クリティカルパス設計',
@@ -371,13 +507,21 @@ export const TASK_FRAMEWORKS = {
           {
             name: '契約/役割/成果基準の明文化',
             description: 'スコープ、受入基準、変更管理、責任分界を締結。成果物：実行覚書、RACI最終版。'
+          },
+          {
+            name: '省力化ポイントの明示',
+            description: '提案の中で「既存資産・テンプレ・ツール・外注で減らせる工数」を明示し、無理なく回る計画に。成果物：Lean-Work Plan。'
+          },
+          {
+            name: '反証可能性ステートメント',
+            description: '仮説・結論・効果予測に対し「どうなれば間違いと認めるか」を明記し、検証可能性を確保。成果物：Falsifiability Sheet。'
           }
         ]
       },
       {
         id: 'phase7',
         name: 'フェーズ7：パイロット実行・チェンジマネジメント',
-        description: '小さく始めて早く学ぶ。PMO・RACI・トレーニングで運用に乗せ、抵抗と学習をマネージする。',
+        description: '小さく始めて早く学ぶ。PMO・RACI・トレーニングで運用に乗せ、抵抗と学習をマネージする。問いベースPMOで運用し、モチベ前提配賦で思考量/生産性を担保。',
         tasks: [
           {
             name: 'PMO立ち上げと運用板',
@@ -394,13 +538,21 @@ export const TASK_FRAMEWORKS = {
           {
             name: 'PDCAと逸脱是正',
             description: 'KPI乖離の原因→対策→効果検証を短サイクルで回す。成果物：KPIモニタ、CA/PA記録。'
+          },
+          {
+            name: '問いベースPMO',
+            description: 'タスクではなく「論点」で管理（Issue-led）。ボードも論点カラム基準で構成し、検証すべき問いの消化状況を可視化。成果物：Issue-Led Board。'
+          },
+          {
+            name: 'モチベ前提の配賦設計',
+            description: '低モチベーション前提で「論点ワード枚数や粒度」を配賦し、思考量を確保。高モチベ依存を排除。成果物：Thinking-Load Plan。'
           }
         ]
       },
       {
         id: 'phase8',
         name: 'フェーズ8：本格展開・定着化（Rollout & Embedding）',
-        description: 'Quick Winで推進力を維持しつつ、標準化・ガバナンス・インセンティブで"新しい当たり前"にする。',
+        description: 'Quick Winで推進力を維持しつつ、標準化・ガバナンス・インセンティブで"新しい当たり前"にする。成長実感の可視化で継続を促進。',
         tasks: [
           {
             name: 'ロールアウト計画とQuick Win演出',
@@ -417,13 +569,17 @@ export const TASK_FRAMEWORKS = {
           {
             name: '効果測定と継続改善',
             description: 'KGI/KPIの定点観測、仮説更新を制度化。成果物：定点レポート、改善バックログ。'
+          },
+          {
+            name: '成長実感の可視化',
+            description: '達成バッジ/トロフィー/帯のストライプ等で成長を見える化し、行動継続を促進。成果物：Win Wall、Progress Badges。'
           }
         ]
       },
       {
         id: 'phase9',
         name: 'フェーズ9：クロージング・次の課題へ',
-        description: '成果・学習・未了課題を経営に接続し、再現可能な"勝ち筋"として資産化。次の問いを残して終える。',
+        description: '成果・学習・未了課題を経営に接続し、再現可能な"勝ち筋"として資産化。次の問いを残して終える。言語化の質で締め、ストーリー反省会で次回の一枚絵を磨く。',
         tasks: [
           {
             name: '最終成果物の統合・納品',
@@ -440,6 +596,10 @@ export const TASK_FRAMEWORKS = {
           {
             name: '次の仮説・課題候補の提示',
             description: '今回の学習から"次に効く問い"を提示し、継続的改善の芯を残す。成果物：Next Hypotheses List。'
+          },
+          {
+            name: 'ストーリー反省会',
+            description: 'どこが"刺さらなかったか"を具体化し、次回の一枚絵（物語・訴求構造）を磨く。成果物：Story Post-mortem。'
           }
         ]
       }
@@ -450,7 +610,7 @@ export const TASK_FRAMEWORKS = {
       {
         id: 'phase1',
         name: 'フェーズ1：着手・訴求ゴールの固定化（Kickoff & Ask-Definition）',
-        description: '「誰に・何を・いつまでに・どうしてほしいか」を一文で定義し、相手理解/政治地図/意思決定経路/根回しの出発点を揃える。症状と課題、依頼と本質を混同しないほど後戻りが減る。',
+        description: '「誰に・何を・いつまでに・どうしてほしいか」を一文で定義し、相手理解/政治地図/意思決定経路/根回しの出発点を揃える。症状と課題、依頼と本質を混同しないほど後戻りが減る。不完全情報でもスタンスを表明し即レス、デイゼロ準備＆物理リマインダーで初動を固める。',
         tasks: [
           {
             name: 'アクション依頼の一文化（Wanted Action 1-liner）',
@@ -467,6 +627,242 @@ export const TASK_FRAMEWORKS = {
           {
             name: '反論・懸念の事前棚卸し',
             description: '「価格/優先/人手/リスク/他案」の反論をMECEに並べ、反証/譲歩/代替を準備。成果物：Objection Playbook、Q&A。'
+          },
+          {
+            name: 'スタンス表明・即レス規律',
+            description: '「ケースバイケース」で逃げず、結論仮置き→前進。Ping→Pongを2時間以内に徹底（即レス運用）。成果物：Decision Log、Response SLA。'
+          },
+          {
+            name: 'デイゼロ準備＆物理リマインダー',
+            description: '雛形・チェックリスト・アウトラインを事前作成し、画面貼り/印刷で忘却防止。成果物：Day-0 Kit、Physical Reminders。'
+          },
+          {
+            name: '努力配分設計：120点×1本＋65点許容',
+            description: '最重要論点に集中、"ナイスハブ"は省力運用を明示。成果物：Effort Focus Map、Effort Cut List。'
+          }
+        ]
+      },
+      {
+        id: 'phase2',
+        name: 'フェーズ2：論理骨子・構成（Logic & Structure Design）',
+        description: 'MECEで論点を組み、Why Now/Why Thisを数字と構造で通す。論点ワード100＆3時間初版、クローズド質問化、リアリティ・スイッチで深さと速度を両立。',
+        tasks: [
+          {
+            name: 'ワンメッセージ＆PREP骨子',
+            description: 'ワンスライド・ワンメッセージ→PREP構成（Point/Reason/Example/Point）。専門語は日常語に置換。成果物：Key Message、PREP骨子。'
+          },
+          {
+            name: '論点ツリーと検証課題の紐づけ',
+            description: '結論→主要論点→必要事実をトップダウン分解。MECE徹底。成果物：Issue Tree、Fact Need List。'
+          },
+          {
+            name: '「Why Now?」と不作為コスト（CoI）の定量化',
+            description: '機会損失/遅延損/競争差をレンジ＆感度で提示（フェルミ推定を活用）。成果物：CoI試算表、感度分析。'
+          },
+          {
+            name: '選択肢（A/推奨、B/条件付、Plan B/次善）の設計',
+            description: 'Impact×Feasibilityで客観比較し、推奨理由を明記。成果物：Option Matrix、推奨理由。'
+          },
+          {
+            name: '論点ワード100 & 3時間初版',
+            description: 'A4 1.5-2枚で約100クエスチョンを書き切り、3時間以内にワークプラン初版。成果物：Issue Words、Work Plan v1。'
+          },
+          {
+            name: 'クローズドクエスチョン雛形',
+            description: 'Yes/No＋数値/選択で詰める質問集を設計。成果物：Closed-Q Bank。'
+          },
+          {
+            name: 'リアリティ・スイッチ適用',
+            description: '前提/定義/単位系を明示し、思考の深さを検査。成果物：Reality-Switch Notes。'
+          },
+          {
+            name: 'サードアンサー設計',
+            description: '直感の2案を封印し、3つ目の面白い案を強制発想。成果物：Third-Answer Set。'
+          }
+        ]
+      },
+      {
+        id: 'phase3',
+        name: 'フェーズ3：ファクト武装と権威づけ（Evidence & Authority）',
+        description: '一次/二次の事実＋第三者権威＋現場観察で外部妥当性を獲得。ネガティブ遮断と本質セグメンテーションでブレない材料作り。',
+        tasks: [
+          {
+            name: 'データ収集・検証（定量×定性）',
+            description: '母集団/サンプル/偏り明示、誘導質問回避。成果物：Research Plan、Raw Log、集計。'
+          },
+          {
+            name: '第三者の権威/事例の選定',
+            description: '客観レポート/先行事例で補強。成果物：Evidence Pack。'
+          },
+          {
+            name: '可視化設計（図解・ビジュアル）',
+            description: '一枚一主旨、凡例/単位/出所を明記。成果物：Chart Book、1枚図。'
+          },
+          {
+            name: '解像度の最適化',
+            description: '意思決定に必要な粒度へ調整。成果物：Resolution Checklist。'
+          },
+          {
+            name: 'ネガティブ遮断の環境設計',
+            description: '低品質情報/雑音源の遮断ルール化。成果物：Info-Hygiene Rules。'
+          },
+          {
+            name: '本質セグメンテーション整備',
+            description: '相手別の効き所を定義。成果物：Segmentation Draft。'
+          }
+        ]
+      },
+      {
+        id: 'phase4',
+        name: 'フェーズ4：ストーリー・資料化（Story & Deck）',
+        description: '結論→理由→証拠→含意の物語で頭に刺さり心も動くデックへ。冒頭でWIIFM/CoI/Quick Winを前段化し、反証可能性も明示。',
+        tasks: [
+          {
+            name: 'エグゼクティブ1枚＆詳細骨子',
+            description: '冒頭に結論、以降は三点論法。成果物：One-slide Exec、Long Deck骨子。'
+          },
+          {
+            name: 'As-Is / To-Be / ギャップの図解',
+            description: '因果線を一本化し道筋を明快に。成果物：ギャップ図、ロードマップ素案。'
+          },
+          {
+            name: 'WIIFM/CoI/Quick Winの前段化',
+            description: '冒頭3枚で関心を掴む。成果物：WIIFM/CoI/Quick Winスライド。'
+          },
+          {
+            name: 'スピーカーノートと想定問答',
+            description: '短答/長答、根拠と限界を準備。成果物：Speaker Notes、Q&A。'
+          },
+          {
+            name: '反証可能性ステートメント',
+            description: '破綻条件/閾値/前提を明示。成果物：Falsifiability Sheet。'
+          }
+        ]
+      },
+      {
+        id: 'phase5',
+        name: 'フェーズ5：チャネル・場づくり（Channel & Setting）',
+        description: '勝負は会議前に決める。最適なタイミング/場/同調者を設計し、根回し・サウンディングで空気を整える。',
+        tasks: [
+          {
+            name: 'タイミング設計とアジェンダ配布',
+            description: '相手の繁忙/予算タイミングに合わせ事前通知。成果物：招集文、アジェンダ。'
+          },
+          {
+            name: '個別根回し・サウンディング',
+            description: '温度感の吸い上げ→当日の「Yesの階段」を設計。成果物：Stakeholder Brief、温度感メモ。'
+          },
+          {
+            name: '訴求チャネルと演出の選定',
+            description: '1on1/小会議/全体会/文書/デモを選択。成果物：Channel Plan、デモ台本。'
+          },
+          {
+            name: 'プロト/デモの準備',
+            description: '見れば分かる最小デモで未来を体感。成果物：クリックデモ/紙芝居。'
+          }
+        ]
+      },
+      {
+        id: 'phase6',
+        name: 'フェーズ6：訴求実行・合意形成（The Ask in the Room）',
+        description: '冒頭で目的/役割/ゴール/時間配分を合意し、結論→論拠→選択肢→推奨→意思決定で運営。反論は受容→要約→回答→クローズで前進。',
+        tasks: [
+          {
+            name: 'オープニング（合意の階段づくり）',
+            description: '小さなYesを積み上げる。成果物：開会スクリプト。'
+          },
+          {
+            name: '本論提示（PREP×ワンスライド）',
+            description: '話速は相手基準、専門語は言い換え。成果物：本論スライド。'
+          },
+          {
+            name: '反論ハンドリング（受容→確認→回答→合意）',
+            description: 'リスクは誠実に開示。成果物：Objection Log。'
+          },
+          {
+            name: '意思決定の明確化とコミット獲得',
+            description: '「本日はA/Bのいずれで？」の具体二択で促す。成果物：Decision Record。'
+          }
+        ]
+      },
+      {
+        id: 'phase7',
+        name: 'フェーズ7：アクション後押し・実行支援（Enable & Nudge）',
+        description: '相手が今すぐ動ける状態へ。Baby Step、障壁除去、RACI明文化、テンプレ供給、問いベースPMOでハードルを下げる。',
+        tasks: [
+          {
+            name: 'Baby Stepと期限・マイルストーン設定',
+            description: '最小アクションを今日に置く。成果物：Action Sheet。'
+          },
+          {
+            name: '障壁の先回り除去',
+            description: '時間/予算/承認/ツールの代替策。成果物：Barrier→Counter Plan。'
+          },
+          {
+            name: '役割分担（RACI）と合意文書',
+            description: '責任/承認/情報先を明確化。成果物：RACI最終、合意メモ。'
+          },
+          {
+            name: 'テンプレ/ツール提供と伴走表明',
+            description: '雛形/チェックリスト配布、「一緒にやる」を明示。成果物：Template Pack、伴走計画。'
+          },
+          {
+            name: '問いベースPMO導入',
+            description: 'タスクでなく論点でボード管理。成果物：Issue-Led Board。'
+          }
+        ]
+      },
+      {
+        id: 'phase8',
+        name: 'フェーズ8：フォローアップ・定着化（Follow-through & Embedding）',
+        description: '報連相と定点観測で実行を支え、Quick Winでモメンタム維持。成長の可視化で継続を促す。',
+        tasks: [
+          {
+            name: '議事メモ配布とリマインド運用',
+            description: '決定/担当/期限/次回を即日共有、システム登録。成果物：MoM、タスク登録。'
+          },
+          {
+            name: 'KPIフォローとQuick Win報告',
+            description: '先行KPIを短サイクル観測、初期成果を可視化。成果物：KPIレポ、Win事例。'
+          },
+          {
+            name: '巻き込み/インセンティブ設計',
+            description: '望ましい行動に報いる制度接続。成果物：Incentive案、運用メモ。'
+          },
+          {
+            name: 'ナレッジ移転と教育',
+            description: 'SOP/FAQ/動画/OJTで自走化。成果物：SOP、Training Kit。'
+          },
+          {
+            name: '成長実感の可視化',
+            description: 'バッジ/トロフィー/帯ストライプ/Win Wallで成長を見える化。成果物：Progress Badges、Win Wall。'
+          }
+        ]
+      },
+      {
+        id: 'phase9',
+        name: 'フェーズ9：クロージング・学習資産化（Close & Learn）',
+        description: '結果/学び/再現条件を言語化し、信頼残高を積む。ストーリー反省会で次の一枚絵を磨く。',
+        tasks: [
+          {
+            name: '結果レビュー（What/So What/Now What）',
+            description: '事実→含意→次アクションで総括。成果物：After Action Review。'
+          },
+          {
+            name: '信頼の締め（感謝・ギブ・約束履行）',
+            description: '小さな約束も確実に守る。成果物：謝意メール、Follow資料。'
+          },
+          {
+            name: '次の仮説と訴求計画の種まき',
+            description: '1行で次仮説を提示・共有。成果物：Next Hypotheses List。'
+          },
+          {
+            name: 'プレイブック更新',
+            description: 'デック雛形/Q&A/根回し順序/反論対処をテンプレ化。成果物：Persuasion Playbook vNext。'
+          },
+          {
+            name: 'ストーリー反省会',
+            description: 'どこが"刺さらなかったか"を具体化。成果物：Story Post-mortem。'
           }
         ]
       }
@@ -490,6 +886,230 @@ export const TASK_FRAMEWORKS = {
           {
             name: 'スコープ／深さ／フォーマット合意',
             description: '対象候補の定義、粒度（概要か詳細か）、成果物形式（Deck/Excel/1-pager）を握る。変更管理の窓口を明確化。成果物：Evaluation Charter、WBS、合意メモ。'
+          },
+          {
+            name: 'スタンス表明・即レス規律',
+            description: '不完全情報でも結論仮置き→前進。「ケースバイケース」で逃げない運用。成果物：Decision Log、Response SLA。'
+          },
+          {
+            name: 'デイゼロ準備＆物理リマインダー',
+            description: 'テンプレ/チェックリスト/アウトラインを前日までに準備し画面貼りで忘却防止。成果物：Day-0 Kit、Physical Reminders。'
+          },
+          {
+            name: '努力配分設計：120点×1本＋65点許容',
+            description: '決定打論点に全力投下、"ナイスハブ"は省力化。成果物：Effort Focus Map、Effort Cut List。'
+          }
+        ]
+      },
+      {
+        id: 'phase2',
+        name: 'フェーズ2：比較軸（評価基準）の設計',
+        description: 'MECEかつ測定可能な物差しを設計し、重みと足切り条件を事前合意。論点ワード100＆3時間、クローズド質問化、リアリティ・スイッチで深さと速度を両立。',
+        tasks: [
+          {
+            name: '評価軸ブレスト→体系化',
+            description: '機能/非機能/TCO/セキュリティ/サポート/将来性…を出し切り重複排除。成果物：Criteria Tree、定義書。'
+          },
+          {
+            name: '評価基準の可観測化とスケール設計',
+            description: '操作定義を言語化（例：「10分・手引なしで主要3操作可」）、尺度を統一。成果物：Scoring Rubric、採点票。'
+          },
+          {
+            name: '重み付け（AHP/加重平均）と必須条件の設定',
+            description: '重み確定とMust-have足切り。成果物：Weight Matrix、Must-have List。'
+          },
+          {
+            name: '論点ワード100 & 3時間初版',
+            description: '評価軸に関する約100の問いをA4 1.5-2枚で書き切り、3時間以内に評価設計の初版を完成。成果物：Issue Words、Work Plan v1。'
+          },
+          {
+            name: 'クローズドクエスチョン雛形',
+            description: 'Yes/No＋数値/選択で詰める質問集。成果物：Closed-Q Bank。'
+          },
+          {
+            name: 'リアリティ・スイッチ適用',
+            description: '前提/定義/単位系を明示し"深さ"を点検。成果物：Reality-Switch Notes。'
+          }
+        ]
+      },
+      {
+        id: 'phase3',
+        name: 'フェーズ3：候補のロングリスト作成と絞り込み',
+        description: '情報源の公平性を担保し候補を網羅→短冊評価でショートリスト化。朝一"仕込み"／ネガティブ遮断／本質セグメンテーション／フェルミ推定でぶれない母集団設計。',
+        tasks: [
+          {
+            name: '情報源の標準化とRFI設計',
+            description: '公式資料/第三者レポート/事例を同類型で揃え、RFIで同一様式の回答を取得。成果物：Source Map、RFI票。'
+          },
+          {
+            name: 'ロングリスト→ショートリスト',
+            description: '必須条件の足切り＋Pugh Matrixで3-5案に絞る。成果物：Long→Short List、足切り記録。'
+          },
+          {
+            name: '前提・用語の整備',
+            description: '通貨/税/期間/バージョン等の統一。成果物：Assumption Sheet、Glossary。'
+          },
+          {
+            name: '朝一"仕込み"実行',
+            description: '調査依頼/データ抽出など時間差作業は毎朝起動。成果物：Prep Queue、依頼ログ。'
+          },
+          {
+            name: 'ネガティブ遮断の環境設計',
+            description: '低品質情報の遮断ルール。成果物：Info-Hygiene Rules。'
+          },
+          {
+            name: '本質セグメンテーション整備',
+            description: '候補の効き所を切り分ける軸を定義。成果物：Segmentation Draft。'
+          },
+          {
+            name: 'フェルミ推定セットアップ',
+            description: '主要KPIを概算→感度でオーダー把握。成果物：Fermi Sheet。'
+          }
+        ]
+      },
+      {
+        id: 'phase4',
+        name: 'フェーズ4：情報収集・正規化（Apple-to-Apple化）',
+        description: '同一定義・同一単位で比較可能にするため、デモ/PoC/ユーザー聴取を設計し、欠落はベンダー照会で補完。',
+        tasks: [
+          {
+            name: 'デモ/PoC/トライアルの設計と実施',
+            description: '代表ユースケースを用い、操作時間/失敗率/学習時間などを計測。成果物：Trial Protocol、計測ログ。'
+          },
+          {
+            name: '第三者評価/口コミ/ユーザー聴取',
+            description: '賛否併記で外部妥当性を確保。成果物：Voice Summary。'
+          },
+          {
+            name: 'データの正規化と欠落補完',
+            description: '通貨/税/期間を統一、空欄は照会で埋める。成果物：Normalized Dataset、問い合わせログ。'
+          },
+          {
+            name: 'ベンダー向けクローズドQ運用',
+            description: 'Yes/No＋数値で回答を揃える。成果物：Vendor Q Sheet。'
+          },
+          {
+            name: 'Reality-Switchチェック',
+            description: '計測条件/単位の齟齬を点検。成果物：RS Check List。'
+          }
+        ]
+      },
+      {
+        id: 'phase5',
+        name: 'フェーズ5：メリット・デメリット分析',
+        description: 'SWOT/Kano/MoSCoWで長短を型に落とす。辻褄思考で異論の成立条件を統合し、サードアンサーで「面白い第3案」を強制発想。',
+        tasks: [
+          {
+            name: 'SWOTとKanoで長短の型を揃える',
+            description: '強み/弱み/機会/脅威＋魅力/当たり前品質。成果物：SWOT/Kanoシート。'
+          },
+          {
+            name: '実装観点（EX/運用/チェンジマネジメント）の当て込み',
+            description: '導入ハードル・教育負荷・権限設計・抵抗を評価。成果物：Adoption Risk、Mitigation案。'
+          },
+          {
+            name: 'TCO/効果/リスクのトレードオフ図解',
+            description: '三面図で位置付けを可視化。成果物：Trade-off Map。'
+          },
+          {
+            name: '辻褄思考レビュー',
+            description: '相反意見の成立条件を探索し整合案を設計。成果物：Coherence Notes。'
+          },
+          {
+            name: 'サードアンサー・セッション',
+            description: '直感の2案を封印し3つ目を出す。成果物：Third-Answer Set。'
+          }
+        ]
+      },
+      {
+        id: 'phase6',
+        name: 'フェーズ6：スコアリング・順位付け',
+        description: '採点基準と重みを透明に適用し、評価者キャリブレーションと感度分析で頑健性を担保。省力化ポイントも明示。',
+        tasks: [
+          {
+            name: 'スコアカードの作成（加重平均/AHP）',
+            description: '素点×重みで総合点、前提や「該当なし」を注記。成果物：Scorecard、根拠メモ。'
+          },
+          {
+            name: '評価者キャリブレーションと多人数採点',
+            description: '目線合わせ→複数採点→平均/分散を記録、極端値は議論で解消。成果物：Calibration Log、採点履歴。'
+          },
+          {
+            name: '感度分析/シナリオ別順位',
+            description: '「コスト最重視」「機能最重視」等で順位変動を検証。成果物：Sensitivity Sheet、Scenario Ranking。'
+          },
+          {
+            name: '省力化ポイントの明示',
+            description: '"ナイスハブ"領域を切り分け、時間投下を守る。成果物：Effort Cut List。'
+          }
+        ]
+      },
+      {
+        id: 'phase7',
+        name: 'フェーズ7：総合評価・推奨の物語化',
+        description: '結論→理由→根拠→含意のストーリー。反証可能性ステートメントを併置し、短時間で刺さる材料へ。',
+        tasks: [
+          {
+            name: 'エグゼクティブサマリとレーダーチャート',
+            description: '推奨案/順位/決め手/前提を1ページ化。成果物：1-pager、Radar/Heatmap。'
+          },
+          {
+            name: '上位候補のメリデメ・リスクの要約',
+            description: '「A=短期費用◎/運用△」「B=機能◎/導入×」等を端的に。Plan Bも提示。成果物：Pros/Cons、Plan B。'
+          },
+          {
+            name: '"決め手"の言語化と引用根拠',
+            description: '象徴的データ/ユーザー声を引用、出典と再現手順を明記。成果物：Killer Fact集、引用一覧。'
+          },
+          {
+            name: '反証可能性ステートメント',
+            description: '破綻条件/閾値/前提を明示。成果物：Falsifiability Sheet。'
+          }
+        ]
+      },
+      {
+        id: 'phase8',
+        name: 'フェーズ8：合意形成・決定・コミット',
+        description: '事前サウンディングで地ならし→本番はPREP/ピラミッドで運営。問いベースPMOとRACIを同時にセット。',
+        tasks: [
+          {
+            name: 'サウンディング/根回し',
+            description: '事前説明で懸念吸い上げ、「Yesの階段」を設計。成果物：Stakeholder Brief、懸念ログ。'
+          },
+          {
+            name: '本番提示とQ&A運営',
+            description: '結論→理由→根拠→選択肢→推奨→意思決定の順。成果物：Executive Deck、Q&A集。'
+          },
+          {
+            name: '意思決定記録とRACI明確化',
+            description: '決定/条件/保留を記録、初回マイルストーンを確定。成果物：Decision Record、RACI、初期ロードマップ。'
+          },
+          {
+            name: '問いベースPMO導入',
+            description: 'タスクではなく論点でボード管理。成果物：Issue-Led Board。'
+          }
+        ]
+      },
+      {
+        id: 'phase9',
+        name: 'フェーズ9：クローズ・学習資産化',
+        description: '比較プロセスを再利用可能なプレイブックへ。成長の可視化でモチベ連鎖を作る。',
+        tasks: [
+          {
+            name: 'After Action Review（What/So What/Now What）',
+            description: '前提/重み/データ品質/政治論点の妥当性を検証し改善に落とす。成果物：AARメモ、改善バックログ。'
+          },
+          {
+            name: 'プレイブック/テンプレ更新',
+            description: 'スコアカード/基準定義/感度テンプレ/引用体裁/連絡文例を更新。成果物：Comparison Playbook vNext。'
+          },
+          {
+            name: '関係者コミュニケーションの締め',
+            description: '未選定先にも敬意を払い結果共有。成果物：謝意/結果連絡テンプレ。'
+          },
+          {
+            name: '成長実感の可視化',
+            description: 'バッジ/Win Wall/ストライプ等で進歩を明示し継続を促す。成果物：Progress Badges、Win Wall。'
           }
         ]
       }
@@ -711,19 +1331,190 @@ export const TASK_FRAMEWORKS = {
       {
         id: 'phase1',
         name: 'フェーズ1：コンテキスト固定（Why/Who/Whatの合意）',
-        description: '目的・成功基準・決裁構造・スコープ・前提/制約を一度に言語化し、以後の計画/運用設計の"土台"を固定する。症状と本質を切り分け、曖昧語は運用定義に置換し、現状維持（Do-Nothing）も比較対象に含めることで後戻りを抑える。',
+        description: '目的・成功基準・決裁構造・スコープ・前提/制約を一度に言語化し、以後の設計/運用の"土台"を固定。デイゼロ準備と朝一の論点作業を仕込み、即レス運用で初動を加速する。',
         tasks: [
           {
             name: '目的と成功の一文化（Goal/KGI/KPI 1-Liner）',
-            description: 'ピラミッド原則で"結論→理由→根拠"を1文化し、5 Whys/So What?で真意を深掘り、KGIと先行/遅行KPIをKPIツリーに分解。注意点：最上位目的（事業KGI）とプロジェクトKPIの因果を曖昧にしない。成果物：Goal Statement／KPIツリー／用語定義（稼働率=99.9%など）。'
+            description: '結論→理由→根拠を1文で固定し、KGIと先行/遅行KPIをツリー化。朝の時間はワードで論点設計を優先し、PPT着手は後回し。即レスでレビュー枠に合わせて納品。成果物：Goal Statement／KPIツリー／用語定義。'
           },
           {
             name: 'ステークホルダー/意思決定設計',
-            description: 'RACI×パワーマップで決裁者/影響者/利用者/阻害要因を可視化し、Yesの階段（段階合意）を設計。注意点：政治力学と期待値を先に言語化し、利害の開示で中立性を担保。成果物：Stakeholder Map／RACI草案／合意形成計画。'
+            description: 'RACI×パワーマップで決裁者/影響者/利用者を可視化し、Yesの階段を設計。Outlook等の予定に合わせた提出時刻を逆算。成果物：Stakeholder Map／RACI草案／合意形成計画。'
           },
           {
-            name: 'スコープ・前提・制約の固定化',
-            description: 'In/Out（機能・地域・期間）と制約（予算/人員/法規）を明記し、現状維持も正式に選択肢化。注意点：境界未定義のまま詳細化しない。成果物：Project Charter（Scope/Assumption/Constraint/Success）。'
+            name: 'スコープ・前提・制約の固定化（Do-Nothing含む）',
+            description: 'In/Out・制約を明記し、現状維持も正式な選択肢化。デイゼロで必要資料・環境の事前整備。成果物：Project Charter（Scope/Assumption/Constraint/Success）。'
+          }
+        ]
+      },
+      {
+        id: 'phase2',
+        name: 'フェーズ2：要求定義（ユーザー価値と運用現実の橋渡し）',
+        description: 'As-Is→To-Beを描き、機能/非機能を観測可能な条件に落とす。ヒアリングはクローズド質問を基本に、曖昧さを排除。',
+        tasks: [
+          {
+            name: 'ユースケース&サービスブループリント',
+            description: 'JTBD/ジャーニーから痛点→裏側（Ops）まで描く。朝一で"論点ワード"を下書き→午後に検証。成果物：Use Case Catalog／Blueprint 1枚図。'
+          },
+          {
+            name: '非機能（SLA/SLI/SLO）閾値の観測定義',
+            description: '可用性/性能/復旧の測定単位・閾値を確定し、計測計画に接続。成果物：NFR一覧／SLA草案／計測計画。'
+          },
+          {
+            name: '要件確認のクローズド化',
+            description: '「ここまで理解→不足はここ」という確認→限定質問で収束させる。成果物：要件票／Q&Aログ。'
+          }
+        ]
+      },
+      {
+        id: 'phase3',
+        name: 'フェーズ3：運用モデル設計（"回る仕組み"の骨格）',
+        description: '問いベース（論点ベース）でプロジェクトを管理するPMO骨格を先に設置。L1/L2/L3・SPOC・インシデント/変更/リリースの流れをBPMN化。',
+        tasks: [
+          {
+            name: 'Issue-led Board（問いベースPMO）',
+            description: 'タスクではなく論点を親にし、カードは「KQ→必要事実→DoD」で運用。成果物：Issue-led Board／運用ルール。'
+          },
+          {
+            name: '運用プロセスの標準化（BPMN）',
+            description: '障害/問題/変更/リリースの手順とエスカレーションを図式化。成果物：Ops Process Map／Runbook。'
+          },
+          {
+            name: 'チーム設計（L1/L2/L3・SPOC）',
+            description: 'L1/2/3切り分けと当番/バックアップを明文化。成果物：運用体制表／R&R一覧。'
+          }
+        ]
+      },
+      {
+        id: 'phase4',
+        name: 'フェーズ4：データ・セキュリティ・法令順守設計',
+        description: 'データの取得→保存→活用→廃棄、権限/監査/規制対応を前倒しで織り込む。',
+        tasks: [
+          {
+            name: 'データライフサイクル&品質',
+            description: 'メタデータ/命名規約、整合性/完全性、保存/廃棄、ログ保全。成果物：Data Policy／DQルール／Retention表。'
+          },
+          {
+            name: 'セキュリティ/権限/監査',
+            description: 'RBAC、証跡、脆弱性対応SLA、サプライヤリスク評価。成果物：Security要件／監査ログ方針。'
+          },
+          {
+            name: '法令・契約・倫理の適合',
+            description: '個人情報/業法/輸出規制、同意取得、AI/データ倫理。成果物：Compliance Checklist／規約案。'
+          }
+        ]
+      },
+      {
+        id: 'phase5',
+        name: 'フェーズ5：リスク・TCO/ROI・資源設計',
+        description: '発生確率×影響度で優先順位づけ、TCO/ROI/NPVをレンジと感度で提示。努力配分は"120点×1本主義"（他は65点可）で勝負タスクに集中。',
+        tasks: [
+          {
+            name: 'リスクレジスタ&早期警報KPI',
+            description: '技術/運用/法務/レピュのリスクと回避/低減/移転/受容、トリガーKPIを設定。成果物：Risk Register／Mitigation。'
+          },
+          {
+            name: 'TCO/ROI/NPVと感度分析',
+            description: '式・前提・ドライバ（利用率/人件費/障害率）で感度を回す。成果物：Business Case Sheet。'
+          },
+          {
+            name: '資源/能力計画（Make/Buy/Partner）',
+            description: 'スキル×工数マトリクス、内製/外注境界、ベンダ評価軸。成果物：Resource Plan。'
+          }
+        ]
+      },
+      {
+        id: 'phase6',
+        name: 'フェーズ6：スケジュール・移行/展開・変更管理設計',
+        description: 'パイロット→段階展開、変更管理（RFC→CAB→実施）、撤退/ロールバック基準を明文化。時間差の出る"仕込み"は朝一で起動。',
+        tasks: [
+          {
+            name: '移行/パイロット→段階展開',
+            description: '対象/順序/Go-NoGo/バックアウト手順。成果物：Rollout Plan／バックアウトRunbook。'
+          },
+          {
+            name: '変更管理プロセス',
+            description: '審査基準・影響分析・承認権限・フリーズ/緊急例外を定義。成果物：Change Policy／CAB運営要領。'
+          },
+          {
+            name: '統合カレンダー&外部要因織込み',
+            description: '決算/繁忙期/法改正/メンテ窓を統合。成果物：Integrated Calendar。'
+          }
+        ]
+      },
+      {
+        id: 'phase7',
+        name: 'フェーズ7：コミュニケーション・教育・定着（EX）',
+        description: 'わかる→できる→続くの3段階でコミュニケーション/トレーニング/インセンティブを設計。ネガティブ要因の遮断と成長の可視化（ストライプ/バッジ）で継続性を設計。',
+        tasks: [
+          {
+            name: 'コミュニケーション設計（Message Map）',
+            description: 'オーディエンス別にPREP台本化、資料はワンスライド・ワンメッセージで統一。成果物：Comms Plan／テンプレ一式。'
+          },
+          {
+            name: 'ロール別トレーニング&認定',
+            description: '学習目標→評価項目→修了判定、OJT/動画/演習を組合せ。成果物：Training Plan／教材雛形。'
+          },
+          {
+            name: '行動強化の設計（成長可視化×ネガティブ遮断）',
+            description: 'ストライプ/バッジ/Win Wallで成長を見える化し、水を差す要因から防御する環境を設計。成果物：Kudos施策／環境設計メモ。'
+          }
+        ]
+      },
+      {
+        id: 'phase8',
+        name: 'フェーズ8：可観測性・監視/アラート・AAR',
+        description: '運用KPI/SLIのダッシュボード、アラート設計、AARで継続改善のループ。',
+        tasks: [
+          {
+            name: 'メトリクス&ダッシュボード',
+            description: '可用/性能/品質/満足度/学習時間のSLI、しきい値・可視化粒度を定義。成果物：KPI/SLI定義／ダッシュボード設計書。'
+          },
+          {
+            name: 'アラート/オンコール設計',
+            description: '優先度・通知・当番表・エスカレーションとSLA連動。成果物：Alert Policy／On-call Runbook。'
+          },
+          {
+            name: 'AAR/ポストモーテム',
+            description: 'What→So What→Now Whatで原因・学びを資産化。成果物：AARテンプレ／改善バックログ。'
+          }
+        ]
+      },
+      {
+        id: 'phase9',
+        name: 'フェーズ9：稼働準備審査（ORR）・移管・最終合意',
+        description: '計画/運用設計の"できる根拠"を総点検し、運用主体へ正式移管。朝一は論点最終チェック→午後にデック整形で最終レビューに備える。',
+        tasks: [
+          {
+            name: 'ORR（Operational Readiness Review）',
+            description: 'SLA・体制・Runbook・監視・訓練・バックアウトの有無をチェックリストで審査。成果物：ORRレポート／是正計画。'
+          },
+          {
+            name: 'エグゼクサマリ&合意文書',
+            description: '結論→根拠→リスク/条件→初期ロードマップを1枚で提示、決裁取得。成果物：Executive One-Pager／Decision Record。'
+          },
+          {
+            name: 'ナレッジ移転/引継ぎ',
+            description: '運用演習、シャドー→リバースシャドー、問合せ模擬。成果物：KT計画／引継ぎ完了報告。'
+          }
+        ]
+      },
+      {
+        id: 'phase10',
+        name: 'フェーズ10：クローズ&学習資産化（Playbook化）',
+        description: '設計〜稼働準備の知見をテンプレ/チェックリスト/メール文例へ落とし込み、次回の立ち上げ速度と品質を底上げ。論点ワード100＆3時間や問いベースPMOなどの運用知を標準化。',
+        tasks: [
+          {
+            name: '設計プレイブックの更新',
+            description: 'Charter雛形、SLA/DoD、BPMN、AAR、ORR、Comms Planを最新版に統合。成果物：Planning & Ops Playbook vNext。'
+          },
+          {
+            name: '指標の初期効果測定',
+            description: '当初KPI対比の初期実績を算定し、想定との差分要因を特定。成果物：Initial Outcome Report。'
+          },
+          {
+            name: '関係者リレーションのクロージング',
+            description: '感謝/学び共有、未選定案/関係先への礼節ある連絡で信頼残高を貯める。成果物：Closing Note／共有資料。'
           }
         ]
       }
@@ -734,23 +1525,173 @@ export const TASK_FRAMEWORKS = {
       {
         id: 'phase1',
         name: 'フェーズ01：立ち上げ・適用範囲の定義',
-        description: '「何を残すか」ではなく「何のために残すか」を先に固定。利用者・再利用シーンを特定し、KGI（再利用率/Time-to-Answer短縮）とKPI（検索→閲覧→適用の転換率）を指標ツリーで接続。論点思考・正しい問題設定が横展開の歩留まりを決める。',
+        description: '「何を残すか」ではなく「何のために残すか」を先に固定。利用者・再利用シーンを特定し、KGI（再利用率/Time-to-Answer短縮）とKPI（検索→閲覧→適用の転換率）を指標ツリーで接続。以後は問いベースで運営（PMO発想）し、意思決定を速くする。',
         tasks: [
           {
             name: '成果の定義とユースケース設計',
-            description: 'ゴールデンサークル（Why/How/What）とPREPで「誰が・どの場面で・何を決めるために使うか」を1文化。注意点：閲覧数＝成果にしない（行動変化で測る）。成果物：ユースケース一覧、KGI/KPI表、1枚サマリ。'
+            description: 'Why/How/WhatとPREPで「誰が・どの場面で・何を決めるために使うか」を1文化。注意点：閲覧数≠成果、行動変化（適用）で測る。成果物：ユースケース一覧、KGI/KPI表、1枚サマリ。'
           },
           {
             name: 'スコープ/非スコープと用語定義',
-            description: 'イシューツリーでMECE分解、非スコープを明示。5 Whysで"症状/真因"を分離。成果物：論点マップ、非スコープ声明、用語集。'
+            description: 'イシューツリーでMECE分解し非スコープも明示。成果物：論点マップ、非スコープ声明、用語集。'
           },
           {
             name: 'ステークホルダー/意思決定設計',
-            description: 'Power–InterestマトリクスとRACI/DACIで役割・承認経路を可視化。注意点：段階合意（前提→小結→最終）。成果物：RACI、影響マップ、合意形成プラン。'
+            description: 'Power–Interest×RACIで役割・承認経路・段階合意（前提→小結→最終）を設計。成果物：RACI、影響マップ、合意形成プラン。'
           },
           {
-            name: '情報区分・権限・法務の初期設計',
-            description: '公開/社外秘/機微/個情/契約拘束の区分と権限。引用は一次情報原則。成果物：データ分類基準、権限テーブル、引用方針。'
+            name: '運営原則（問いベース/即レス）',
+            description: 'プロジェクトは問いベースで進行、問い合わせは即レスを標準化。成果物：運営原則メモ、SLA。'
+          }
+        ]
+      },
+      {
+        id: 'phase2',
+        name: 'フェーズ02：ソース収集・証跡化',
+        description: '"語り"ではなく証拠で残す。一次資料・数値・意思決定ログを集め、後から検証可能なトレーサビリティを確保。時間差作業（仕込み）は朝一で動かす運用を徹底。',
+        tasks: [
+          {
+            name: 'アセット棚卸し（成果物/議事/決定ログ）',
+            description: '全アセットにメタデータ（作成者/版/日付/適用条件）付与、Docs-as-Code/SemVerで版管理。成果物：アセット台帳、リンク集、版管理ルール。'
+          },
+          {
+            name: 'AAR×KPTインタビュー',
+            description: 'AAR（What/So What/Now What）＋KPTで教訓抽出。注意点：クローズドクエスチョンで聞き切り、事実→解釈→示唆の順で記録。成果物：インタビューノート、教訓サマリ。'
+          },
+          {
+            name: '外部ベンチ/参考文献の取り込み',
+            description: '一次ソース主義で3C/PEST整理。成果物：ベンチ表、出典リスト（URL/発行日/引用範囲）。'
+          },
+          {
+            name: 'データ抽出と正規化（朝一仕込み）',
+            description: 'KPIログの単位/粒度/期間を統一し、抽出・クレンジングなど仕込み作業は朝一に実行。成果物：正規化データ、データ辞書。'
+          }
+        ]
+      },
+      {
+        id: 'phase3',
+        name: 'フェーズ03：抽出・要素分解（成功/失敗・前提/リスク）',
+        description: '情報の山を"意思決定に効く要点"へ圧縮。論点→タスク→ワード→スライドの順で加工し、論点ワードはA4 1.5～2枚（100クエスチョン）を書き切る→3時間でワークプランまでを標準に。',
+        tasks: [
+          {
+            name: 'ストーリーライン設計',
+            description: 'ピラミッド＆ワンスライド・ワンメッセージでSo What/Why Soを往復。成果物：1ページ要約、論拠ピラミッド。'
+          },
+          {
+            name: '5 Whys×ロジックツリーで真因特定',
+            description: '仮説→検証→更新を短サイクル、MECEで抜け漏れを抑制。成果物：因果マップ、論点ツリー。'
+          },
+          {
+            name: 'アサンプション/リスクのトレース',
+            description: '施策と前提・成立条件・リスク（確率×影響）を紐付け、再現条件を明記。成果物：アサンプションログ、リスク登録票。'
+          },
+          {
+            name: '失敗のアンチパターン化',
+            description: '「兆候→対処」をカード化し誤りの再発を防止。成果物：アンチパターン集。'
+          }
+        ]
+      },
+      {
+        id: 'phase4',
+        name: 'フェーズ04：標準化・テンプレート化',
+        description: '"誰がやっても同じにできる"状態へ。SOP/チェックリスト/テンプレ/例文で再現性と品質を固定。朝のクリアタイムはワード作成・定義仕事に充てることをルール化。',
+        tasks: [
+          {
+            name: 'SOP/プレイブック設計',
+            description: '目的→前提→準備→手順→判定基準→落とし穴→参考の共通フォーマット。DoR/DoDを明文化。成果物：SOP/プレイブックv1。'
+          },
+          {
+            name: 'チェックリスト＆レビュー観点',
+            description: 'QCD/UX/セキュリティ/リスクのYes/No判定とダブルサイン。成果物：チェックリスト、レビューフォーム。'
+          },
+          {
+            name: 'テンプレート/記入例（提案書・計画書・A3）',
+            description: 'A3思考で「目的/現状/原因/対策/効果/副作用」を1枚に凝縮。成果物：PPT/Docテンプレ、記入例。'
+          },
+          {
+            name: 'タクソノミ/タグ/メタデータ設計',
+            description: '検索語（職種/業界/規模/機能/フェーズ）を前提に統制語彙・命名規則・必須メタデータを定義。成果物：分類表、メタデータ辞書。'
+          },
+          {
+            name: '版管理/変更管理ルール',
+            description: 'Git運用、CHANGELOG、破壊的変更はMAJORで明示。成果物：変更管理手順、リリースノート。'
+          }
+        ]
+      },
+      {
+        id: 'phase5',
+        name: 'フェーズ05：ナレッジベース設計（情報設計・検索・表現）',
+        description: 'Findability×Readabilityを最大化。利用者の言葉で同義語辞書を作り、検索・タグと連動。クローズドクエスチョンで要件を具体化して要素を落とし込む。',
+        tasks: [
+          {
+            name: '情報アーキテクチャ（IA）設計',
+            description: 'ユーザーストーリーからサイトマップ/目次/パンくず設計。1トピック=1URL=1メッセージ。成果物：IA図、CMS構成案。'
+          },
+          {
+            name: '検索最適化と同義語辞書',
+            description: '英日/社内語の同義語辞書を整備しタグと連動。成果物：検索辞書、クエリガイド。'
+          },
+          {
+            name: '可視化スタイルガイド',
+            description: '色数制限、単位明記、比較は同スケール、凡例先出し。成果物：可視化ガイド。'
+          },
+          {
+            name: '品質基準とピアレビュー',
+            description: '事実/意見分離、出典明記、再現手順の有無を合否基準に。成果物：品質基準書、レビュー記録。'
+          },
+          {
+            name: '多言語/アクセシビリティ',
+            description: '固有名詞の表記揺れ、代替テキスト、色覚バリアフリー、簡潔日本語（60字以内）。成果物：多言語ガイド、アクセシ仕様。'
+          }
+        ]
+      },
+      {
+        id: 'phase6',
+        name: 'フェーズ06：導入・浸透（チェンジマネジメント）',
+        description: '"正しい"より"納得できる"を優先。即レスとハッピーモードで心理的コストを下げ、使われるナレッジにする。低モチベメンバーは論点ワード枚数を増やして思考量で補う運用も併用。',
+        tasks: [
+          {
+            name: '変革ストーリーとコミュニケーション計画',
+            description: 'Kotter/ADKAR×PREPで告知→短期勝利→定着。成果物：告知資料、FAQ、説明会台本。'
+          },
+          {
+            name: '研修・オンボーディング（朝活設計）',
+            description: 'ロール別の最初の一歩を設計し、朝のクリアタイムはワード/定義仕事に充当。成果物：ハンズオン資料、演習データ。'
+          },
+          {
+            name: '伴走支援/オフィスアワー（即応）',
+            description: '初期は即レスで質問コストを下げ、Q&Aログを次版改善に循環。成果物：Q&Aログ、改善バックログ。'
+          },
+          {
+            name: 'インセンティブ/表彰',
+            description: '再利用貢献（再利用回数/引用数）の可視化と表彰。成果物：表彰設計、ダッシュボード。'
+          }
+        ]
+      },
+      {
+        id: 'phase7',
+        name: 'フェーズ07：横展開・運用・改善',
+        description: 'パイロット→段階拡大→全社展開。問いベース（論点ベース）でガバナンスし、検索→閲覧→適用のKPIファネルを月次で改善。',
+        tasks: [
+          {
+            name: 'パイロット選定とQuick Win設計',
+            description: '影響×実現性で部門選定、2週間以内の可視成果を仕込む。成果物：展開計画、成功指標。'
+          },
+          {
+            name: 'ナレッジ・チャンピオン制度',
+            description: '各部門の旗振り役を任命し月次サロンで事例共有。成果物：役割定義、運営要領。'
+          },
+          {
+            name: 'ガバナンス/棚卸し',
+            description: '使われない/古い/重複コンテンツを定期除却（情報の5S）。成果物：棚卸しレポート、アーカイブ方針。'
+          },
+          {
+            name: 'KPIモニタリングとPDCA（論点レビュー）',
+            description: '論点ワード→アクション→適用の流れをレビュー、3時間ルールを守れているか定期点検。成果物：KPIダッシュボード、改善版。'
+          },
+          {
+            name: '成果の可視化と最終報告',
+            description: 'Before/After（TTA/再利用率/工数削減）とキラーファクト/反証を併記。成果物：エグゼクティブサマリ、成果事例集。'
           }
         ]
       }
@@ -761,19 +1702,202 @@ export const TASK_FRAMEWORKS = {
       {
         id: 'phase1',
         name: 'フェーズ01：目的定義と論点設計',
-        description: 'まず「何を訊くか」の前に「なぜ訊くか／何を決めるために訊くか」を固定します。ゴールデンサークル（Why→How→What）と論点思考で"解くべき問い"を言語化し、仮説を置いてインタビューで検証する設計にします。課題の定義を誤ると以降すべてが歪むため、「問題の定義が正しいか？」を繰り返し点検します。',
+        description: '「なぜ訊くか／何を決めるために訊くか」を先に固定。意思決定に効くKQを1行化し、専門用語に"慣れておく"ことで誤読を防ぐ。深さはリアリティ・スイッチ（正しさではなく"思考の深さ"の切替）で担保する。',
         tasks: [
           {
             name: '意思決定ゴールと評価指標の確定',
-            description: '最終意思決定（例：業務BPRの是非/要件確定）とKGI/KPI（意思決定に必要な確度、リスク許容度、必要粒度）をピラミッド原則で1ページ化。注意点：指標は"行動変化"に紐づける。成果物：1枚サマリ、指標ツリー。'
+            description: '最終意思決定とKGI/KPIを1ページに。指標は行動変化に紐づける。成果物：1枚サマリ、指標ツリー。'
           },
           {
             name: '論点ツリー／仮説の明文化',
-            description: 'ロジックツリーで論点をMECE分解し、「仮説→必要事実→質問」の三段ひな壇に展開（仮説思考）。注意点：仮説は"反証可能性"を明記。成果物：論点ツリー、仮説一覧。'
+            description: '仮説→必要事実→質問の三段棚。反証可能性を明記し、後工程の型に繋ぐ。成果物：論点ツリー、仮説一覧。'
           },
           {
             name: 'スコープ／非スコープと用語定義',
-            description: '対象業務・期間・地域・役割を明確化し、非スコープを宣言。専門用語の定義は冒頭で共有。成果物：スコープ定義書、用語集。'
+            description: '対象と非対象を宣言。専門用語の定義を冒頭で共有。成果物：スコープ定義書、用語集。'
+          }
+        ]
+      },
+      {
+        id: 'phase2',
+        name: 'フェーズ02：対象者選定とサンプリング設計',
+        description: '階層×機能×立場を網羅し、偏りを抑える。プロセスは"型の進化"を前提にテンプレとして更新可能にする。',
+        tasks: [
+          {
+            name: 'ステークホルダーマッピング',
+            description: 'Power×InterestとRACIで影響度・情報保有度を可視化。成果物：利害関係者マップ、RACI表。'
+          },
+          {
+            name: 'サンプリング戦略と割付',
+            description: '層化基準・必要サンプル・重複条件（理論的飽和）を定義。成果物：対象者リスト、割付計画。'
+          },
+          {
+            name: 'エキスパート基準の設定',
+            description: '資格／査読／年数で基準化し、デルファイ候補抽出の土台に。成果物：選定基準、候補名簿。'
+          }
+        ]
+      },
+      {
+        id: 'phase3',
+        name: 'フェーズ03：コンプライアンス・同意・運営ルール',
+        description: '情報区分・保存・権限制御、録音・匿名化・撤回権を標準化し、運営の型に落とす。',
+        tasks: [
+          {
+            name: '情報分類・取扱方針',
+            description: '公開/内部/機微の分類、保存期間、持出し禁止、権限。成果物：情報管理ポリシー、権限表。'
+          },
+          {
+            name: 'インフォームド・コンセント',
+            description: '目的/利用範囲/録音/匿名化/撤回権を明記。成果物：同意書（JA/EN）。'
+          },
+          {
+            name: 'バイアス低減オペレーション',
+            description: '二名体制、順序効果回避、先入観提示禁止。成果物：実施ガイド、役割分担表。'
+          }
+        ]
+      },
+      {
+        id: 'phase4',
+        name: 'フェーズ04：インタビュー設計（プロトコル・質問票）',
+        description: '"会話"ではなく"実験"。朝はワードで論点・ストーリーラインを作り、分析やPPTは後回し（集中資源の最適配分）。デイゼロで準備を作り切る。',
+        tasks: [
+          {
+            name: 'プロトコル骨子（導入→本編→深掘り→締め）',
+            description: '時間配分（例 5/30/20/5）と質問タイプ定義。成果物：プロトコルv1。'
+          },
+          {
+            name: '質問リスト作成（オープン/クローズ）',
+            description: 'PREP構成、事実と判断を分離。サードアンサー（直感1・2ではなく3つ目をひねる）で深掘り案を追加。成果物：質問票、追質問ガイド。'
+          },
+          {
+            name: '業務理解の補助ツール',
+            description: 'SIPOC・旅程・RACIを"共創記入"。成果物：白地図一式。'
+          },
+          {
+            name: 'パイロットインタビュー',
+            description: '2件試行→曖昧・誘導・冗長の除去。成果物：プロトコルv2、改善ログ。'
+          }
+        ]
+      },
+      {
+        id: 'phase5',
+        name: 'フェーズ05：ロジ整備（アポ・環境・ブリーフィング）',
+        description: '急いでやる／相手のレビュー可能時間に合わせて作り切るを徹底（動き出しの遅さを自覚し是正）。',
+        tasks: [
+          {
+            name: 'アポイントと資料送付',
+            description: '目的/所要/事前準備明記、守秘・同意を同封。成果物：招待メール、同意書。'
+          },
+          {
+            name: 'インタビュアーブリーフィング',
+            description: '役割分担、禁句、深掘り合図を共有。成果物：ブリーフ資料、チェックリスト。'
+          },
+          {
+            name: 'リスク対応（急用/延長/中断）',
+            description: '代替日時、録音不調バックアップ、途中中断の扱い。成果物：運営ガイド。'
+          }
+        ]
+      },
+      {
+        id: 'phase6',
+        name: 'フェーズ06：実施（関係構築→深掘り→合意）',
+        description: '"訊く"より"引き出す"。辻褄思考で矛盾の背景を理解し、リアリティ・スイッチで深さを切替える。',
+        tasks: [
+          {
+            name: 'アイスブレイクと枠組み共有',
+            description: '目的・配分・情報扱い・録音確認。成果物：録音ログ、同意記録。'
+          },
+          {
+            name: '本編（業務/組織/データ/意思決定）',
+            description: 'CITで成功/失敗事例、5 Whys/ラダーリングで価値観まで到達。成果物：逐語録、要点メモ。'
+          },
+          {
+            name: '矛盾のクロスチェック',
+            description: '他部門・資料・ログで照合、相違は仮説として宿題化。成果物：ギャップリスト、追加質問。'
+          },
+          {
+            name: '終盤サマリと合意',
+            description: '口頭要約→抜け漏れ確認→次アクション合意。成果物：サマリ、To-Do。'
+          }
+        ]
+      },
+      {
+        id: 'phase7',
+        name: 'フェーズ07：エキスパート・エリシテーション特化',
+        description: '数値の"あたり"を揃えるためフェルミ推定と論理的な話し方（構成）を活用し、デルファイで収束。',
+        tasks: [
+          {
+            name: 'デルファイ・ラウンド設計',
+            description: '匿名投票→集計→再提示→収束。成果物：ラウンド計画、集計票。'
+          },
+          {
+            name: '事前確率の校正',
+            description: 'Brier等で過信/過小評価を補正。成果物：校正レポート。'
+          },
+          {
+            name: '反事実・限界条件の探索',
+            description: '「もしAが成立しないなら？」で前提境界を特定。成果物：前提/限界リスト。'
+          }
+        ]
+      },
+      {
+        id: 'phase8',
+        name: 'フェーズ08：記録・転記・コーディング（定性/定量化）',
+        description: '型を進化させる前提で、転記→クレンジング→コード化→可視化の標準手順を更新し続ける。',
+        tasks: [
+          {
+            name: '転記・クレンジング',
+            description: '話者・タイムスタンプ・表記統一。成果物：逐語録、スタイルガイド。'
+          },
+          {
+            name: 'コーディング枠組み構築',
+            description: '一次→二次コード、相互評価で整合性。成果物：コードブック、信頼性指標。'
+          },
+          {
+            name: '定量化と可視化',
+            description: '「n件中x件」頻度化、共起・時系列の図示。成果物：可視化スライド、集計表。'
+          }
+        ]
+      },
+      {
+        id: 'phase9',
+        name: 'フェーズ09：統合・検証・示唆化',
+        description: 'So What/Why Soの往復で意思決定材料へ統合。リアリティ・スイッチで深さ、辻褄思考で相反意見の整合を取る。',
+        tasks: [
+          {
+            name: 'インサイト合成とストーリーライン',
+            description: '結論→根拠→具体例のピラミッド。成果物：エグゼクサマリ、論拠マップ。'
+          },
+          {
+            name: '反証可能性テスト',
+            description: '逆仮説を立て矛盾探索、意思決定影響を明示。成果物：反証ログ、残リスク表。'
+          },
+          {
+            name: 'メンバーチェック/利害調整',
+            description: '当事者確認、匿名度合い合意。成果物：確認済みサマリ、修正版。'
+          }
+        ]
+      },
+      {
+        id: 'phase10',
+        name: 'フェーズ10：報告・合意形成・ナレッジ化',
+        description: '朝はワードで要旨を仕上げ、"急いでやる"原則でリードタイム短縮。次案件へ回るプレイブック更新（型の進化）まで完了させる。',
+        tasks: [
+          {
+            name: '意思決定者向け報告（口頭+資料）',
+            description: '5分版/15分版、キラーファクト、想定QA。成果物：報告スライド、QA集。'
+          },
+          {
+            name: 'アクションプランの明確化',
+            description: 'RACI・マイルストーン・成功指標・副作用/緩和策を1枚化。成果物：アクションボード。'
+          },
+          {
+            name: 'ナレッジ登録と展開',
+            description: 'タグ/分類/版管理でKB登録、横展開ウェビナーで浸透。成果物：KB記事、録画/配布資料。'
+          },
+          {
+            name: '振り返り（AAR×KPT）',
+            description: 'プロセス/質問/運営の改善点を抽出し型を更新。成果物：レトロスペクティブ、改善バックログ。'
           }
         ]
       }
