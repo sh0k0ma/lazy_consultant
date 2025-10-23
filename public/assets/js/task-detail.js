@@ -114,9 +114,21 @@ function renderTaskDetail() {
   document.getElementById('task-start').textContent = formatDate(currentTask.startDate);
   document.getElementById('task-end').textContent = formatDate(currentTask.endDate);
 
+  // Set framework checkbox state
+  const frameworkCheckbox = document.getElementById('enable-framework-checkbox');
+  const isFrameworkEnabled = currentTask.useFramework === true;
+  frameworkCheckbox.checked = isFrameworkEnabled;
+  
+  // Show/hide framework based on checkbox
+  const frameworkContainer = document.getElementById('framework-container');
+  frameworkContainer.style.display = isFrameworkEnabled ? 'block' : 'none';
+
   currentPhaseId = null;
   renderJournals();
-  renderTaskFramework();
+  
+  if (isFrameworkEnabled) {
+    renderTaskFramework();
+  }
 }
 
 function renderJournals() {
@@ -215,19 +227,20 @@ function createJournalEntry(journal) {
 }
 
 function renderTaskFramework() {
-  const phaseContainer = document.querySelector('.phase-container');
+  const frameworkContainer = document.getElementById('framework-container');
   const framework = TASK_FRAMEWORKS['universal'];
 
-  if (!phaseContainer) {
+  if (!frameworkContainer) {
     return;
   }
 
   if (!framework || !framework.phases || framework.phases.length === 0) {
-    phaseContainer.style.display = 'none';
+    frameworkContainer.style.display = 'none';
     return;
   }
 
-  phaseContainer.style.display = '';
+  // Framework container visibility is controlled by checkbox in renderTaskDetail
+  // Don't change display here
   document.getElementById('framework-type').textContent = 'ユニバーサルフレームワーク';
 
   ensurePhaseState(currentTask, framework);
@@ -571,6 +584,22 @@ function setupEventListeners() {
   // Task status change
   document.getElementById('task-status-select').addEventListener('change', async (e) => {
     currentTask.status = e.target.value;
+    await saveTask();
+    renderTaskDetail();
+  });
+  
+  // Framework checkbox toggle
+  document.getElementById('enable-framework-checkbox').addEventListener('change', async (e) => {
+    currentTask.useFramework = e.target.checked;
+    
+    // Initialize phases if enabling framework for the first time
+    if (currentTask.useFramework && !currentTask.phases) {
+      const framework = TASK_FRAMEWORKS['universal'];
+      if (framework) {
+        ensurePhaseState(currentTask, framework);
+      }
+    }
+    
     await saveTask();
     renderTaskDetail();
   });
