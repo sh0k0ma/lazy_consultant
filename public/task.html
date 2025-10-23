@@ -83,6 +83,26 @@
         </div>
       </div>
 
+      <!-- Framework Toggle -->
+      <div class="detail-section" style="border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.95rem;">
+          <input type="checkbox" id="enable-framework-checkbox" style="width: auto; cursor: pointer;">
+          <strong>ユニバーサルフレームワークを使用</strong>
+        </label>
+        <p style="margin: 0.5rem 0 0 1.5rem; font-size: 0.85rem; color: #64748b;">
+          3フェーズ51項目の詳細なチェックリストで業務を管理
+        </p>
+      </div>
+
+      <!-- Framework Container -->
+      <div id="framework-container" style="display: none;">
+        <div class="detail-section">
+          <h3>Task Considerations - ユニバーサルフレームワーク</h3>
+          <div id="phase-tabs" class="phase-tabs"></div>
+          <div id="phase-content" class="phase-content"></div>
+        </div>
+      </div>
+
       <div class="detail-section">
         <h3>Journal</h3>
         <div id="journals-container"></div>
