@@ -1,22 +1,15 @@
-# 🚀 Quick Start Guide - Lazy Consultant
+# Quick Start Guide
 
-## すぐに始める (Getting Started)
+## インストールと起動
 
-### 1️⃣ インストール
 ```bash
-cd {インストール先のパス}
 npm install
-```
-
-### 2️⃣ 起動
-```bash
 npm run dev
+# http://127.0.0.1:3001
 ```
-
-### 3️⃣ アクセス
-ブラウザで開く: **http://127.0.0.1:3001**
 
 ---
+
 
 ## 📝 基本的な使い方
 
@@ -70,83 +63,27 @@ npm run dev
 
 **デフォルトはシンプルなタスク記入欄のみ表示されます。** 詳細は [README.md](./README.md) を参照してください。
 
----
-
-## 📂 ファイル構成
-
-```
-lazy_consultant/
-├── src/
-│   ├── server/index.js       # サーバー
-│   └── data/                 # データ保存先（JSON）
-├── public/
-│   ├── index.html            # Dashboard
-│   ├── task.html             # タスク詳細
-│   ├── knowledge.html        # ナレッジ
-│   └── assets/
-│       ├── css/style.css     # スタイル
-│       └── js/               # JavaScript
-└── package.json
-```
 
 ---
 
-## ⚙️ コマンド
+## コマンド
 
 ```bash
-# 開発モード（自動リロード）
-npm run dev
-
-# 本番モード
-npm start
-
-# 停止
-Ctrl + C
+npm run dev    # 開発モード
+npm start      # 本番モード
 ```
 
 ---
 
-## 💡 Tips
+## トラブルシューティング
 
-- **自動保存**: ページを閉じると自動保存
-- **展開/折りたたみ**: プロジェクト/ワーク名の▶をクリック
-- **ステータス**: Planned → Ongoing → Complete と進める
-- **ジャーナル**: 会議メモや進捗を記録
-- **フレームワーク**: 3フェーズのチェックリストを活用
-
----
-
-## 🔧 トラブルシューティング
-
-### ポートが使用中の場合
+### ポート使用中
 ```bash
-# ポート3001を使用しているプロセスを確認
 lsof -i :3001
-
-# 別のポートで起動（.envファイルを作成）
-echo "PORT=3002" > .env
-npm run dev
+echo "PORT=3002" > .env && npm run dev
 ```
 
-### データをリセット
+### データリセット
 ```bash
-# データファイルを初期化
-echo "[]" > src/data/projects.json
-echo "[]" > src/data/works.json
-echo "[]" > src/data/tasks.json
-echo "[]" > src/data/knowledge.json
+echo "[]" > src/data/*.json
 ```
-
----
-
-## 📞 サポート
-
-問題がある場合は、以下を確認：
-1. Node.js がインストールされているか (`node -v`)
-2. `npm install` が正常に完了したか
-3. サーバーが起動しているか (ターミナルのメッセージを確認)
-4. ブラウザのコンソールにエラーがないか (F12で開発者ツール)
-
----
-
-**準備完了！ コンサルティングワークを効率化しましょう！** 🎉
