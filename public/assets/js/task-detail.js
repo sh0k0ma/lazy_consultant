@@ -110,7 +110,6 @@ function renderTaskDetail() {
   
   // Display field values (no inline editing)
   document.getElementById('task-purpose').textContent = currentTask.purpose || '-';
-  document.getElementById('task-type').textContent = currentTask.taskType || '-';
   document.getElementById('task-stakeholders').textContent = currentTask.stakeholders || '-';
   document.getElementById('task-start').textContent = formatDate(currentTask.startDate);
   document.getElementById('task-end').textContent = formatDate(currentTask.endDate);
@@ -217,7 +216,7 @@ function createJournalEntry(journal) {
 
 function renderTaskFramework() {
   const phaseContainer = document.querySelector('.phase-container');
-  const framework = TASK_FRAMEWORKS[currentTask.taskType];
+  const framework = TASK_FRAMEWORKS['universal'];
 
   if (!phaseContainer) {
     return;
@@ -229,7 +228,7 @@ function renderTaskFramework() {
   }
 
   phaseContainer.style.display = '';
-  document.getElementById('framework-type').textContent = currentTask.taskType;
+  document.getElementById('framework-type').textContent = 'ユニバーサルフレームワーク';
 
   ensurePhaseState(currentTask, framework);
 
@@ -256,7 +255,7 @@ function renderPhaseContent() {
   const container = document.getElementById('phase-content-container');
   clearElement(container);
 
-  const framework = TASK_FRAMEWORKS[currentTask.taskType];
+  const framework = TASK_FRAMEWORKS['universal'];
   if (!framework) return;
 
   ensurePhaseState(currentTask, framework);
@@ -411,7 +410,7 @@ function switchPhase(phaseId) {
 }
 
 function completePhase() {
-  const framework = TASK_FRAMEWORKS[currentTask.taskType];
+  const framework = TASK_FRAMEWORKS['universal'];
   if (!framework) return;
 
   ensurePhaseState(currentTask, framework);
@@ -518,7 +517,6 @@ function setupEventListeners() {
     const form = document.getElementById('edit-task-form');
     form.elements.id.value = currentTask.id;
     form.elements.purpose.value = currentTask.purpose || '';
-    form.elements.taskType.value = currentTask.taskType;
     form.elements.stakeholders.value = currentTask.stakeholders || '';
     form.elements.startDate.value = currentTask.startDate;
     form.elements.endDate.value = currentTask.endDate;
@@ -528,20 +526,7 @@ function setupEventListeners() {
   document.getElementById('edit-task-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const oldTaskType = currentTask.taskType;
-    const newTaskType = e.target.elements.taskType.value;
-    
-    // Check if task type changed
-    if (oldTaskType !== newTaskType) {
-      if (!confirm('タスクタイプを変更すると、すべてのフェーズデータがリセットされます。続行しますか?')) {
-        return;
-      }
-      currentTask.phases = {};
-      currentPhaseId = null;
-    }
-    
     currentTask.purpose = e.target.elements.purpose.value;
-    currentTask.taskType = newTaskType;
     currentTask.stakeholders = e.target.elements.stakeholders.value;
     currentTask.startDate = e.target.elements.startDate.value;
     currentTask.endDate = e.target.elements.endDate.value;

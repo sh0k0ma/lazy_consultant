@@ -206,7 +206,7 @@ function createTaskCard(task) {
     createElement('div', { className: 'task-info' }, [
       createElement('h5', {}, [task.name]),
       createElement('div', { className: 'task-meta' }, [
-        `${task.taskType} • ${formatDate(task.startDate)} - ${formatDate(task.endDate)}`
+        `${formatDate(task.startDate)} - ${formatDate(task.endDate)}`
       ])
     ]),
     createElement('span', { className: `status-badge status-${task.status}` }, [task.status])
