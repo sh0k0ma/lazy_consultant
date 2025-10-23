@@ -7,7 +7,7 @@
     "startDate": "2025-10-23",
     "endDate": "2025-10-31",
     "status": "Planned",
-    "useFramework": true,
+    "useFramework": false,
     "phases": {
       "planning": {
         "name": "Planning",
