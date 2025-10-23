@@ -131,6 +131,9 @@ function renderPhaseContent() {
   const contentContainer = document.getElementById('phase-content');
   if (!contentContainer) return;
   
+  // 表示を有効化
+  contentContainer.style.display = 'block';
+  
   clearElement(contentContainer);
   
   const phase = currentTask.phases[currentPhase];
