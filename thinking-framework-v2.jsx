@@ -12,7 +12,6 @@ export default function ThinkingFramework() {
   const [modalTab, setModalTab] = useState("what");
   const [selectedLayer, setSelectedLayer] = useState(null);
   const [animIn, setAnimIn] = useState(false);
-  const [activeNode, setActiveNode] = useState(null);
 
   useEffect(() => {
     if (modal) {
@@ -30,16 +29,20 @@ export default function ThinkingFramework() {
       <GlobalStyles />
       <Header />
 
+      {/* Relationship Overview — top */}
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "60px 28px 0" }}>
+        <RelationshipOverview />
+      </div>
+
       {/* Interactive Network Section */}
       <div id="explore" style={{ background: "#f8f9fa" }}>
-        <NetworkGraph activeNode={activeNode} setActiveNode={setActiveNode} onOpenModal={openModal} />
+        <NetworkGraph onOpenModal={openModal} />
       </div>
 
       {/* Cards Section */}
       <LayerNav selectedLayer={selectedLayer} setSelectedLayer={setSelectedLayer} />
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 28px 60px" }}>
         <LayerSection selectedLayer={selectedLayer} onOpenModal={openModal} />
-        <RelationshipOverview />
       </div>
 
       <Modal

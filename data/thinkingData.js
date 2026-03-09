@@ -438,21 +438,25 @@ data.forEach(d => {
   d.colorLight = lc.colorLight;
 });
 
-// Network graph node positions (viewBox: 0 0 960 540)
+// Network graph node positions (viewBox: 0 0 960 580)
+// Layout: foundation (bottom), execution (middle), expansion (top)
 export const nodePositions = {
-  logical:     { x: 430, y: 280 },
-  critical:    { x: 540, y: 280 },
-  hypothesis:  { x: 480, y: 155 },
-  issue:       { x: 330, y: 195 },
-  framework:   { x: 630, y: 195 },
-  strategic:   { x: 710, y: 310 },
-  reverse:     { x: 570, y: 415 },
-  systems:     { x: 340, y: 400 },
-  lateral:     { x: 190, y: 115 },
-  design:      { x: 150, y: 340 },
-  abstract:    { x: 480, y: 55 },
-  analogy:     { x: 770, y: 115 },
-  "zero-base": { x: 790, y: 410 },
+  // Foundation layer — bottom row
+  logical:     { x: 400, y: 490 },
+  critical:    { x: 560, y: 490 },
+  // Execution layer — middle band
+  hypothesis:  { x: 340, y: 330 },
+  issue:       { x: 200, y: 390 },
+  framework:   { x: 620, y: 330 },
+  strategic:   { x: 760, y: 390 },
+  reverse:     { x: 480, y: 270 },
+  systems:     { x: 480, y: 390 },
+  // Expansion layer — top band
+  lateral:     { x: 160, y: 100 },
+  design:      { x: 320, y: 140 },
+  abstract:    { x: 480, y: 80 },
+  analogy:     { x: 640, y: 140 },
+  "zero-base": { x: 800, y: 100 },
 };
 
 // Deduplicated undirected edges from relations
