@@ -5,12 +5,14 @@ import LayerNav from "./components/LayerNav";
 import LayerSection from "./components/LayerSection";
 import RelationshipOverview from "./components/RelationshipOverview";
 import Modal from "./components/Modal";
+import NetworkGraph from "./components/NetworkGraph";
 
 export default function ThinkingFramework() {
   const [modal, setModal] = useState(null);
   const [modalTab, setModalTab] = useState("what");
   const [selectedLayer, setSelectedLayer] = useState(null);
   const [animIn, setAnimIn] = useState(false);
+  const [activeNode, setActiveNode] = useState(null);
 
   useEffect(() => {
     if (modal) {
@@ -24,12 +26,18 @@ export default function ThinkingFramework() {
   const openModal = (item, tab = "what") => { setModal(item); setModalTab(tab); };
 
   return (
-    <div style={{ fontFamily: "'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif", background: "#fafafa", minHeight: "100vh", color: "#1a1a1a" }}>
+    <div style={{ fontFamily: "'Inter', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif", background: "#f8f9fa", minHeight: "100vh", color: "#111827" }}>
       <GlobalStyles />
       <Header />
-      <LayerNav selectedLayer={selectedLayer} setSelectedLayer={setSelectedLayer} />
 
-      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "32px 28px 60px" }}>
+      {/* Interactive Network Section */}
+      <div id="explore" style={{ background: "#f8f9fa" }}>
+        <NetworkGraph activeNode={activeNode} setActiveNode={setActiveNode} onOpenModal={openModal} />
+      </div>
+
+      {/* Cards Section */}
+      <LayerNav selectedLayer={selectedLayer} setSelectedLayer={setSelectedLayer} />
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 28px 60px" }}>
         <LayerSection selectedLayer={selectedLayer} onOpenModal={openModal} />
         <RelationshipOverview />
       </div>

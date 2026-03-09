@@ -418,10 +418,52 @@ export const data = [
 ];
 
 export const layers = [
-  { id: "foundation", label: "基盤層", en: "Foundation Layer", color: "#c0392b", desc: "すべての思考の土台となる普遍的能力", count: 2 },
-  { id: "execution", label: "実行層", en: "Execution Layer", color: "#2980b9", desc: "問題解決・戦略立案を直接駆動する実務の武器", count: 6 },
-  { id: "expansion", label: "拡張層", en: "Expansion Layer", color: "#27ae60", desc: "既存の枠を超え、新たな価値を創造する", count: 5 },
+  { id: "foundation", label: "基盤層", en: "Foundation Layer", color: "#c0392b", colorLight: "#fef2f2", desc: "すべての思考の土台となる普遍的能力", count: 2 },
+  { id: "execution", label: "実行層", en: "Execution Layer", color: "#2563eb", colorLight: "#eff6ff", desc: "問題解決・戦略立案を直接駆動する実務の武器", count: 6 },
+  { id: "expansion", label: "拡張層", en: "Expansion Layer", color: "#059669", colorLight: "#ecfdf5", desc: "既存の枠を超え、新たな価値を創造する", count: 5 },
 ];
 
 export const nameById = {};
 data.forEach(d => { nameById[d.id] = d.name; });
+
+// Normalize colors: layer = color meaning
+const layerColorMap = {
+  foundation: { color: "#c0392b", colorLight: "#fef2f2" },
+  execution:  { color: "#2563eb", colorLight: "#eff6ff" },
+  expansion:  { color: "#059669", colorLight: "#ecfdf5" },
+};
+data.forEach(d => {
+  const lc = layerColorMap[d.layer];
+  d.color = lc.color;
+  d.colorLight = lc.colorLight;
+});
+
+// Network graph node positions (viewBox: 0 0 960 540)
+export const nodePositions = {
+  logical:     { x: 430, y: 280 },
+  critical:    { x: 540, y: 280 },
+  hypothesis:  { x: 480, y: 155 },
+  issue:       { x: 330, y: 195 },
+  framework:   { x: 630, y: 195 },
+  strategic:   { x: 710, y: 310 },
+  reverse:     { x: 570, y: 415 },
+  systems:     { x: 340, y: 400 },
+  lateral:     { x: 190, y: 115 },
+  design:      { x: 150, y: 340 },
+  abstract:    { x: 480, y: 55 },
+  analogy:     { x: 770, y: 115 },
+  "zero-base": { x: 790, y: 410 },
+};
+
+// Deduplicated undirected edges from relations
+export const networkEdges = [];
+const edgeSet = new Set();
+data.forEach(d => {
+  d.relations.forEach(rId => {
+    const key = [d.id, rId].sort().join("-");
+    if (!edgeSet.has(key)) {
+      edgeSet.add(key);
+      networkEdges.push({ from: d.id, to: rId });
+    }
+  });
+});
