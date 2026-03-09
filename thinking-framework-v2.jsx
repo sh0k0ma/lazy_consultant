@@ -1,0 +1,746 @@
+import { useState, useEffect } from "react";
+
+const data = [
+  {
+    id: "logical",
+    name: "論理的思考",
+    en: "Logical Thinking",
+    layer: "foundation",
+    layerLabel: "基盤層",
+    color: "#c0392b",
+    colorLight: "#fdecea",
+    icon: "⛓",
+    summary: "すべての思考の土台。因果関係・演繹・帰納で矛盾なく結論を導く。",
+    what: {
+      overview: "前提→推論→結論を、論理的飛躍なく積み上げる思考法。あらゆるコンサルティング思考の基盤であり、この能力なしには他の思考法は機能しない。",
+      structure: [
+        { label: "演繹法", desc: "一般法則（大前提）から個別の結論を導く。「すべてのA はBである。CはAである。ゆえにCはBである」という三段論法が典型。戦略の論理的整合性を検証する際に多用。" },
+        { label: "帰納法", desc: "複数の個別事実から共通パターンを抽出し、一般法則を導く。クライアントの事業データや業界トレンドから仮説を構築する際の基本動作。" },
+        { label: "MECE分解", desc: "Mutually Exclusive, Collectively Exhaustive（漏れなくダブりなく）。問題をロジックツリーで分解し、分析の網羅性を担保する。" },
+        { label: "因果推論", desc: "「AだからB」という因果の鎖を正確に追う。相関と因果を混同しないことが、データドリブンな意思決定の前提条件。" },
+      ],
+    },
+    when: "あらゆる場面。特に複雑な問題の分解、提案書のストーリーライン構築、クライアントへの説明責任を果たす場面で不可欠。",
+    useCases: [
+      { title: "収益低下の原因分析", desc: "売上＝単価×数量×顧客数とロジックツリーで分解し、どの変数が低下しているかをMECEに特定する。" },
+      { title: "提案書のストーリー構築", desc: "「現状分析→課題特定→打ち手→効果試算」をピラミッドストラクチャーで矛盾なく組み立てる。" },
+      { title: "経営会議での反論対応", desc: "質問に対して「前提→根拠→結論」の三段論法で即座に論理的に回答し、信頼を獲得する。" },
+    ],
+    transitions: [
+      { to: "critical", timing: "論理を組み立てた後", desc: "自分の論理に飛躍がないか、前提が正しいかを検証するために批判的思考に移行する。" },
+      { to: "framework", timing: "問題を分解する際", desc: "MECE分解を効率的に行うために、既存フレームワーク（3C、バリューチェーン等）を活用する。" },
+      { to: "hypothesis", timing: "分析の方向性を決める際", desc: "論理構造を骨格として、仮の結論（仮説）を立てて検証サイクルに入る。" },
+    ],
+    relations: ["critical", "framework", "hypothesis"],
+  },
+  {
+    id: "critical",
+    name: "批判的思考",
+    en: "Critical Thinking",
+    layer: "foundation",
+    layerLabel: "基盤層",
+    color: "#e67e22",
+    colorLight: "#fef5e7",
+    icon: "🔍",
+    summary: "前提・根拠・バイアスを疑い、思考の質を検証する「メタ思考」。",
+    what: {
+      overview: "「本当にそうか？」を問い続ける思考。情報の信頼性、論証の妥当性、自分自身の認知バイアスを検証し、思考の品質管理を行う。",
+      structure: [
+        { label: "前提の検証", desc: "「この分析の前提は何か？その前提は本当に正しいか？」を問う。多くの誤った結論は、誤った前提から生まれる。" },
+        { label: "バイアス認識", desc: "確証バイアス（自説に都合の良い情報だけ集める）、アンカリング（最初の情報に引きずられる）等の認知バイアスを自覚する。" },
+        { label: "エビデンス評価", desc: "データの出所、サンプルサイズ、測定方法の妥当性を評価し、情報の信頼度を格付けする。" },
+        { label: "反証の探索", desc: "自分の仮説を「否定する証拠」を積極的に探す。反証に耐えた仮説だけが信頼に値する。" },
+      ],
+    },
+    when: "仮説の検証段階、データ分析結果の解釈、意思決定前のリスク評価、クライアント報告前の品質チェック。",
+    useCases: [
+      { title: "市場調査データの信頼性評価", desc: "調査のサンプリング手法・回答バイアス・設問設計を検証し、データに基づく提言の妥当性を担保する。" },
+      { title: "競合分析の盲点チェック", desc: "自社に有利な情報だけ集めていないか、確証バイアスを意識的に排除して競合の強みを正当に評価する。" },
+      { title: "M&Aデューデリジェンス", desc: "対象企業が提示する財務データ・事業計画の前提を一つずつ疑い、隠れたリスクを炙り出す。" },
+    ],
+    transitions: [
+      { to: "logical", timing: "論理の穴を発見した時", desc: "批判的に検証した結果、論理の飛躍を発見したら、論理的思考に戻って構造を再構築する。" },
+      { to: "zero-base", timing: "前提そのものが間違っていた時", desc: "既存の前提が根本的に誤っていると判明した場合、ゼロベースで考え直す必要が生じる。" },
+      { to: "hypothesis", timing: "反証を踏まえた仮説修正時", desc: "批判的検証の結果を踏まえ、仮説を修正・再構築して次の検証サイクルに進む。" },
+    ],
+    relations: ["logical", "hypothesis", "zero-base"],
+  },
+  {
+    id: "hypothesis",
+    name: "仮説思考",
+    en: "Hypothesis-driven Thinking",
+    layer: "execution",
+    layerLabel: "実行層",
+    color: "#2c3e50",
+    colorLight: "#ebedef",
+    icon: "🎯",
+    summary: "限られた情報から「答えの仮説」を先に立て、検証で磨き上げるスピード重視の思考。",
+    what: {
+      overview: "情報が20%しか揃っていない段階で、「おそらく答えはこうだろう」という仮の結論を設定し、検証→修正を高速で回す。完璧な分析を待つのではなく、仮説によって分析の焦点を絞ることで、限られた時間と資源で最大の成果を出す。",
+      structure: [
+        { label: "仮説構築", desc: "限られた情報・経験・直感から「おそらくこうだろう」という暫定的な答えを立てる。良い仮説は「検証可能」かつ「具体的」であること。" },
+        { label: "検証設計", desc: "仮説を支持する/否定するデータは何かを特定し、最小限の労力で検証する方法を設計する。" },
+        { label: "高速検証", desc: "完璧なデータを集めるのではなく、仮説の正否を判断できる最小限のエビデンスを素早く集める。" },
+        { label: "仮説進化", desc: "検証結果に基づき仮説を修正・精緻化し、次のサイクルに進む。このPDCAを高速で何周も回す。" },
+      ],
+    },
+    when: "プロジェクト初期のイシュー設定、Day1仮説の構築、クライアントへの初期仮説提示、限られた時間での意思決定。",
+    useCases: [
+      { title: "新規プロジェクトのDay1仮説", desc: "業界知見とクライアントヒアリングから初日で「売上低迷の主因は新規顧客獲得コストの高騰」と仮説を立て、2週間で検証する。" },
+      { title: "新規事業の市場性評価", desc: "「ターゲット市場は500億円規模で年率10%成長」と仮説を設定し、公開データ3-4点で素早く検証する。" },
+      { title: "組織課題の診断", desc: "「離職率の高さはミドルマネジメントのマネジメント力不足が主因」と仮説を立て、インタビュー5件で検証する。" },
+    ],
+    transitions: [
+      { to: "critical", timing: "仮説を検証する段階で", desc: "立てた仮説に対して批判的思考で「本当にそうか？」を問い、バイアスのない検証を行う。" },
+      { to: "issue", timing: "仮説を立てる前に", desc: "そもそも「解くべき問い」が正しいかをイシュー思考で確認してから仮説構築に入る。" },
+      { to: "logical", timing: "仮説を構造化する際に", desc: "仮説の論理構造をロジックツリーで整理し、検証ポイントを明確化する。" },
+    ],
+    relations: ["logical", "critical", "issue"],
+  },
+  {
+    id: "strategic",
+    name: "戦略的思考",
+    en: "Strategic Thinking",
+    layer: "execution",
+    layerLabel: "実行層",
+    color: "#2980b9",
+    colorLight: "#ebf5fb",
+    icon: "♟",
+    summary: "全体最適・長期視点で、限られた資源の配分と優先順位を決める思考。",
+    what: {
+      overview: "「何をやるか」以上に「何をやらないか」を決める思考。目的→現状→ギャップ→打ち手という流れで、限られたリソースをどこに集中させるかを判断する。短期の効率ではなく、中長期の競争優位を構築する視点が本質。",
+      structure: [
+        { label: "目的の明確化", desc: "「何を達成したいのか」を定義する。目的が曖昧だと、すべての戦略議論が空転する。" },
+        { label: "現状の構造理解", desc: "外部環境（市場・競合・規制）と内部環境（強み・弱み・資源）を構造的に把握する。" },
+        { label: "ギャップ分析", desc: "目的と現状の差分を特定し、その差分を埋めるために必要な変化の大きさと方向を明確にする。" },
+        { label: "資源配分の意思決定", desc: "「どこに賭けるか」を決める。トレードオフを直視し、複数の選択肢の中から最も効果的な打ち手を選ぶ。" },
+      ],
+    },
+    when: "中期経営計画策定、事業ポートフォリオ最適化、新市場参入判断、競争戦略の立案。",
+    useCases: [
+      { title: "中期経営計画の策定", desc: "3年後のあるべき姿を定義し、事業ポートフォリオの取捨選択と経営資源の再配分方針を決定する。" },
+      { title: "海外市場参入戦略", desc: "参入可能な10市場を評価し、市場魅力度×自社の勝てる確率で優先順位をつけ、最初の2市場に集中する。" },
+      { title: "デジタル変革（DX）戦略", desc: "全社のDX投資予算をどの業務領域に優先配分するか、ROIと戦略的重要性の2軸で判断する。" },
+    ],
+    transitions: [
+      { to: "systems", timing: "全体像を把握する段階で", desc: "戦略の影響が複数部門・ステークホルダーに及ぶ場合、システム思考で相互作用を理解する。" },
+      { to: "reverse", timing: "戦略を実行計画に落とす段階で", desc: "「3年後の目標」から逆算して、各年度・四半期のマイルストーンを設計する。" },
+      { to: "framework", timing: "環境分析の段階で", desc: "3C・5Forces・PEST等のフレームワークを活用して、構造的に環境を整理する。" },
+    ],
+    relations: ["systems", "reverse", "hypothesis", "framework"],
+  },
+  {
+    id: "systems",
+    name: "システム思考",
+    en: "Systems Thinking",
+    layer: "execution",
+    layerLabel: "実行層",
+    color: "#27ae60",
+    colorLight: "#eafaf1",
+    icon: "🔄",
+    summary: "要素間の相互作用・フィードバックループ・時間軸を捉え、全体像を理解する。",
+    what: {
+      overview: "問題を「孤立した事象」ではなく「相互に影響し合うシステム全体の振る舞い」として捉える思考法。部分最適が全体最適を損なうケースや、施策の副作用・遅延効果を事前に予測するために不可欠。",
+      structure: [
+        { label: "要素の特定", desc: "システムを構成する主要な要素（プレイヤー、変数、プロセス）を洗い出す。" },
+        { label: "相互作用のマッピング", desc: "要素間の因果関係・影響関係を矢印で結び、「AがBに影響し、BがCに影響する」という連鎖を可視化する。" },
+        { label: "フィードバックループの発見", desc: "「強化ループ（好循環/悪循環）」と「バランスループ（安定化）」を特定し、システムのダイナミクスを理解する。" },
+        { label: "レバレッジポイントの特定", desc: "システム全体に最も大きな変化をもたらす介入点（テコの支点）を見つけ、最小の力で最大の効果を狙う。" },
+      ],
+    },
+    when: "組織変革、サプライチェーン最適化、政策立案、複雑な社会課題、副作用評価。",
+    useCases: [
+      { title: "組織変革の副作用予測", desc: "人員削減→残存社員の負荷増→離職率上昇→さらなる人手不足という悪循環ループを事前に特定し、対策を設計する。" },
+      { title: "サブスクモデルの成長設計", desc: "顧客獲得→データ蓄積→サービス改善→顧客満足度向上→口コミ拡大→新規顧客獲得という好循環の強化ループを設計する。" },
+      { title: "サプライチェーンのボトルネック解消", desc: "調達・製造・物流・販売の全体像をマッピングし、一箇所の改善が全体に波及するレバレッジポイントを特定する。" },
+    ],
+    transitions: [
+      { to: "strategic", timing: "レバレッジポイント特定後", desc: "システム全体の理解を踏まえ、戦略的に「どこに介入するか」を意思決定する。" },
+      { to: "abstract", timing: "パターンを抽出する際", desc: "個別のシステム構造から一般化可能なパターンを抽出し、他の文脈に転用する。" },
+      { to: "logical", timing: "因果関係を精緻化する際", desc: "相互作用の因果関係が本当に正しいか、論理的思考で一つずつ検証する。" },
+    ],
+    relations: ["logical", "strategic", "abstract"],
+  },
+  {
+    id: "framework",
+    name: "フレームワーク思考",
+    en: "Framework Thinking",
+    layer: "execution",
+    layerLabel: "実行層",
+    color: "#8e44ad",
+    colorLight: "#f5eef8",
+    icon: "📐",
+    summary: "3C・4P・SWOTなど既存の枠組みを活用し、効率的に問題を構造化する。",
+    what: {
+      overview: "先人が体系化した分析フレームワークを「思考の型」として活用し、問題構造化の速度と網羅性を両立する思考法。ただし、フレームワークは「考える道具」であり「答え」ではない。型に当てはめるだけでは本質を見失う。",
+      structure: [
+        { label: "適切な型の選択", desc: "問題の性質に合ったフレームワークを選ぶ。外部環境分析→PEST/5Forces、競争戦略→3C、マーケティング→4P等。" },
+        { label: "型への情報整理", desc: "収集した情報をフレームワークの各要素に分類・整理し、「何が分かっていて、何が分かっていないか」を明確にする。" },
+        { label: "型を超えた洞察", desc: "フレームワークで整理した後、「このフレームワークでは見えない論点はないか？」を必ず問う。" },
+        { label: "複数フレームワークの併用", desc: "一つのフレームワークでは全体像が見えない場合、複数のフレームワークを組み合わせて多角的に分析する。" },
+      ],
+    },
+    when: "市場分析、競合分析、事業環境評価、初期の問題構造化、チーム内の議論の共通言語として。",
+    useCases: [
+      { title: "新規参入市場の環境分析", desc: "PEST→5Forces→3Cの順でマクロ→業界→競合と分析の粒度を段階的に細かくしていく。" },
+      { title: "プロダクト戦略の立案", desc: "STP（セグメンテーション→ターゲティング→ポジショニング）→4Pで一貫したマーケティング戦略を構築する。" },
+      { title: "事業再建プランの策定", desc: "バリューチェーン分析でコスト構造を可視化し、SWOT分析で強みを活かした再建の方向性を定める。" },
+    ],
+    transitions: [
+      { to: "logical", timing: "フレームワークの各要素を埋める際", desc: "各セルの情報が論理的に正しいか、MECEに整理されているかを検証する。" },
+      { to: "lateral", timing: "フレームワークで行き詰まった際", desc: "型に囚われて新しい視点が出ない場合、水平思考で枠を壊す必要がある。" },
+      { to: "strategic", timing: "分析結果から戦略を導く際", desc: "環境分析の結果を踏まえ、戦略的思考で「何に資源を集中するか」を判断する。" },
+    ],
+    relations: ["logical", "strategic", "hypothesis"],
+  },
+  {
+    id: "issue",
+    name: "イシュー思考",
+    en: "Issue-driven Thinking",
+    layer: "execution",
+    layerLabel: "実行層",
+    color: "#d35400",
+    colorLight: "#fdf2e9",
+    icon: "❗",
+    summary: "「解くべき問い」を正しく設定することに最大の労力を注ぐ思考。",
+    what: {
+      overview: "「イシュー度（解く価値の高さ）×解の質」を最大化する思考法。多くのプロジェクトが失敗する原因は、解の質の低さではなく、そもそも解くべき問いの設定ミスにある。「犬の道」（イシュー度の低い問いに時間をかけること）を避けることが核心。",
+      structure: [
+        { label: "イシューの見極め", desc: "「今、本当に答えを出すべき問いは何か？」を特定する。答えが出ても意思決定に影響しない問いは解く価値がない。" },
+        { label: "イシュー度の評価", desc: "その問いに答えることで、どれだけ大きなインパクトがあるかを評価する。意思決定の方向性を変える問いが高イシュー度。" },
+        { label: "サブイシューへの分解", desc: "大きなイシューを、答えを出せる大きさのサブイシューに分解する。各サブイシューは独立して検証可能であること。" },
+        { label: "優先順位づけ", desc: "分解したサブイシューに優先順位をつけ、限られた時間で最も重要な問いから順に取り組む。" },
+      ],
+    },
+    when: "プロジェクト開始時の論点設定、経営会議のアジェンダ設計、リソース配分判断。",
+    useCases: [
+      { title: "コンサルプロジェクトの初期設計", desc: "「売上を伸ばすには？」という曖昧な問いを「既存顧客の単価向上 vs 新規顧客獲得のどちらに注力すべきか？」と具体化する。" },
+      { title: "経営会議のアジェンダ改革", desc: "毎月の経営会議で議論される20議題を、イシュー度で評価し「今月意思決定すべき3議題」に絞り込む。" },
+      { title: "R&D投資判断", desc: "10の研究テーマから「5年以内に市場化可能かつ市場規模100億円以上」のイシュー度で3テーマに絞る。" },
+    ],
+    transitions: [
+      { to: "hypothesis", timing: "イシュー設定後すぐに", desc: "解くべき問いが定まったら、その問いに対する仮説を立てて検証サイクルに入る。" },
+      { to: "strategic", timing: "「何をやらないか」を決める際", desc: "イシュー度の低い論点を切り捨てる判断は、戦略的思考の「選択と集中」と直結する。" },
+      { to: "critical", timing: "イシュー設定の妥当性を検証する際", desc: "設定したイシューが本当に「解く価値がある問い」か、批判的に検証する。" },
+    ],
+    relations: ["hypothesis", "strategic", "critical"],
+  },
+  {
+    id: "reverse",
+    name: "逆算思考",
+    en: "Backward Thinking",
+    layer: "execution",
+    layerLabel: "実行層",
+    color: "#16a085",
+    colorLight: "#e8f8f5",
+    icon: "⏪",
+    summary: "ゴールから逆算して、必要なステップを設計する思考。",
+    what: {
+      overview: "「未来の成功状態」を具体的かつ鮮明に描き、そこから現在に向かって必要なマイルストーンを逆順に配置する思考法。「今何をすべきか」を現状起点で考えるのではなく、「ゴールに到達するために何が必要か」を終点起点で設計する。",
+      structure: [
+        { label: "成功状態の具体化", desc: "「3年後にどういう状態であれば成功か」を数値・状態の両面で具体的に定義する。曖昧なゴールからは逆算できない。" },
+        { label: "マイルストーンの設定", desc: "ゴールから逆算して「1年後」「半年後」「3ヶ月後」「来月」に達成すべき中間目標を配置する。" },
+        { label: "必要条件の特定", desc: "各マイルストーン達成に必要なリソース・能力・条件を洗い出し、現状とのギャップを明確にする。" },
+        { label: "クリティカルパスの設計", desc: "すべてのタスクの依存関係を整理し、最も時間がかかる経路（クリティカルパス）を特定して重点管理する。" },
+      ],
+    },
+    when: "プロジェクト計画、KPI設計、ロードマップ策定、目標達成プランニング。",
+    useCases: [
+      { title: "IPO準備プロジェクト", desc: "上場予定日から逆算して、監査法人選定→内部統制構築→申請書類作成→審査対応の各フェーズの締切を設定する。" },
+      { title: "年間売上目標の達成計画", desc: "年間売上100億円の目標から逆算し、月次の受注目標→週次のパイプライン目標→日次の営業活動量を算出する。" },
+      { title: "DXロードマップの策定", desc: "3年後の「全業務デジタル化」から逆算し、1年目:基盤構築→2年目:主要業務移行→3年目:全面展開と段階設計する。" },
+    ],
+    transitions: [
+      { to: "strategic", timing: "ゴール設定の段階で", desc: "逆算の起点となる「成功状態」の定義には、戦略的思考による目的・方向性の明確化が必要。" },
+      { to: "zero-base", timing: "既存計画を見直す際", desc: "「もしゼロから計画するなら同じスケジュールにするか？」と問い、前例踏襲を排除する。" },
+      { to: "hypothesis", timing: "各マイルストーンの実現可能性を検証する際", desc: "逆算で設定した各ステップが実現可能かを仮説として検証する。" },
+    ],
+    relations: ["strategic", "zero-base", "hypothesis"],
+  },
+  {
+    id: "lateral",
+    name: "水平思考",
+    en: "Lateral Thinking",
+    layer: "expansion",
+    layerLabel: "拡張層",
+    color: "#e74c3c",
+    colorLight: "#fdedec",
+    icon: "💡",
+    summary: "既存の枠を壊し、まったく異なる角度からアイデアを生み出す創造的思考。",
+    what: {
+      overview: "エドワード・デボノが提唱した、論理的（垂直的）思考の対概念。既存の前提・常識・思考パターンを意図的に壊し、まったく異なる角度から問題にアプローチする。「正しい答え」を論理的に導くのではなく、「新しい視点」を創造的に生み出す。",
+      structure: [
+        { label: "前提の逆転", desc: "「もし〇〇の逆が正しかったら？」と仮定する。「顧客は価格で選ぶ」→「もし価格が高いほど売れるとしたら？」" },
+        { label: "ランダム刺激", desc: "無関係な概念を強制的に結びつける。辞書をランダムに開いた単語と問題を組み合わせて発想する。" },
+        { label: "類推的飛躍", desc: "まったく異なる分野の解決策を「借りてくる」。医療の問題に製造業のアプローチを適用する等。" },
+        { label: "制約の除去", desc: "「もし予算が無限だったら？」「もし法規制がなかったら？」と制約を外して理想形を発想し、そこから現実解に近づける。" },
+      ],
+    },
+    when: "イノベーション創出、新規事業開発、行き詰まった議論の突破、ブレインストーミング。",
+    useCases: [
+      { title: "新規事業アイデア創出", desc: "「ホテル業界の常識を全部逆転させたら？」→自社物件なし・価格変動制・宿泊者が部屋を提供＝Airbnbモデルの発想。" },
+      { title: "コスト削減の発想転換", desc: "「コストを下げる」ではなく「もしこの工程自体をなくしたら？」と問い、BPR的な抜本改革案を生む。" },
+      { title: "採用難の解消", desc: "「良い人材を採る」→「良い人材が自ら来る仕組みを作る」と視点を逆転させ、採用ブランディング戦略を構想する。" },
+    ],
+    transitions: [
+      { to: "analogy", timing: "他分野から解法を借りる際", desc: "水平に飛んだアイデアを、アナロジー思考で構造的に精緻化する。" },
+      { to: "design", timing: "アイデアを形にする際", desc: "水平思考で生まれたアイデアを、デザイン思考のプロトタイプで素早く形にする。" },
+      { to: "logical", timing: "アイデアの実現可能性を検証する際", desc: "創造的なアイデアが論理的に成立するか、実現可能かを検証する段階で論理的思考に戻る。" },
+    ],
+    relations: ["analogy", "zero-base", "design"],
+  },
+  {
+    id: "design",
+    name: "デザイン思考",
+    en: "Design Thinking",
+    layer: "expansion",
+    layerLabel: "拡張層",
+    color: "#f1c40f",
+    colorLight: "#fef9e7",
+    icon: "✏️",
+    summary: "ユーザーへの共感を起点に、試作と検証を繰り返して解を創る。",
+    what: {
+      overview: "スタンフォードd.schoolが体系化した、人間中心のイノベーション手法。従来の「分析して正解を導く」アプローチではなく、「共感して解を創り、試して学ぶ」アプローチ。不確実性の高い問題に対して、小さく素早く試すことで解を見つける。",
+      structure: [
+        { label: "共感（Empathize）", desc: "ユーザーの行動を観察し、インタビューで深層心理を理解する。「何を言っているか」だけでなく「何を感じているか」を掘り下げる。" },
+        { label: "問題定義（Define）", desc: "共感で得たインサイトから「本当に解くべき問い」を再定義する。ユーザー自身が言語化できていない真のニーズを特定する。" },
+        { label: "創造（Ideate）", desc: "量を重視したブレインストーミングで大量のアイデアを出し、その後に収束させる。" },
+        { label: "試作・検証（Prototype/Test）", desc: "最小限のプロトタイプを素早く作り、ユーザーに試してもらって学ぶ。失敗を「学び」として次のサイクルに活かす。" },
+      ],
+    },
+    when: "顧客体験（CX）改善、新サービス開発、社内業務改革、人間中心の組織変革。",
+    useCases: [
+      { title: "顧客体験（CX）の改善", desc: "コールセンターに寄せられる不満を分析するだけでなく、顧客の自宅に行き実際の製品使用場面を観察して、潜在的な不満を発見する。" },
+      { title: "社内業務プロセスの改革", desc: "現場社員に1日密着し、システムの使いにくさ・非効率な承認フローなど「声に出されない不満」を発見して改善する。" },
+      { title: "新サービスのコンセプト検証", desc: "PowerPointの画面モックだけでユーザーテストを実施し、開発前にコンセプトの方向性を検証する。" },
+    ],
+    transitions: [
+      { to: "lateral", timing: "Ideateフェーズで", desc: "アイデア創出フェーズで水平思考を活用し、既存の枠にとらわれない発想を促す。" },
+      { to: "hypothesis", timing: "Prototype/Testフェーズで", desc: "プロトタイプを作る際に「この機能があれば○○が改善する」と仮説を立てて検証する。" },
+      { to: "systems", timing: "サービス全体を設計する際", desc: "個別のタッチポイントだけでなく、サービス全体のエコシステムをシステム思考で設計する。" },
+    ],
+    relations: ["lateral", "hypothesis", "systems"],
+  },
+  {
+    id: "abstract",
+    name: "抽象化思考",
+    en: "Abstract Thinking",
+    layer: "expansion",
+    layerLabel: "拡張層",
+    color: "#2471a3",
+    colorLight: "#ebf5fb",
+    icon: "🔮",
+    summary: "具体から本質を抽出し、異なる文脈に転用可能な概念に昇華する。",
+    what: {
+      overview: "具体的な事象から「要するに何なのか」という本質・パターンを抽出し、別の具体的文脈に適用する思考法。抽象と具体を自在に往復する能力であり、経験を「知恵」に変換するメカニズムそのもの。",
+      structure: [
+        { label: "具体→抽象（上位概念化）", desc: "個別の事象から共通する構造・原理・パターンを見出す。「A社もB社もC社もこのパターンだ」と一般化する。" },
+        { label: "抽象レベルでの操作", desc: "抽出した概念を組み合わせたり、変形したり、他の概念と接続したりして、新しい洞察を得る。" },
+        { label: "抽象→具体（具体化）", desc: "抽象的な概念を、特定の状況・クライアント・業界に合わせて具体的なアクションプランに落とし込む。" },
+        { label: "抽象度の調整", desc: "相手の理解度や議論の目的に応じて、説明の抽象度を自在に上げ下げする。経営層には抽象的に、実務者には具体的に。" },
+      ],
+    },
+    when: "業界横断のベストプラクティス転用、複雑な問題の本質把握、他社事例の自社適用。",
+    useCases: [
+      { title: "異業種ベストプラクティスの転用", desc: "トヨタ生産方式の「ジャストインタイム」を抽象化→「必要なものを必要な時に必要な量だけ」→病院の薬剤管理に具体化する。" },
+      { title: "成功事例のパターン抽出", desc: "過去10プロジェクトの成功要因を抽象化し「経営トップのコミットメント×現場チャンピオンの存在」というパターンを発見する。" },
+      { title: "経営層への報告", desc: "現場の複雑な状況を「要するに3つの問題に集約される」と抽象化し、意思決定可能な粒度で報告する。" },
+    ],
+    transitions: [
+      { to: "analogy", timing: "抽象化したパターンを別の領域に適用する際", desc: "抽象化で見出した構造的パターンを、アナロジー思考で具体的な別領域に「架け橋」する。" },
+      { to: "systems", timing: "全体構造を理解する際", desc: "個々の事象を抽象化してパターンを見出した上で、システム思考で全体の構造を理解する。" },
+      { to: "logical", timing: "帰納的推論を行う際", desc: "複数の具体事例から一般法則を導く「帰納法」は、論理的思考と抽象化思考の接点。" },
+    ],
+    relations: ["analogy", "logical", "systems"],
+  },
+  {
+    id: "analogy",
+    name: "アナロジー思考",
+    en: "Analogical Thinking",
+    layer: "expansion",
+    layerLabel: "拡張層",
+    color: "#c0392b",
+    colorLight: "#fdedec",
+    icon: "🪞",
+    summary: "異分野の類似構造を見出し、解決策を「借りてくる」思考。",
+    what: {
+      overview: "「AとBは一見違うが、構造が似ている」という類推を通じて、ある領域で成功した解法を別の領域に転用する思考法。表面的な類似ではなく「構造的な類似」を見抜く目が重要。",
+      structure: [
+        { label: "構造の抽出", desc: "参照元の事例から、表面的な特徴ではなく「なぜ成功したのか」の構造的メカニズムを抽出する。" },
+        { label: "類似構造の探索", desc: "抽出した構造と同じメカニズムが働きうる、異なる領域・文脈を探す。" },
+        { label: "転用と適応", desc: "参照元の解法を、転用先の固有の制約・条件に合わせて調整し、適用する。" },
+        { label: "差異の検証", desc: "「どこまでが同じでどこからが違うか」を慎重に検証し、安易な適用による失敗を防ぐ。" },
+      ],
+    },
+    when: "異業種ベストプラクティスの導入、新市場参入戦略、イノベーション創出。",
+    useCases: [
+      { title: "金融業界へのサブスク導入", desc: "SaaS業界のサブスクモデル（低価格で顧客を獲得→利用データで改善→アップセル）の構造を金融商品販売に転用する。" },
+      { title: "製造業のDX推進", desc: "EC業界のパーソナライゼーション（データ→セグメント→個別対応）の構造を、B2B製造業の営業プロセスに適用する。" },
+      { title: "社内制度改革", desc: "ゲーム業界のエンゲージメント手法（ポイント→レベル→報酬）の構造を、社内研修制度に転用して参加率を向上させる。" },
+    ],
+    transitions: [
+      { to: "abstract", timing: "構造を抽出する際", desc: "アナロジーの出発点は抽象化思考による構造の抽出。「要するに何のメカニズムか」を理解する。" },
+      { to: "lateral", timing: "参照先を探索する際", desc: "「まったく関係ない業界から学べることはないか」と水平思考で発想を広げる。" },
+      { to: "critical", timing: "転用の妥当性を検証する際", desc: "「この類推は本当に成立するか？」を批判的に検証し、表面的な類似に騙されないようにする。" },
+    ],
+    relations: ["abstract", "lateral"],
+  },
+  {
+    id: "zero-base",
+    name: "ゼロベース思考",
+    en: "Zero-based Thinking",
+    layer: "expansion",
+    layerLabel: "拡張層",
+    color: "#1abc9c",
+    colorLight: "#e8f8f5",
+    icon: "🗑",
+    summary: "既存の前提をすべて白紙に戻し、あるべき姿から考え直す。",
+    what: {
+      overview: "「もし今日ゼロから始めるとしたら、同じことをするか？」という問いを核とする思考法。過去の経緯・しがらみ・組織の慣性を意識的に排除し、「本来あるべき姿」から現在を評価する。サンクコスト（埋没費用）に囚われないための思考法でもある。",
+      structure: [
+        { label: "既存前提の棚卸し", desc: "「なぜこの方法なのか」「なぜこの体制なのか」を問い、暗黙の前提を意識化する。多くの場合、過去の経緯でそうなっているだけ。" },
+        { label: "白紙化", desc: "棚卸しした前提を一旦すべて取り払い、「制約がなかったらどうするか」を考える。" },
+        { label: "あるべき姿の設計", desc: "白紙の状態から、目的に最も適した「理想形」を設計する。現実の制約は後から考慮する。" },
+        { label: "現実との摺り合わせ", desc: "理想形と現実の制約を摺り合わせ、「理想に最も近い現実解」を見出す。理想を知っているから妥協点を戦略的に選べる。" },
+      ],
+    },
+    when: "組織再編、BPR（業務プロセス改革）、コスト構造の抜本改革、「聖域なき改革」。",
+    useCases: [
+      { title: "組織構造の抜本改革", desc: "「もしゼロから組織を作るなら、この部署は必要か？」と問い、歴史的経緯で残った不要な組織を特定する。" },
+      { title: "ゼロベース予算編成", desc: "前年比〇%増ではなく、全ての予算項目をゼロから「本当に必要か？いくら必要か？」を積み上げて予算を再構築する。" },
+      { title: "レガシーシステムの刷新判断", desc: "「このシステムを今から新規導入するか？」と問い、サンクコストに囚われずリプレイス判断をする。" },
+    ],
+    transitions: [
+      { to: "critical", timing: "既存前提を疑う段階で", desc: "「なぜこの方法なのか」を問う際、批判的思考で前提の妥当性を検証する。" },
+      { to: "reverse", timing: "あるべき姿を設計した後", desc: "理想形が定まったら、逆算思考でその実現に必要なステップを設計する。" },
+      { to: "lateral", timing: "まったく新しい解法を探す際", desc: "白紙に戻した後、水平思考で従来とは異なるアプローチを探索する。" },
+    ],
+    relations: ["critical", "lateral", "reverse"],
+  },
+];
+
+const layers = [
+  { id: "foundation", label: "基盤層", en: "Foundation Layer", color: "#c0392b", desc: "すべての思考の土台となる普遍的能力", count: 2 },
+  { id: "execution", label: "実行層", en: "Execution Layer", color: "#2980b9", desc: "問題解決・戦略立案を直接駆動する実務の武器", count: 6 },
+  { id: "expansion", label: "拡張層", en: "Expansion Layer", color: "#27ae60", desc: "既存の枠を超え、新たな価値を創造する", count: 5 },
+];
+
+const nameById = {};
+data.forEach(d => { nameById[d.id] = d.name; });
+
+export default function ThinkingFramework() {
+  const [modal, setModal] = useState(null);
+  const [modalTab, setModalTab] = useState("what");
+  const [selectedLayer, setSelectedLayer] = useState(null);
+  const [animIn, setAnimIn] = useState(false);
+
+  useEffect(() => {
+    if (modal) {
+      requestAnimationFrame(() => setAnimIn(true));
+    } else {
+      setAnimIn(false);
+    }
+  }, [modal]);
+
+  const closeModal = () => { setAnimIn(false); setTimeout(() => setModal(null), 200); };
+  const openModal = (item, tab = "what") => { setModal(item); setModalTab(tab); };
+
+  const filtered = selectedLayer ? data.filter(d => d.layer === selectedLayer) : data;
+
+  return (
+    <div style={{ fontFamily: "'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif", background: "#fafafa", minHeight: "100vh", color: "#1a1a1a" }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=DM+Serif+Display&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        ::selection { background: #2980b9; color: #fff; }
+        .card-main:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important; }
+        .layer-btn:hover { transform: translateY(-1px); }
+        .tag-pill:hover { opacity: 0.8; }
+        .modal-overlay { animation: fadeOverlay 0.2s ease; }
+        .modal-box { animation: slideUp 0.25s cubic-bezier(0.16,1,0.3,1); }
+        .modal-box.out { animation: slideDown 0.2s ease forwards; }
+        @keyframes fadeOverlay { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px) } to { opacity: 1; transform: translateY(0) } }
+        @keyframes slideDown { from { opacity: 1; transform: translateY(0) } to { opacity: 0; transform: translateY(20px) } }
+        .trans-arrow { transition: background 0.15s; cursor: pointer; }
+        .trans-arrow:hover { filter: brightness(0.95); }
+      `}</style>
+
+      {/* ===== HEADER ===== */}
+      <div style={{ background: "#fff", borderBottom: "1px solid #e8e8e8", padding: "48px 0 40px" }}>
+        <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 28px" }}>
+          <div style={{ fontSize: 11, letterSpacing: 5, color: "#999", fontWeight: 500, textTransform: "uppercase", marginBottom: 10 }}>
+            Consulting Thinking Framework
+          </div>
+          <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(32px, 5vw, 50px)", fontWeight: 400, color: "#111", lineHeight: 1.2, marginBottom: 12 }}>
+            コンサルタントの<span style={{ color: "#2980b9" }}>13</span>の思考法
+          </h1>
+          <p style={{ fontSize: 15, color: "#666", lineHeight: 1.8, maxWidth: 640 }}>
+            コンサルティングで活用される主要な思考法を3つの階層に分類。各カードをクリックすると、構造的な定義・ユースケース・他の思考法への移行タイミングを確認できます。
+          </p>
+        </div>
+      </div>
+
+      {/* ===== LAYER NAV ===== */}
+      <div style={{ background: "#fff", borderBottom: "1px solid #e8e8e8", position: "sticky", top: 0, zIndex: 50 }}>
+        <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 28px", display: "flex", gap: 8, alignItems: "center", height: 56, overflowX: "auto" }}>
+          <button onClick={() => setSelectedLayer(null)} className="layer-btn" style={{
+            padding: "6px 18px", borderRadius: 20, border: !selectedLayer ? "2px solid #333" : "1px solid #ddd",
+            background: !selectedLayer ? "#333" : "#fff", color: !selectedLayer ? "#fff" : "#666",
+            fontSize: 13, fontWeight: 500, cursor: "pointer", transition: "all 0.15s", whiteSpace: "nowrap",
+          }}>全て (13)</button>
+          {layers.map(l => (
+            <button key={l.id} onClick={() => setSelectedLayer(l.id)} className="layer-btn" style={{
+              padding: "6px 18px", borderRadius: 20,
+              border: selectedLayer === l.id ? `2px solid ${l.color}` : "1px solid #ddd",
+              background: selectedLayer === l.id ? l.color : "#fff",
+              color: selectedLayer === l.id ? "#fff" : "#666",
+              fontSize: 13, fontWeight: 500, cursor: "pointer", transition: "all 0.15s", whiteSpace: "nowrap",
+            }}>
+              {l.label} ({l.count})
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== LAYER SECTIONS ===== */}
+      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "32px 28px 60px" }}>
+        {layers.filter(l => !selectedLayer || l.id === selectedLayer).map(layer => {
+          const items = data.filter(d => d.layer === layer.id);
+          return (
+            <div key={layer.id} style={{ marginBottom: 48 }}>
+              {/* Layer Header */}
+              <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
+                <div style={{ width: 4, height: 28, borderRadius: 2, background: layer.color }} />
+                <div>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: layer.color }}>{layer.label}
+                    <span style={{ fontSize: 12, fontWeight: 400, color: "#999", marginLeft: 8 }}>{layer.en}</span>
+                  </div>
+                  <div style={{ fontSize: 13, color: "#888", marginTop: 2 }}>{layer.desc}</div>
+                </div>
+              </div>
+
+              {/* Cards Grid */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
+                {items.map(item => (
+                  <div key={item.id} className="card-main" onClick={() => openModal(item)}
+                    style={{
+                      background: "#fff", borderRadius: 12, padding: "22px 20px", cursor: "pointer",
+                      border: "1px solid #eaeaea", transition: "all 0.2s ease",
+                      boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+                    }}>
+                    {/* Card Header */}
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                        <span style={{ fontSize: 22 }}>{item.icon}</span>
+                        <div>
+                          <div style={{ fontSize: 16, fontWeight: 700, color: "#1a1a1a" }}>{item.name}</div>
+                          <div style={{ fontSize: 10, color: "#aaa", letterSpacing: 0.5 }}>{item.en}</div>
+                        </div>
+                      </div>
+                      <span style={{
+                        fontSize: 10, padding: "3px 10px", borderRadius: 12, fontWeight: 600,
+                        background: item.colorLight, color: item.color,
+                      }}>{item.layerLabel}</span>
+                    </div>
+
+                    {/* Summary */}
+                    <p style={{ fontSize: 13, color: "#555", lineHeight: 1.75, marginBottom: 14 }}>{item.summary}</p>
+
+                    {/* Use Cases Preview */}
+                    <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
+                      {item.useCases.map((uc, i) => (
+                        <span key={i} style={{
+                          fontSize: 10, padding: "3px 8px", borderRadius: 6,
+                          background: "#f5f5f5", color: "#777",
+                        }}>📋 {uc.title}</span>
+                      ))}
+                    </div>
+
+                    {/* Relations */}
+                    <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
+                      {item.relations.map(rId => (
+                        <span key={rId} className="tag-pill" style={{
+                          fontSize: 10, padding: "2px 8px", borderRadius: 10,
+                          border: "1px solid #e0e0e0", color: "#888", transition: "opacity 0.15s",
+                        }}>→ {nameById[rId]}</span>
+                      ))}
+                    </div>
+
+                    {/* CTA hint */}
+                    <div style={{ marginTop: 14, fontSize: 11, color: "#bbb", textAlign: "right" }}>
+                      クリックで詳細 →
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+
+        {/* ===== RELATIONSHIP OVERVIEW ===== */}
+        <div style={{ background: "#fff", borderRadius: 16, border: "1px solid #eaeaea", padding: "28px 24px", marginTop: 8 }}>
+          <h3 style={{ fontSize: 18, fontWeight: 700, color: "#333", marginBottom: 16 }}>構造的関係の全体像</h3>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
+            {layers.map(l => (
+              <div key={l.id} style={{ padding: "16px 18px", borderRadius: 10, background: l.id === "foundation" ? "#fef5f5" : l.id === "execution" ? "#f0f7fc" : "#f0faf4", borderLeft: `4px solid ${l.color}` }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: l.color, marginBottom: 6 }}>{l.label}</div>
+                <div style={{ fontSize: 12, color: "#666", lineHeight: 1.8 }}>
+                  {l.id === "foundation" && "論理的思考と批判的思考は他の11思考法すべてを支える「OS」。論理的思考が推論の正しさを保証し、批判的思考がその品質を監査する。"}
+                  {l.id === "execution" && "仮説思考・イシュー思考は「何を解くか×どう解くか」の表裏一体ペア。戦略的思考・フレームワーク思考・逆算思考・システム思考が分析と実行を駆動する。"}
+                  {l.id === "expansion" && "水平思考・デザイン思考・アナロジー思考・抽象化思考・ゼロベース思考が「正解の見えない問題」に対する創造的突破力を提供する。"}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: 16, padding: "14px 18px", background: "#f8f8f8", borderRadius: 8, fontSize: 13, color: "#555", lineHeight: 1.8 }}>
+            <strong>核心：</strong>13の思考法は独立ではなく、基盤層→実行層→拡張層の「階層構造」と、各層内・層間の「ネットワーク構造」の二重構造を持つ。優れたコンサルタントは、問題の性質に応じてこれらを自在に組み合わせ、ある思考から別の思考へスムーズに移行する。
+          </div>
+        </div>
+      </div>
+
+      {/* ===== MODAL ===== */}
+      {modal && (
+        <div className="modal-overlay" onClick={closeModal}
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
+          <div className={`modal-box ${animIn ? "" : "out"}`} onClick={e => e.stopPropagation()}
+            style={{ background: "#fff", borderRadius: 16, width: "100%", maxWidth: 720, maxHeight: "88vh", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+            
+            {/* Modal Header */}
+            <div style={{ padding: "24px 28px 0", borderBottom: "1px solid #eee", flexShrink: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <span style={{ fontSize: 28 }}>{modal.icon}</span>
+                  <div>
+                    <h2 style={{ fontSize: 22, fontWeight: 700, color: modal.color, margin: 0 }}>{modal.name}</h2>
+                    <div style={{ fontSize: 12, color: "#999" }}>{modal.en}</div>
+                  </div>
+                  <span style={{ fontSize: 11, padding: "3px 10px", borderRadius: 12, fontWeight: 600, background: modal.colorLight, color: modal.color, marginLeft: 8 }}>
+                    {modal.layerLabel}
+                  </span>
+                </div>
+                <button onClick={closeModal} style={{ background: "none", border: "none", fontSize: 22, color: "#999", cursor: "pointer", padding: 4 }}>✕</button>
+              </div>
+
+              {/* Tabs */}
+              <div style={{ display: "flex", gap: 0 }}>
+                {[
+                  { key: "what", label: "What ─ 定義" },
+                  { key: "usecase", label: "Use Cases" },
+                  { key: "transition", label: "思考の移行" },
+                ].map(tab => (
+                  <button key={tab.key} onClick={() => setModalTab(tab.key)} style={{
+                    padding: "10px 20px", fontSize: 13, fontWeight: modalTab === tab.key ? 600 : 400,
+                    color: modalTab === tab.key ? modal.color : "#888",
+                    borderBottom: modalTab === tab.key ? `2.5px solid ${modal.color}` : "2.5px solid transparent",
+                    background: "none", border: "none", cursor: "pointer", transition: "all 0.15s",
+                  }}>{tab.label}</button>
+                ))}
+              </div>
+            </div>
+
+            {/* Modal Body */}
+            <div style={{ padding: "24px 28px 28px", overflowY: "auto", flex: 1 }}>
+              
+              {/* WHAT TAB */}
+              {modalTab === "what" && (
+                <div>
+                  <p style={{ fontSize: 14, color: "#444", lineHeight: 1.85, marginBottom: 20 }}>{modal.what.overview}</p>
+                  
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#999", letterSpacing: 2, marginBottom: 12, textTransform: "uppercase" }}>構造的要素</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    {modal.what.structure.map((s, i) => (
+                      <div key={i} style={{
+                        display: "flex", gap: 14, padding: "14px 16px",
+                        background: i % 2 === 0 ? "#f9f9f9" : "#fff",
+                        borderRadius: 10, border: "1px solid #f0f0f0",
+                      }}>
+                        <div style={{
+                          minWidth: 28, height: 28, borderRadius: 8,
+                          background: modal.color, color: "#fff",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          fontSize: 13, fontWeight: 700, flexShrink: 0,
+                        }}>{i + 1}</div>
+                        <div>
+                          <div style={{ fontSize: 14, fontWeight: 700, color: "#333", marginBottom: 4 }}>{s.label}</div>
+                          <div style={{ fontSize: 12.5, color: "#666", lineHeight: 1.75 }}>{s.desc}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ marginTop: 20, padding: "12px 16px", background: modal.colorLight, borderRadius: 8, borderLeft: `4px solid ${modal.color}` }}>
+                    <div style={{ fontSize: 12, fontWeight: 600, color: modal.color, marginBottom: 4 }}>WHEN ─ 使用場面</div>
+                    <div style={{ fontSize: 13, color: "#555", lineHeight: 1.75 }}>{modal.when}</div>
+                  </div>
+                </div>
+              )}
+
+              {/* USE CASES TAB */}
+              {modalTab === "usecase" && (
+                <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                  {modal.useCases.map((uc, i) => (
+                    <div key={i} style={{
+                      padding: "18px 20px", borderRadius: 12,
+                      background: "#fff", border: "1px solid #eaeaea",
+                      boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+                    }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                        <span style={{
+                          fontSize: 11, fontWeight: 700, color: "#fff", background: modal.color,
+                          padding: "2px 8px", borderRadius: 6,
+                        }}>CASE {i + 1}</span>
+                        <div style={{ fontSize: 15, fontWeight: 700, color: "#333" }}>{uc.title}</div>
+                      </div>
+                      <div style={{ fontSize: 13, color: "#555", lineHeight: 1.8, paddingLeft: 2 }}>{uc.desc}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* TRANSITION TAB */}
+              {modalTab === "transition" && (
+                <div>
+                  <p style={{ fontSize: 13, color: "#888", lineHeight: 1.7, marginBottom: 18 }}>
+                    {modal.name}から他の思考法へ移行する典型的なタイミングとその理由。
+                  </p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    {modal.transitions.map((tr, i) => {
+                      const target = data.find(d => d.id === tr.to);
+                      return (
+                        <div key={i} className="trans-arrow"
+                          onClick={() => { setModal(target); setModalTab("what"); }}
+                          style={{
+                            padding: "16px 18px", borderRadius: 12,
+                            background: "#fff", border: "1px solid #eaeaea",
+                            boxShadow: "0 1px 3px rgba(0,0,0,0.03)",
+                          }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                            <span style={{
+                              fontSize: 13, fontWeight: 700, color: modal.color,
+                              padding: "2px 10px", background: modal.colorLight, borderRadius: 8,
+                            }}>{modal.name}</span>
+                            <span style={{ fontSize: 16, color: "#ccc" }}>→</span>
+                            <span style={{
+                              fontSize: 13, fontWeight: 700, color: target?.color || "#333",
+                              padding: "2px 10px", background: target?.colorLight || "#f5f5f5", borderRadius: 8,
+                            }}>{target?.icon} {target?.name}</span>
+                          </div>
+                          <div style={{ fontSize: 12, fontWeight: 600, color: "#e67e22", marginBottom: 4 }}>
+                            🕐 タイミング：{tr.timing}
+                          </div>
+                          <div style={{ fontSize: 12.5, color: "#666", lineHeight: 1.75 }}>{tr.desc}</div>
+                          <div style={{ fontSize: 11, color: "#bbb", marginTop: 6, textAlign: "right" }}>クリックで移動 →</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
