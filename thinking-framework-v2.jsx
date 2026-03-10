@@ -6,6 +6,7 @@ import LayerSection from "./components/LayerSection";
 import RelationshipOverview from "./components/RelationshipOverview";
 import Modal from "./components/Modal";
 import NetworkGraph from "./components/NetworkGraph";
+import Footer from "./components/Footer";
 
 export default function ThinkingFramework() {
   const [modal, setModal] = useState(null);
@@ -44,6 +45,8 @@ export default function ThinkingFramework() {
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 28px 60px" }}>
         <LayerSection selectedLayer={selectedLayer} onOpenModal={openModal} />
       </div>
+
+      <Footer />
 
       <Modal
         modal={modal}
